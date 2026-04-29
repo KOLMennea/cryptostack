@@ -14,7 +14,60 @@ green() { printf '\033[32m%s\033[0m\n' "$*"; }
 yellow() { printf '\033[33m%s\033[0m\n' "$*"; }
 red() { printf '\033[31m%s\033[0m\n' "$*"; }
 
+# Détection OS et package manager
+detect_os() {
+  case "$(uname -s)" in
+    Darwin) echo "macos" ;;
+    Linux)  echo "linux" ;;
+    MINGW*|MSYS*|CYGWIN*) echo "windows" ;;
+    *)      echo "unknown" ;;
+  esac
+}
+
+detect_pkg_manager() {
+  if command -v brew >/dev/null 2>&1; then echo "brew"; return; fi
+  if command -v apt-get >/dev/null 2>&1; then echo "apt"; return; fi
+  if command -v dnf >/dev/null 2>&1; then echo "dnf"; return; fi
+  if command -v pacman >/dev/null 2>&1; then echo "pacman"; return; fi
+  echo "none"
+}
+
+OS=$(detect_os)
+PM=$(detect_pkg_manager)
+
+# Renvoie la commande d'install pour un package
+install_cmd() {
+  local pkg="$1"
+  # Mapping de noms de packages spécifiques
+  local pkg_brew="$pkg"
+  local pkg_apt="$pkg"
+  local pkg_dnf="$pkg"
+  local pkg_pacman="$pkg"
+
+  if [ "$pkg" = "weasyprint" ]; then
+    pkg_dnf="python3-weasyprint"
+  fi
+
+  case "$PM" in
+    brew)   echo "brew install $pkg_brew" ;;
+    apt)    echo "sudo apt-get update && sudo apt-get install -y $pkg_apt" ;;
+    dnf)    echo "sudo dnf install -y $pkg_dnf" ;;
+    pacman) echo "sudo pacman -S --noconfirm $pkg_pacman" ;;
+    none)
+      if [ "$OS" = "macos" ]; then
+        echo "Homebrew manquant. Installe-le d'abord :"
+        echo "    /bin/bash -c \"\$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\""
+        echo "  Puis : brew install $pkg"
+      else
+        echo "Aucun package manager détecté — installe $pkg manuellement"
+      fi
+      ;;
+  esac
+}
+
 cyan "📦 cryptostack installer"
+echo "  OS détecté : $OS"
+echo "  Package manager : $PM"
 echo ""
 
 # 1. Vérifier qu'on est bien dans le repo
@@ -24,10 +77,28 @@ if [ ! -f "$REPO_DIR/crypto/SKILL.md" ] || [ ! -f "$REPO_DIR/crypto-update/SKILL
   exit 1
 fi
 
-# 2. Créer le dossier ~/.claude/skills/ si absent
+# 2. Si macOS sans Homebrew → proposer l'install
+if [ "$OS" = "macos" ] && [ "$PM" = "none" ]; then
+  echo ""
+  yellow "⚠️ Homebrew n'est pas installé. C'est requis pour jq et weasyprint."
+  echo ""
+  echo "Installe Homebrew d'abord avec cette commande :"
+  echo ""
+  cyan '  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'
+  echo ""
+  echo "Puis relance ./install.sh"
+  echo ""
+  read -p "Continuer quand même (sans installer brew) ? [y/N] " -n 1 -r
+  echo ""
+  if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+    exit 1
+  fi
+fi
+
+# 3. Créer le dossier ~/.claude/skills/ si absent
 mkdir -p "$SKILL_DIR"
 
-# 3. Symlink crypto et crypto-update
+# 4. Symlink crypto et crypto-update
 for skill in crypto crypto-update; do
   TARGET="$REPO_DIR/$skill"
   LINK="$SKILL_DIR/$skill"
@@ -52,7 +123,7 @@ for skill in crypto crypto-update; do
   fi
 done
 
-# 4. Init la mémoire interne
+# 5. Init la mémoire interne
 mkdir -p "$MEMORY_DIR/patterns"
 [ ! -f "$MEMORY_DIR/projects.jsonl" ] && touch "$MEMORY_DIR/projects.jsonl"
 if [ ! -f "$MEMORY_DIR/stats.json" ]; then
@@ -67,33 +138,36 @@ EOF
 fi
 green "✅ Mémoire initialisée : $MEMORY_DIR"
 
-# 5. Init le dossier rapports
+# 6. Init le dossier rapports
 mkdir -p "$DOCS_DIR"
 green "✅ Dossier rapports : $DOCS_DIR"
 
-# 6. Vérifier dépendances
+# 7. Vérifier dépendances
 echo ""
 cyan "🔍 Dépendances"
 
 check_dep() {
   local cmd="$1"
-  local install_cmd="$2"
-  local optional="${3:-required}"
+  local optional="${2:-required}"
 
   if command -v "$cmd" >/dev/null 2>&1; then
     green "  ✅ $cmd"
   else
+    local hint
+    hint=$(install_cmd "$cmd")
     if [ "$optional" = "optional" ]; then
-      yellow "  ⚠️ $cmd manquant (optionnel) — install : $install_cmd"
+      yellow "  ⚠️ $cmd manquant (optionnel pour PDF)"
+      echo "     Install : $hint"
     else
-      red "  ❌ $cmd manquant — install : $install_cmd"
+      red "  ❌ $cmd manquant (requis)"
+      echo "     Install : $hint"
     fi
   fi
 }
 
-check_dep jq "brew install jq" required
-check_dep weasyprint "brew install weasyprint" optional
-check_dep git "brew install git" required
+check_dep git required
+check_dep jq required
+check_dep weasyprint optional
 
 echo ""
 cyan "🎉 cryptostack installé."

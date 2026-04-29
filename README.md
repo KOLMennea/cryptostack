@@ -8,19 +8,59 @@ inter-projets, et export PDF.
 
 Pré-requis : Claude Code, `git`, `jq`, et `weasyprint` (pour l'export PDF).
 
-```bash
-# Installer les dépendances macOS
-brew install jq weasyprint
+### macOS
 
-# Cloner et installer
+Si Homebrew n'est pas déjà installé :
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+Puis :
+
+```bash
+brew install jq weasyprint git
 git clone https://github.com/KOLMennea/cryptostack ~/cryptostack
 cd ~/cryptostack
 ./install.sh
 ```
 
-`install.sh` symlinke les skills dans `~/.claude/skills/`, initialise la mémoire
-interne dans `~/.cryptostack/memory/` et le dossier rapports dans
-`~/Documents/cryptostack/audits/`.
+### Linux Debian/Ubuntu
+
+```bash
+sudo apt-get update && sudo apt-get install -y jq weasyprint git
+git clone https://github.com/KOLMennea/cryptostack ~/cryptostack
+cd ~/cryptostack
+./install.sh
+```
+
+### Linux Fedora/RHEL
+
+```bash
+sudo dnf install -y jq python3-weasyprint git
+git clone https://github.com/KOLMennea/cryptostack ~/cryptostack
+cd ~/cryptostack
+./install.sh
+```
+
+### Linux Arch
+
+```bash
+sudo pacman -S --noconfirm jq weasyprint git
+git clone https://github.com/KOLMennea/cryptostack ~/cryptostack
+cd ~/cryptostack
+./install.sh
+```
+
+### Que fait `install.sh`
+
+- Détecte ton OS et ton package manager (brew / apt / dnf / pacman)
+- Si macOS sans Homebrew, te propose la commande d'install
+- Symlinke `~/.claude/skills/crypto` → `~/cryptostack/crypto/`
+- Symlinke `~/.claude/skills/crypto-update` → `~/cryptostack/crypto-update/`
+- Initialise la mémoire interne dans `~/.cryptostack/memory/`
+- Crée le dossier rapports dans `~/Documents/cryptostack/audits/`
+- Vérifie les dépendances et donne la commande d'install si une manque
 
 ## Utilisation
 
