@@ -1,0 +1,14 @@
+# macOS
+.DS_Store
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*~
+
+# Données locales — ne JAMAIS pousser sur le repo public
+# (la mémoire est privée à chaque user, et les audits user-facing aussi)
+audits/
+memory/
+*.jsonl
