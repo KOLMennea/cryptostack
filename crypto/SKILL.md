@@ -9,8 +9,11 @@ description: |
   des projets analysés pour matcher des similitudes et déclencher de la vigilance accrue
   quand un nouveau projet partage la signature d'un projet AVOID passé. Orchestration
   stricte : checkpoint AskUserQuestion à chaque critère, pas de saut. Catalogue de scams
-  comparables publics (Forsage, Arbistar 2.0, HyperVerse, BitConnect, Celsius). Override
-  automatique : MLM 4+ niveaux ou contract non-vérifié → AVOID immédiat. Export PDF final
+  comparables publics (Forsage, Arbistar 2.0, HyperVerse, BitConnect, Celsius). Analyse MLM
+  par la substance économique (pas par le nombre de niveaux) : override AVOID sur Ponzi prouvé
+  (commissions financées par les dépôts des nouveaux entrants) et sur fingerprint structurel
+  (rank-up + custody centralisée + revenu non vérifiable), jamais sur le seul comptage de
+  niveaux ; verdict INCERTAIN quand les preuves manquent. Contract non-vérifié → AVOID. Export PDF final
   via weasyprint avec scorecard expurgée (zéro mention des projets internes que tu as
   analysés ; comparables publics conservés). Sortie : ~/Documents/cryptostack/audits/<date>-<slug>/.
   Use when user asks to "évalue ce projet crypto", "audite ce token", "/crypto",
@@ -106,11 +109,14 @@ Si pattern matché avec un projet interne AVOID, ajouter un `⚠️ vigilance ac
   - moy ≥ 7 → `STRONG` 🟢
   - moy 4–6.9 → `MIXED` 🟡
   - moy < 4 → `WEAK` 🔴
-  - Critère 6 (incentives) ≤ 1 → `SCAM-PATTERN` 🚨 (override)
+  - Substance Ponzi prouvée (commissions ⟵ dépôts) OU fingerprint structurel
+    (rank-up + custodial + revenu non vérifiable) → `SCAM-PATTERN` 🚨 (override).
+    ⚠️ JAMAIS sur le seul nombre de niveaux d'affiliation.
 - **Verdicts provisoires** (recalculés à chaque tour avec les critères déjà scorés) :
-  - Score partiel ≥ 7 ET aucun critère < 4 → `🟢 PASS-leaning`
+  - Score partiel ≥ 7 ET aucun critère < 4 ET provenance des commissions vérifiable → `🟢 PASS-leaning`
   - Score partiel 4–6.9 → `🟡 INVESTIGATE-leaning`
-  - Score partiel < 4 OU 1 critère ≤ 1 sur Centralisation/Liquidité/Incentives → `🚨 AVOID-leaning`
+  - Provenance des commissions inconnue / déclarative (preuves insuffisantes) → `❓ INCERTAIN-leaning`
+  - Score partiel < 4 OU substance Ponzi prouvée OU fingerprint structurel → `🚨 AVOID-leaning`
 - **Probabilité scam** : démarre à 50% (neutre) et bouge selon les signaux
   (voir grille de pondération en Phase 11)
 - **Truncation contract address** : `0xf61a...d8c2` (4 premiers + 4 derniers)
@@ -185,6 +191,12 @@ projets suivants.
   "patterns": {
     "custody": "non-custodial-but-factory",
     "mlm_levels": 4,
+    "commission_source": "deposits",
+    "deposits_to_mlm_band": ">50%",
+    "deposits_to_mlm_confidence": "estimé",
+    "recurring_external_revenue": false,
+    "growth_dependent": true,
+    "rank_up_tiers": true,
     "yield_source": "deposits",
     "audit_tier": "none",
     "team_doxx": "anonymous",
@@ -197,7 +209,7 @@ projets suivants.
     "sector": "yield-farm-mlm"
   },
   "key_red_flags_top3": [
-    "Factory contract + 4 niveaux MLM",
+    "Commissions financées par les dépôts des nouveaux entrants (>50%) + rank-up tiers",
     "Tx hash recyclée décorelée du wallet user",
     "Équipe 100% anonyme + promesses % fixe"
   ]
@@ -213,6 +225,7 @@ projets suivants.
   "verdicts": {
     "PASS": 12,
     "INVESTIGATE": 12,
+    "INCERTAIN": 0,
     "AVOID": 23
   },
   "last_updated": "2026-04-29T15:42:11Z"
@@ -229,24 +242,30 @@ structurelle proche du projet courant.
 
 | Pattern | Match si | Si match → action |
 |---------|----------|-------------------|
-| `mlm_levels >= 4` ET `mlm_levels` égal | 1 projet AVOID interne | +20 pts probabilité scam, mention vigilance |
-| `factory_contract: true` ET `youtube_affiliation: true` | 1 projet AVOID interne | +25 pts, mention vigilance |
+| `commission_source: "deposits"` (financement par les nouveaux entrants) | 1 projet AVOID interne | +25 pts probabilité scam, mention vigilance |
+| `rank_up_tiers: true` ET `recurring_external_revenue: false` | 1 projet AVOID interne | +20 pts, mention vigilance |
+| `factory_contract: true` ET `commission_source: "deposits"` | 1 projet AVOID interne | +20 pts, mention vigilance |
 | `yield_source: "deposits"` ET `audit_tier: "none"` | 1 projet AVOID interne | +15 pts |
 | `custody: "custodial"` ET `team_doxx: "anonymous"` | 1 projet AVOID interne | +15 pts |
 | `had_upgrade_function: true` ET `had_pause_function: true` ET owner EOA | 1 projet AVOID interne | +10 pts |
 
+⚠️ Le champ `mlm_levels` reste stocké pour information mais **ne déclenche AUCUN
+matching à lui seul** : un nombre de niveaux élevé n'est pas une signature de
+fraude (cf. directive — substance over structure). On matche sur la provenance
+des commissions et le fingerprint structurel, pas sur le comptage de niveaux.
+
 **Code bash de lookup** (à exécuter après chaque critère pertinent) :
 
 ```bash
-# Exemple : après avoir détecté mlm_levels=4 en Phase 6
-LOOKUP_PATTERN='select(.patterns.mlm_levels >= 4 and .verdict == "AVOID")'
+# Exemple : après avoir détecté commission_source="deposits" en Phase 6
+LOOKUP_PATTERN='select(.patterns.commission_source == "deposits" and .verdict == "AVOID")'
 INTERNAL_MATCHES=$(jq -s "[ .[] | $LOOKUP_PATTERN ] | length" \
   ~/.cryptostack/memory/projects.jsonl 2>/dev/null || echo 0)
 
 # Si > 0, bumper la vigilance interne et noter dans le dashboard
 if [ "$INTERNAL_MATCHES" -gt 0 ]; then
   # Pattern Match déclenché → vigilance accrue
-  echo "MEMORY_MATCH: $INTERNAL_MATCHES projet(s) AVOID interne(s) avec MLM 4+ niveaux"
+  echo "MEMORY_MATCH: $INTERNAL_MATCHES projet(s) AVOID interne(s) avec commissions financées par les dépôts"
 fi
 ```
 
@@ -281,7 +300,7 @@ mémoire :
 ```bash
 mkdir -p ~/.cryptostack/memory
 [ ! -f ~/.cryptostack/memory/projects.jsonl ] && touch ~/.cryptostack/memory/projects.jsonl
-[ ! -f ~/.cryptostack/memory/stats.json ] && echo '{"version":"1.0","total_audits":0,"verdicts":{"PASS":0,"INVESTIGATE":0,"AVOID":0},"last_updated":"'"$(date -u +%Y-%m-%dT%H:%M:%SZ)"'"}' > ~/.cryptostack/memory/stats.json
+[ ! -f ~/.cryptostack/memory/stats.json ] && echo '{"version":"1.0","total_audits":0,"verdicts":{"PASS":0,"INVESTIGATE":0,"INCERTAIN":0,"AVOID":0},"last_updated":"'"$(date -u +%Y-%m-%dT%H:%M:%SZ)"'"}' > ~/.cryptostack/memory/stats.json
 TOTAL=$(jq -r '.total_audits' ~/.cryptostack/memory/stats.json)
 AVOID=$(jq -r '.verdicts.AVOID' ~/.cryptostack/memory/stats.json)
 echo "📚 Mémoire : $TOTAL projets analysés, $AVOID verdicts AVOID."
@@ -604,65 +623,134 @@ WebFetch `https://www.geckoterminal.com/<chain>/pools/<addr>` :
 **Question-clé** : Le système pousse-t-il à investir intelligemment ou à
 recruter / spéculer ?
 
-**Pourquoi ça compte** : c'est ICI que se détectent les pyramides MLM. Un
-projet qui paie plus pour recruter que pour utiliser le produit est, par
-définition, un schéma pyramidal — illégal en France (L.122-6 code conso) et
-aux US (FTC).
+**Pourquoi ça compte** : c'est ICI que se détectent les pyramides MLM — mais par
+la **substance économique**, pas par le nombre de niveaux. Un système d'affiliation
+n'est PAS frauduleux par nature : il est sain quand il est financé par une création
+de valeur réelle (ventes, abonnements, fees, revenus de trading externes), fragile
+quand il dépend des nouveaux entrants, et pyramidal/Ponzi UNIQUEMENT quand les
+commissions sont **principalement financées par les apports des nouveaux membres**.
+Le nombre de niveaux est un indicateur économique (plus de niveaux = plus de
+ressources nécessaires pour rémunérer le réseau), jamais un critère juridique en soi.
 
-⚠️ **Override automatique** : si MLM 4+ niveaux détecté → **AVOID immédiat**
-peu importe les autres scores.
+⚠️ **Ce critère ne déclenche PAS d'AVOID sur le seul comptage de niveaux.** Les
+deux seuls déclencheurs AVOID liés à l'affiliation sont la **substance Ponzi prouvée**
+(étape 6h) et le **fingerprint structurel** (étape 6i). En l'absence de preuve sur la
+provenance des commissions → verdict **INCERTAIN**, pas une présomption de fraude.
 
-#### Investigation
+#### Investigation — les 7 facteurs de soutenabilité
 
 **Étape 6a — Mécanisme de rémunération principal** via `AskUserQuestion` :
 - A) "Yield sur USAGE (fees protocol, staking sécurité, LP)"
 - B) "Points / airdrops futurs — incentives temporaires"
-- C) "Commissions sur PARRAINAGE (plusieurs niveaux)"
+- C) "Commissions sur PARRAINAGE (un ou plusieurs niveaux)"
 - D) "Autre — texte libre"
 
-Si C : **drapeau rouge majeur**. Continue avec 6b.
+Si C : ce n'est pas un drapeau rouge en soi. Continue l'analyse économique 6b→6g.
 
-**Étape 6b — Multi-level marketing ?**
-Compte le nombre de **niveaux de commission** :
+**Étape 6b — Origine réelle des commissions (facteur #1, le plus important)**
+D'où vient l'argent qui rémunère l'affiliation ? Distingue :
+- Revenus EXTERNES réels : ventes, licences, abonnements, frais de service,
+  commissions sur performance/trading, revenus d'exploitation → **sain**
+- Apports des nouveaux entrants : dépôts, investissements, argent des inscriptions
+  → **risque économique croissant avec la dépendance**
 
-| Niveaux | Verdict |
-|---------|---------|
-| 0-1 niveau (ex. "10% des fees de tes invités directs") | Affiliation classique, OK |
-| 2-3 niveaux | Zone grise, suspect |
-| **4+ niveaux** | **Pyramide, illégal** → score 0/10, override AVOID |
+**Étape 6c — Nombre de niveaux (facteur #5, indicateur éco, PAS verdict)**
 
-**Étape 6c — Incentives à l'usage vs à l'acquisition**
-Le projet paie-t-il plus pour **utiliser** (trader, lend, staker) ou pour
-**recruter** (faire déposer d'autres) ?
-- Ratio fees_users / commissions_parrainage > 3:1 → sain
-- Ratio < 1:1 → ponzi-like
+| Niveaux | Lecture (jamais un AVOID à elle seule) |
+|---------|----------------------------------------|
+| 1-5 niveaux | Courant, généralement compatible avec un modèle soutenable |
+| 6-10 niveaux | Demander des explications sur le financement du réseau |
+| > 10 niveaux | Analyser avec attention la soutenabilité (beaucoup de ressources à mobiliser) |
 
-**Étape 6d — Source du yield si > 20% APY**
-Demande explicitement d'où vient le yield :
+⚠️ Un système à 2 niveaux peut être une pyramide ; un système à 8 niveaux financé
+par un vrai produit peut être sain. **Toujours privilégier l'analyse économique
+(6b, 6e) sur le comptage de niveaux.**
 
-| Source | Verdict |
-|--------|---------|
-| Trading fees réels | Sustainable |
-| Émission du token protocol | Dilutif mais pas ponzi |
-| **Dépôts des nouveaux entrants** | **PONZI mécanique** → score ≤ 1 |
+**Étape 6d — Séparation investissement / licence (facteur #2)**
+Le modèle est plus lisible quand les fonds investis restent investis et que les
+frais (licence, frais de service) sont clairement identifiés. Exemple transparent :
+dépôt 1000€ = 900€ investis + 100€ de licence annoncée. Des prélèvements cachés =
+facteur négatif ; la transparence = facteur positif.
 
-#### Red flags Critère 6
+**Étape 6e — Part des nouveaux dépôts finançant le MLM (facteur #3) — avec label de confiance**
+
+Estime la **bande** (jamais un pourcentage ponctuel "au pif") de la part des
+nouveaux dépôts qui finance les commissions d'affiliation, ET attache-lui
+obligatoirement un **label de confiance** :
+
+| Label | Quand l'utiliser |
+|-------|------------------|
+| `mesuré` | Méthode on-chain énoncée : tracing des tx de commission vs entrées de dépôts sur un contract vérifié non-custodial |
+| `estimé` | Inféré de signaux indépendants (tokenomics, flux on-chain partiels), méthode explicitée |
+| `déclaratif` | Repose sur ce que le projet annonce (grille de fees déclarée = `déclaratif`, PAS `estimé`) |
+| `inconnu` | Custody off-chain opaque, aucune traçabilité |
+
+Repères de bande (indicateurs de soutenabilité, pas des seuils légaux) :
+
+| Bande | Lecture |
+|-------|---------|
+| 0-10% | Généralement compatible avec un modèle robuste si transparent |
+| 10-30% | Zone nécessitant une analyse approfondie |
+| 30-50% | Niveau élevé pouvant fragiliser le modèle |
+| > 50% | Très préoccupant : le système dépend principalement des nouveaux membres |
+
+**Étape 6f — Revenus récurrents externes (facteur #4) & dépendance à la croissance (facteur #7)**
+- Inventorie les revenus durables INDÉPENDANTS du recrutement : abonnements, frais
+  de gestion, commissions sur performance/trading, revenus SaaS, ventes. Plus ils
+  sont importants, moins le système dépend des nouveaux entrants.
+- Question décisive : **si le recrutement s'arrêtait fortement demain, l'entreprise
+  survivrait-elle grâce à son activité économique ?** Oui = très positif. Non = risque majeur.
+
+**Étape 6g — Transparence (facteur #6)**
+L'entreprise explique-t-elle clairement pourcentages, frais, commissions, conditions
+de rémunération et sources de financement ? Modèle transparent = favorable ; flux
+opaques = défavorable.
+
+#### ⚠️ Déclencheurs AVOID liés à l'affiliation (les SEULS)
+
+**Étape 6h — Substance-AVOID (Ponzi prouvé)** — déclenche AVOID si l'UN de :
+- bande dépôts→MLM **> 50% @ confiance `mesuré` ou `estimé`** (commissions
+  principalement financées par les nouveaux entrants)
+- **réinvestissement obligatoire** d'un % imposé
+- **source du yield = dépôts des nouveaux entrants** (admis à 6a/6b)
+
+Bande **30-50% @ `mesuré`/`estimé`** → INVESTIGATE (fragilisant, pas éliminatoire).
+Toute bande **@ `déclaratif` ou `inconnu`** → **INCERTAIN** (preuves insuffisantes,
+jamais PASS, jamais présomption de fraude — voir Phase 11 verdict).
+
+**Étape 6i — Fingerprint structurel (plancher anti-Forsage)** — déclenche AVOID si LES TROIS :
+- système de **rangs / "rank up"** (Silver → Gold → Diamond)
+- **custody centralisée** (le projet détient les fonds)
+- **revenu externe NON vérifiable**
+
+Ce plancher ne se déclenche PAS sur un referral simple + vrai produit, ni sur des
+rangs adossés à un revenu externe vérifiable. C'est le fingerprint Forsage/Arbistar,
+pas une pénalité du MLM.
+
+#### Red flags comportementaux Critère 6
+
+Ces signaux **plafonnent le score C6 à ≤ 3 et ajoutent à la probabilité scam**,
+mais ne déclenchent PAS d'AVOID à eux seuls (l'AVOID vient de la substance 6e ou
+du fingerprint 6i) :
 
 - Dashboard user met en avant **"gains d'affiliation"** > portfolio value
 - Classement / leaderboard top parrains récompensés
 - "Rank up" système (Silver → Gold → Diamond) à la **Forsage / Arbistar / BitConnect**
 - "Earn more by inviting friends" en feature principale
-- **Lien de parrainage avec params `ref=`, `frenID=`, `sponsor=`, `r=`** = MLM confirmé
 
-#### Scoring Critère 6
+Signal neutre (NI rouge NI vert) : un **lien de parrainage** (`ref=`, `sponsor=`,
+`r=`) atteste juste qu'il y a de l'affiliation — banal, ce n'est pas une fraude.
+
+#### Scoring Critère 6 (substance, pas comptage de niveaux)
 
 | Signal | Score |
 |--------|-------|
-| Yield 100% usage réel, incentives alignées sur utiliser/sécuriser | 9-10 |
-| Mix usage + airdrop, pas de parrainage multi-niveau | 6-8 |
-| 1 niveau de parrainage simple en bonus | 4-5 |
-| 2-3 niveaux de commission | 1-3 |
-| **4+ niveaux OU "rank up" OU dashboard affiliation #1** | **0** ⚠️ override AVOID |
+| Affiliation financée par revenu externe vérifiable, incentives alignées sur l'usage | 9-10 |
+| Mix usage + affiliation modérée, revenu externe présent, transparent | 6-8 |
+| Affiliation présente mais dépendance partielle aux entrants (bande 10-30%) | 4-5 |
+| Dépendance forte aux entrants (30-50%) OU red flag comportemental ci-dessus | 1-3 |
+| Substance Ponzi prouvée (6h) OU fingerprint structurel (6i) | **0** ⚠️ déclenche AVOID |
+| Provenance des commissions `déclaratif`/`inconnu` | score **non attribué** → route vers INCERTAIN |
 
 #### Checkpoint Phase 6
 
@@ -673,12 +761,19 @@ Demande explicitement d'où vient le yield :
 
 Écris **`$AUDIT_DIR/mechanics.md`** maintenant.
 
-⚠️ Si MLM 4+ niveaux détecté à l'étape 6b : inclus dans mechanics.md une
-**alerte juridique** :
+⚠️ Inclus l'**alerte juridique** dans mechanics.md UNIQUEMENT si la substance
+pyramidale est établie (substance-AVOID 6h OU fingerprint structurel 6i) — PAS sur
+le seul nombre de niveaux :
 
-> Structure multi-niveau détectée (N niveaux). En France, L.122-6 du code de la
-> consommation et la loi 1953-02-05 interdisent les schémas pyramidaux.
+> Schéma pyramidal/Ponzi caractérisé : les commissions sont principalement
+> financées par les apports des nouveaux entrants [preuve : <bande %, label de
+> confiance, source>]. En France, L.122-6 du code de la consommation et la loi
+> 1953-02-05 interdisent les schémas pyramidaux.
 > Signalement : Pharos (https://www.internet-signalement.gouv.fr/).
+
+Si la provenance des commissions est `déclaratif`/`inconnu` : **pas d'alerte
+juridique**, mais une note d'incertitude listant les questions à lever (voir
+verdict INCERTAIN, Phase 11).
 
 ---
 
@@ -903,18 +998,33 @@ Score composite = 0.15 × C1 + 0.10 × C2 + 0.10 × C3
                 + 0.10 × C7 + 0.05 × C8 + 0.03 × C9 + 0.02 × C10
 ```
 
-### Règles de verdict (overrides en priorité)
+### Règles de verdict — machine à états (overrides en priorité)
 
+Quatre verdicts possibles : `PASS` 🟢 · `INVESTIGATE` 🟡 · `INCERTAIN` ❓ · `AVOID` 🔴.
 Évalue dans cet ordre. Le PREMIER qui matche détermine le verdict :
 
-1. **MLM 4+ niveaux détecté à C6** → `AVOID` automatique, peu importe le reste
-2. **C4 ≤ 1 ET C5 ≤ 2** (centralisation extrême + sortie bloquée) → `AVOID` (risque otage)
-3. **Contract non-vérifié sur EVM** OU **mention Rekt.news** OU **action SEC/DOJ active** → `AVOID`
-4. **Track record équipe inclut un rug** → minimum `INVESTIGATE`
-5. Score composite < 4 → `AVOID`
-6. Score composite 4–6.9 → `INVESTIGATE`
-7. Score composite ≥ 7 ET aucun critère < 4 → `PASS`
-8. Score composite ≥ 7 mais 1+ critère < 4 → `INVESTIGATE` (déséquilibre)
+1. **Planchers structurels** → `AVOID` : contract non-vérifié sur EVM, mention
+   Rekt.news, action SEC/DOJ active, tx hash recyclée, OU **C4 ≤ 1 ET C5 ≤ 2**
+   (centralisation extrême + sortie bloquée, risque otage)
+2. **Plancher fraude structurel (fingerprint Forsage)** → `AVOID` : rank-up tiers
+   ET custody centralisée ET revenu externe NON vérifiable (étape 6i)
+3. **Substance-AVOID (Ponzi prouvé)** → `AVOID` : bande dépôts→MLM > 50% @
+   confiance `mesuré`/`estimé`, OU réinvestissement obligatoire, OU yield financé
+   par les dépôts des nouveaux entrants (étape 6h)
+4. **Evidence gate** : si la provenance des commissions est **inconnue ou
+   déclarative** (impossible de prouver qu'elle vient d'un revenu externe à
+   confiance ≥ `estimé`) → `INCERTAIN` (preuves insuffisantes). INCERTAIN
+   pré-empte tout PASS score-based ci-dessous : on ne PASS jamais sans preuve.
+5. **Track record équipe inclut un rug** → minimum `INVESTIGATE`
+6. Bande dépôts→MLM **30-50% @ `mesuré`/`estimé`** → minimum `INVESTIGATE`
+7. Score composite < 4 → `AVOID`
+8. Score composite 4–6.9 → `INVESTIGATE`
+9. Score composite ≥ 7 ET aucun critère < 4 ET **provenance des commissions
+   vérifiable @ confiance ≥ `estimé`** → `PASS`
+10. Score composite ≥ 7 mais 1+ critère < 4 → `INVESTIGATE` (déséquilibre)
+
+⚠️ Le nombre de niveaux d'affiliation n'apparaît dans AUCUNE de ces règles : ce
+n'est jamais un déclencheur de verdict à lui seul.
 
 ### Probabilité scam — grille de pondération
 
@@ -923,7 +1033,8 @@ Pour le compteur affiché dans le dashboard :
 | Signal | Δ probabilité scam |
 |--------|---------------------|
 | Tx hash recyclée / décorélée du wallet user | +30 pts (smoking gun) |
-| Factory contract + lien parrainage | +40 pts (MLM confirmé) |
+| Commissions financées par les dépôts (> 50% @ mesuré/estimé) | +40 pts (Ponzi prouvé) |
+| Rank-up tiers + custody centralisée + revenu non vérifiable | +35 pts (fingerprint Forsage) |
 | Deployer > 10k tx avec micro-montants alternés | +25 pts (distribution commission) |
 | "Trading bot" claim + pas d'audit + pas de LP transparent | +20 pts |
 | Fondateurs anonymes + promesses % fixe | +15 pts |
@@ -992,6 +1103,36 @@ Démarre à 50% (neutre) en Phase 0. Recalcule après chaque critère.
 2. [MAJEUR] ...
 5. [MINEUR] ...
 
+## Analyse économique de l'affiliation
+
+[Inclure cette section dès qu'un système d'affiliation/MLM est présent. C'est le
+livrable qui distingue un système sain d'un Ponzi, par la substance.]
+
+| Facteur | Constat | Source / confiance |
+|---------|---------|--------------------|
+| 1. Origine des commissions | <revenu externe réel / dépôts des nouveaux entrants> | <URL · mesuré/estimé/déclaratif/inconnu> |
+| 2. Séparation investissement / licence | <claire / opaque / N.A.> | <preuve> |
+| 3. Part dépôts→MLM | <bande 0-10 / 10-30 / 30-50 / >50> | **label : mesuré/estimé/déclaratif/inconnu** |
+| 4. Revenus récurrents externes | <liste / aucun> | <preuve> |
+| 5. Nombre de niveaux | <N> (indicateur éco, pas verdict) | <source> |
+| 6. Transparence des flux | <%, frais, conditions explicités ? oui/non> | <preuve> |
+| 7. Dépendance à la croissance | <survit si le recrutement s'arrête ? oui/non> | <raisonnement> |
+
+**Verdict d'affiliation** : <sain financé par valeur réelle / fragile dépendant des
+entrants / pyramidal-Ponzi prouvé / INCERTAIN faute de preuves>.
+
+## Questions à lever (UNIQUEMENT si verdict INCERTAIN)
+
+[Quand la provenance des commissions est `déclaratif`/`inconnu`, on conclut à
+l'incertitude — PAS à la fraude — et on liste les questions précises qui
+lèveraient le doute.]
+
+- Quelle est la source vérifiable des commissions d'affiliation (contrat, flux
+  on-chain, comptes audités) ?
+- Quelle part des nouveaux dépôts finance les commissions, et comment est-ce traçable ?
+- Quels revenus externes (hors recrutement) l'entreprise génère-t-elle, avec preuve ?
+- Le projet survivrait-il si le recrutement s'arrêtait demain ? Sur quelles données ?
+
 ## Thèse en 3 bullets
 
 - **Pourquoi ça pourrait marcher** : ...
@@ -1014,9 +1155,11 @@ Démarre à 50% (neutre) en Phase 0. Recalcule après chaque critère.
 
 ## Verdict final
 
-**PASS / INVESTIGATE / AVOID**
+**PASS / INVESTIGATE / INCERTAIN / AVOID**
 
-<Raisonnement en 3-4 phrases liant les 10 critères et les overrides activés>
+<Raisonnement en 3-4 phrases liant les 10 critères et les overrides activés.
+Si INCERTAIN : énonce les preuves manquantes et renvoie à la section "Questions
+à lever" ci-dessous.>
 
 ## Actions recommandées
 
@@ -1046,6 +1189,14 @@ Démarre à 50% (neutre) en Phase 0. Recalcule après chaque critère.
 ## Sources citées
 
 - <toutes les URLs collectées pendant le parcours>
+
+## Sources écartées
+
+[Inclure une ligne UNIQUEMENT si une source du registre de fiabilité a été
+rencontrée pendant la recherche. Sinon, omettre toute la section. Ne jamais
+détailler dans le corps du rapport — une ligne suffit.]
+
+- <source> — non retenue (fiabilité contestée, voir registre). N'a pesé ni en positif ni en négatif.
 
 ## Rapports détaillés par catégorie
 
@@ -1140,7 +1291,7 @@ echo "📚 Mémoire mise à jour : projets.jsonl + stats.json"
 
 Variables à substituer (issues du parcours) :
 - `SLUG`, `TICKER`, `CHAIN`, `DATE` : connus depuis Phase 0
-- `VERDICT` : PASS / INVESTIGATE / AVOID — calculé en Phase 11
+- `VERDICT` : PASS / INVESTIGATE / INCERTAIN / AVOID — calculé en Phase 11
 - `SCORE`, `SCAM_PROB` : calculés en Phase 11
 - `C1..C10` : scores des 10 critères (entiers 0-10)
 - `CUSTODY` : `"non-custodial"` | `"custodial"` | `"non-custodial-but-factory"` | `"hybrid"`
@@ -1235,6 +1386,7 @@ cat > "$AUDIT_DIR/scorecard-pdf.html" <<'HTML_EOF'
                    font-weight: bold; font-size: 13pt; margin: 0.5em 0 1em 0; }
   .verdict-PASS { background: #d4edda; color: #155724; }
   .verdict-INVESTIGATE { background: #fff3cd; color: #856404; }
+  .verdict-INCERTAIN { background: #e2e3e5; color: #383d41; }
   .verdict-AVOID { background: #f8d7da; color: #721c24; }
   .meta { color: #555; font-size: 9.5pt; }
   .meta-grid { display: grid; grid-template-columns: 130px 1fr; row-gap: 0.2em; margin: 1em 0; }
@@ -1427,7 +1579,7 @@ Affiche à l'user :
 - ✅ Markdown : `$AUDIT_DIR/scorecard.md`
 - ✅ PDF : `$AUDIT_DIR/scorecard.pdf`
 - ✅ Mémoire : "1 projet ajouté à ~/.cryptostack/memory/projects.jsonl"
-- Total mémoire : "Tu as maintenant N projets analysés (P PASS, I INVESTIGATE, A AVOID)"
+- Total mémoire : "Tu as maintenant N projets analysés (P PASS, I INVESTIGATE, U INCERTAIN, A AVOID)"
 
 ---
 
@@ -1483,6 +1635,33 @@ scorecard finale (section Comparables).
 
 **Si WebFetch bloqué / rate-limité** : note "DATA_UNAVAILABLE", demande à
 l'user de coller la page si possible, continue sans inventer.
+
+### Fiabilité des sources & corroboration
+
+Toutes les sources ne se valent pas. Avant de retenir une accusation grave
+(scam, rug, fraude) dans le verdict :
+
+1. **Règle de corroboration** : une accusation grave portée par UNE seule source
+   n'entre dans le verdict que si une **2ᵉ source indépendante** la confirme. Une
+   source isolée = signal à investiguer, pas une preuve. Vaut pour TOUTES les
+   sources (y compris Rekt.news, BehindMLM, blogs anonymes).
+2. **Registre de fiabilité — sources écartées comme preuve** : certaines sources
+   sont disqualifiées pour défaut de fiabilité documenté. Leur contenu n'est
+   **jamais compté comme preuve, ni en négatif ni en positif**. Elles ne plombent
+   ni ne gonflent un projet.
+
+   | Source | Statut | Raison (documentée) | Réf. |
+   |--------|--------|---------------------|------|
+   | `warning-trading.com` | NON FIABLE — écartée | Éditeur Net & Law (Bulgarie) ; gérant Nicolas Gaiardo condamné en 2007 pour escroquerie en bande organisée ; un jugement français établit que ce n'est pas un site d'information ; modèle de promotion/labellisation payante de sites + recovery-scam ciblant les victimes. | deontofi.com ; ziegler-associes.com |
+
+   **Effet sur le rapport** : le corps de la scorecard, le verdict et le scoring
+   ignorent purement cette source (aucun bruit à la lecture). MAIS si elle a été
+   rencontrée pendant la recherche, on l'inscrit en **une ligne dans l'annexe
+   "Sources écartées"** du rapport — jamais une suppression totalement silencieuse.
+   Le lecteur n'est pas encombré, mais la trace reste vérifiable.
+
+   Ce registre est extensible : on n'y ajoute une source qu'avec une raison
+   documentée et une référence vérifiable — jamais sur une simple préférence.
 
 ---
 
@@ -1541,10 +1720,15 @@ Même structure, critères 4-6, avec en plus en bas :
 ```markdown
 ## Alerte MLM / pyramide
 
-[Inclure SI ≥ 2 niveaux de commission détectés]
+[Inclure UNIQUEMENT SI substance pyramidale établie : substance-AVOID 6e
+(commissions financées par les dépôts > 50% @ mesuré/estimé) OU fingerprint
+structurel 6f. JAMAIS sur le seul nombre de niveaux. Si provenance déclarative/
+inconnue : pas cette alerte, mais la note d'incertitude + questions à lever.]
 
-> Structure multi-niveau détectée (N niveaux). En France, L.122-6 du code de
-> la consommation et la loi 1953-02-05 interdisent les schémas pyramidaux.
+> Schéma pyramidal/Ponzi caractérisé : commissions principalement financées par
+> les apports des nouveaux entrants [preuve : <bande %, label de confiance, source>].
+> En France, L.122-6 du code de la consommation et la loi 1953-02-05 interdisent
+> les schémas pyramidaux.
 > Signalement possible sur Pharos (https://www.internet-signalement.gouv.fr/).
 ```
 
@@ -1638,10 +1822,19 @@ Risque : accumuler 11 investigations détaillées en mémoire.
 - **Écriture sur disque au fil de l'eau** : fundamentals.md à fin Phase 3,
   mechanics.md à fin Phase 6, trust.md à fin Phase 10, scorecard.md en
   Phase 11, scorecard.pdf en Phase 12.
-- **Override AVOID prioritaires** : MLM 4+ niveaux, contract non-vérifié EVM,
-  Rekt.news / SEC / DOJ. Vérifie ces 3 conditions à chaque tour.
+- **Override AVOID prioritaires** : contract non-vérifié EVM, Rekt.news / SEC / DOJ,
+  **substance Ponzi prouvée** (commissions financées par les dépôts), **fingerprint
+  structurel** (rank-up + custodial + revenu non vérifiable). Vérifie ces conditions à
+  chaque tour. ⚠️ Le nombre de niveaux d'affiliation n'est JAMAIS un override à lui seul.
+- **MLM = substance, pas structure** : ne pénalise jamais automatiquement un projet
+  parce qu'il a de l'affiliation multi-niveau. Si les preuves manquent sur la
+  provenance des commissions → verdict `INCERTAIN` + questions à lever, pas une
+  présomption de fraude.
 - **Tu n'inventes jamais de chiffres**. Si tu ne sais pas, tu le dis. Si data
-  unavailable, c'est `DATA_UNAVAILABLE`, pas une estimation au pif.
+  unavailable, c'est `DATA_UNAVAILABLE`, pas une estimation au pif. **Seule exception
+  sanctionnée** : la part dépôts→MLM peut être donnée en **bande** (0-10/10-30/30-50/>50)
+  accompagnée d'un **label de confiance explicite** (`mesuré`/`estimé`/`déclaratif`/
+  `inconnu`) ; un pourcentage ponctuel sans bande ni label reste interdit.
 - **Disclaimer obligatoire** dans la scorecard finale (markdown ET PDF) et
   dans toute mention de sécurité smart contract.
 

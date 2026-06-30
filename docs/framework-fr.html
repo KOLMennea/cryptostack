@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Crypto Due Diligence Framework — ENNEA</title>
+<style>
+  @page {
+    size: A4;
+    margin: 0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --cream: #f4f1ea;
+    --ink: #2b2b2b;
+    --gray: #6b6b6b;
+    --light-gray: #999;
+    --red: #c5341f;
+    --rule: #d8d3c8;
+    --card-border: #e3dfd6;
+    --dark: #1c1b19;
+  }
+  body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #2b2b2b;
+    font-size: 10pt;
+    line-height: 1.5;
+  }
+  .page {
+    width: 210mm;
+    height: 297mm;
+    background: #f4f1ea;
+    padding: 18mm 22mm 20mm 22mm;
+    page-break-after: always;
+    position: relative;
+  }
+  .page:last-child { page-break-after: avoid; }
+
+  /* ── header / footer ───────────────────────── */
+  .hdr {
+    font-size: 8.5pt;
+    letter-spacing: 0.12em;
+    margin-bottom: 4mm;
+  }
+  .hdr b { color: #2b2b2b; }
+  .hdr span { color: #8a8a8a; }
+  .hdr-rule { border: none; border-top: 1.2pt solid #c5341f; margin-bottom: 10mm; }
+  .ftr {
+    position: absolute;
+    bottom: 12mm; left: 22mm; right: 22mm;
+    border-top: 0.5pt solid #d8d3c8;
+    padding-top: 2.5mm;
+    font-size: 7.5pt;
+    color: #8a8a8a;
+  }
+  .ftr .right { float: right; }
+  .ftr a { color: #8a8a8a; text-decoration: none; }
+
+  /* ── typography ────────────────────────────── */
+  .kicker {
+    font-family: Georgia, "Times New Roman", serif;
+    font-style: italic;
+    font-size: 12.5pt;
+    color: #c5341f;
+    margin-bottom: 2mm;
+  }
+  .kicker.dark { color: #555; }
+  h1, h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    letter-spacing: 0.01em;
+  }
+  h1 { font-size: 30pt; line-height: 1.1; text-transform: uppercase; }
+  h2 { font-size: 22pt; line-height: 1.15; text-transform: uppercase; margin-bottom: 4mm; }
+  .accent { color: #c5341f; }
+  .section-rule { border: none; border-top: 1.2pt solid #c5341f; margin: 5mm 0 6mm 0; }
+
+  /* ── components ────────────────────────────── */
+  .card {
+    background: #fdfcf9;
+    border: 0.5pt solid #e3dfd6;
+    padding: 5.5mm 6mm;
+    margin-bottom: 6mm;
+  }
+  .card p { margin-bottom: 2.5mm; }
+  .card p:last-child { margin-bottom: 0; }
+  .muted { color: #6b6b6b; }
+  .dark-block {
+    background: #1c1b19;
+    color: #eceae4;
+    padding: 6mm 7mm;
+    margin-top: 7mm;
+  }
+  .dark-block .title {
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 14pt;
+    margin-bottom: 2.5mm;
+  }
+  .dark-block p { font-size: 9.5pt; color: #d6d3ca; }
+  .dark-block .accent { color: #e2604c; }
+
+  .numlist { margin-top: 6mm; }
+  .numlist.tight { margin-top: 4mm; }
+  .numlist.tight .numitem { margin-bottom: 3.5mm; }
+  .numlist.tight .numitem .body { padding-bottom: 2mm; }
+  .numitem { display: table; width: 100%; margin-bottom: 5.5mm; }
+  .numitem .num {
+    display: table-cell; width: 12mm;
+    font-family: Georgia, serif; font-weight: bold;
+    color: #c5341f; font-size: 11pt; vertical-align: top;
+  }
+  .numitem .body { display: table-cell; vertical-align: top; border-bottom: 0.5pt solid #d8d3c8; padding-bottom: 3mm; }
+  .numitem .body h3 { font-family: Georgia, serif; font-size: 12pt; margin-bottom: 1mm; }
+  .numitem .body p { font-size: 9pt; color: #6b6b6b; }
+
+  .branch-card {
+    background: #fdfcf9;
+    border: 0.5pt solid #e3dfd6;
+    padding: 5mm 6mm;
+    margin-bottom: 6mm;
+  }
+  .branch-card .branch-title { margin-bottom: 0.5mm; }
+  .branch-card .branch-label {
+    font-size: 9pt; font-weight: bold; color: #c5341f; margin-right: 2mm;
+  }
+  .branch-card .branch-name { font-family: Georgia, serif; font-weight: bold; font-size: 13pt; }
+  .branch-card .branch-sub { font-family: Georgia, serif; font-style: italic; font-size: 9pt; color: #6b6b6b; margin-bottom: 3mm; }
+  ul.dash { list-style: none; }
+  ul.dash li { padding-left: 6mm; position: relative; margin-bottom: 1.5mm; font-size: 9.5pt; }
+  ul.dash li::before { content: "—"; position: absolute; left: 0; color: #c5341f; }
+  ul.dash li b { font-weight: bold; }
+
+  .verdict-line { margin-bottom: 1.8mm; font-size: 9.5pt; padding-left: 6mm; position: relative; }
+  .verdict-line::before { content: "—"; position: absolute; left: 0; color: #c5341f; }
+  .v-fonce { color: #2e7d32; font-weight: bold; }
+  .v-prudence { color: #b8860b; font-weight: bold; }
+  .v-risque { color: #d35400; font-weight: bold; }
+  .v-evite { color: #c0392b; font-weight: bold; }
+
+  /* ── annexe install ────────────────────────── */
+  .step { display: table; width: 100%; margin-bottom: 6mm; }
+  .step .num {
+    display: table-cell; width: 13mm;
+    font-family: Georgia, serif; font-weight: bold;
+    color: #c5341f; font-size: 15pt; vertical-align: top;
+  }
+  .step .body { display: table-cell; vertical-align: top; }
+  .step .body h3 { font-family: Georgia, serif; font-size: 13pt; margin-bottom: 1.5mm; }
+  .step .body p { font-size: 9.5pt; margin-bottom: 2mm; }
+  .step .body p.why { color: #6b6b6b; font-size: 9pt; }
+
+  .cmd {
+    background: #1c1b19;
+    color: #e8e6df;
+    font-family: "SF Mono", Menlo, "Courier New", monospace;
+    font-size: 8.5pt;
+    line-height: 1.55;
+    padding: 3.5mm 4.5mm;
+    margin: 2mm 0 2.5mm 0;
+    white-space: pre-wrap;
+    word-break: break-all;
+    border-left: 2pt solid #c5341f;
+  }
+  .cmd-label {
+    font-size: 7.5pt; text-transform: uppercase; letter-spacing: 0.1em;
+    color: #c5341f; font-weight: bold; margin-bottom: 0.5mm;
+  }
+  .expect {
+    font-size: 8.5pt; color: #6b6b6b; font-style: italic; margin-bottom: 2mm;
+  }
+  .tip {
+    background: #fdfcf9; border-left: 2pt solid #c5341f;
+    padding: 3mm 4.5mm; font-size: 9pt; color: #555; margin: 3mm 0;
+  }
+  table.trouble { width: 100%; border-collapse: collapse; margin-top: 3mm; }
+  table.trouble th {
+    text-align: left; font-size: 8pt; text-transform: uppercase; letter-spacing: 0.08em;
+    color: #c5341f; border-bottom: 1pt solid #c5341f; padding: 1.5mm 2mm;
+  }
+  table.trouble td {
+    font-size: 8.8pt; border-bottom: 0.5pt solid #d8d3c8;
+    padding: 2mm; vertical-align: top;
+  }
+  table.trouble td code, p code, li code {
+    font-family: "SF Mono", Menlo, "Courier New", monospace;
+    font-size: 8.3pt; background: #ece8de; padding: 0.3mm 1mm;
+  }
+  .arch {
+    font-family: "SF Mono", Menlo, "Courier New", monospace;
+    font-size: 8.3pt; line-height: 1.6;
+    background: #fdfcf9; border: 0.5pt solid #e3dfd6;
+    padding: 4mm 5mm; white-space: pre; margin: 2mm 0 4mm 0;
+  }
+  .oslabel {
+    font-size: 8pt; text-transform: uppercase; letter-spacing: 0.12em;
+    font-weight: bold; color: #c5341f;
+    border-bottom: 1pt solid #c5341f; padding-bottom: 1.5mm;
+    margin-bottom: 5mm;
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════ PAGE 1 — COVER ════════ -->
+<div class="page">
+  <div class="hdr" style="margin-top:14mm;"><b>ENNEA</b> <span>STUDIO</span></div>
+  <hr class="hdr-rule">
+  <div style="margin-top:38mm;">
+    <div class="kicker" style="color:#555;">Une méthode structurée. Un outil dédié. Un verdict clair.</div>
+    <h1>Crypto Due<br>Diligence<br><span class="accent">Framework.</span></h1>
+    <hr class="section-rule" style="margin-top:8mm;">
+    <p style="font-size:11pt; margin-bottom:1.5mm;">Formation individuelle intensive + outil d&rsquo;analyse assist&eacute; par IA</p>
+    <p class="muted" style="font-size:9pt;">10 pr&eacute;requis &middot; 4 branches d&rsquo;analyse &middot; 1 verdict actionnable &middot; guide d&rsquo;installation inclus</p>
+  </div>
+  <div class="ftr"><a href="https://ennea.dev" style="color:#c5341f;">ennea.dev</a><span class="right">Confidentiel — 2026</span></div>
+</div>
+
+<!-- ════════ PAGE 2 — PROBLÈME / SOLUTION ════════ -->
+<div class="page">
+  <div class="hdr"><b>ENNEA</b> <span>STUDIO</span></div>
+  <hr class="hdr-rule">
+  <div class="kicker">L&rsquo;approche habituelle</div>
+  <h2>ne <span class="accent">fonctionne pas.</span></h2>
+  <hr class="section-rule">
+  <div class="card">
+    <p>L&rsquo;&eacute;cosyst&egrave;me crypto g&eacute;n&egrave;re un flux constant de projets entrants : bots de trading, protocoles DeFi, tokens, infrastructures blockchain. <b>Le probl&egrave;me n&rsquo;est pas le manque d&rsquo;opportunit&eacute;s — c&rsquo;est l&rsquo;absence de m&eacute;thode fiable pour les &eacute;valuer.</b></p>
+    <p class="muted">Sans framework structur&eacute;, les d&eacute;cisions reposent sur le narratif marketing, le FOMO, ou l&rsquo;intuition. Les cons&eacute;quences sont pr&eacute;visibles : capital allou&eacute; sur des projets non viables, exposition aux rug pulls, perte de temps sur des analyses superficielles.</p>
+  </div>
+
+  <div style="margin-top:10mm;">
+    <div class="kicker" style="color:#2b2b2b; font-size:15pt;">&laquo; Peut-on filtrer le bruit ? &raquo;<br><i>La r&eacute;ponse est <span class="accent" style="text-decoration:underline;"><b>OUI.</b></span></i></div>
+  </div>
+  <hr class="section-rule">
+  <div class="card">
+    <p>Ce programme combine une <b>formation individuelle intensive</b> et un <b>outil d&rsquo;analyse assist&eacute; par IA</b>, con&ccedil;u sp&eacute;cifiquement pour &eacute;valuer la viabilit&eacute; de projets crypto. Vous repartez avec la comp&eacute;tence et l&rsquo;outil.</p>
+    <p class="muted">Le framework couvre deux dimensions compl&eacute;mentaires :</p>
+    <ul class="dash">
+      <li><b>Partie 1 — Pr&eacute;requis fondamentaux</b>&nbsp;&nbsp;10 points de contr&ocirc;le syst&eacute;matiques, applicables &agrave; tout projet</li>
+      <li><b>Partie 2 — Analyse technique adaptative</b>&nbsp;&nbsp;4 branches sp&eacute;cialis&eacute;es selon le type de projet</li>
+    </ul>
+  </div>
+  <div style="border-left: 2pt solid #c5341f; padding: 2mm 0 2mm 5mm; margin-top: 6mm;">
+    <p style="font-size:9.5pt;"><b>Intervenant :</b> Consultant s&eacute;curit&eacute; (RSSI) et d&eacute;veloppeur sp&eacute;cialis&eacute; fintech. Exp&eacute;rience op&eacute;rationnelle sur des projets r&eacute;gul&eacute;s — conformit&eacute; DORA, dossiers AMF, audits de s&eacute;curit&eacute;. Double expertise technique et r&eacute;glementaire.</p>
+  </div>
+  <div class="ftr">ENNEA &middot; ben@ennea.dev &middot; ennea.dev<span class="right">Document confidentiel</span></div>
+</div>
+
+<!-- ════════ PAGE 3 — PARTIE 1 (01-05) ════════ -->
+<div class="page">
+  <div class="hdr"><b>ENNEA</b> <span>STUDIO</span></div>
+  <hr class="hdr-rule">
+  <div class="kicker">Partie 1.</div>
+  <h2>Les 10 pr&eacute;requis<br><span class="accent">fondamentaux</span></h2>
+  <hr class="section-rule">
+  <p class="muted">Avant toute analyse technique, ces 10 points de contr&ocirc;le &eacute;liminent la majorit&eacute; des projets non viables. Chaque point est scor&eacute; individuellement. Un score insuffisant arr&ecirc;te l&rsquo;analyse : inutile d&rsquo;aller plus loin.</p>
+
+  <div class="numlist">
+    <div class="numitem"><div class="num">01</div><div class="body"><h3>Fondateurs &amp; &Eacute;quipe</h3><p>Identit&eacute; v&eacute;rifiable, historique professionnel, implication pass&eacute;e dans d&rsquo;autres projets crypto, signaux de cr&eacute;dibilit&eacute; ou d&rsquo;alerte.</p></div></div>
+    <div class="numitem"><div class="num">02</div><div class="body"><h3>Structure Juridique</h3><p>Entit&eacute; l&eacute;gale, juridiction d&rsquo;incorporation, mentions l&eacute;gales, conditions d&rsquo;utilisation, conformit&eacute; r&eacute;glementaire.</p></div></div>
+    <div class="numitem"><div class="num">03</div><div class="body"><h3>Pr&eacute;sence en Ligne</h3><p>Anciennet&eacute; du domaine, qualit&eacute; du site, certificat SSL, coh&eacute;rence de la pr&eacute;sentation avec les ambitions du projet.</p></div></div>
+    <div class="numitem"><div class="num">04</div><div class="body"><h3>R&eacute;seaux Sociaux</h3><p>Anciennet&eacute; des comptes, ratio followers/engagement r&eacute;el, d&eacute;tection de bots, coh&eacute;rence du discours dans le temps.</p></div></div>
+    <div class="numitem"><div class="num">05</div><div class="body"><h3>Communaut&eacute;</h3><p>Taille et qualit&eacute; de la communaut&eacute; active, organicit&eacute;, pr&eacute;sence de vrais utilisateurs vs comptes farm&eacute;s.</p></div></div>
+  </div>
+  <div class="ftr">ENNEA &middot; ben@ennea.dev &middot; ennea.dev<span class="right">Document confidentiel</span></div>
+</div>
+
+<!-- ════════ PAGE 4 — PARTIE 1 (06-10) ════════ -->
+<div class="page">
+  <div class="hdr"><b>ENNEA</b> <span>STUDIO</span></div>
+  <hr class="hdr-rule">
+  <div class="numlist" style="margin-top:0;">
+    <div class="numitem"><div class="num">06</div><div class="body"><h3>Documentation</h3><p>Whitepaper, documentation technique, substance vs buzzwords, coh&eacute;rence des promesses avec la r&eacute;alit&eacute; technique.</p></div></div>
+    <div class="numitem"><div class="num">07</div><div class="body"><h3>Partenariats &amp; Financement</h3><p>Investisseurs v&eacute;rifiables, annonces bilat&eacute;rales, r&eacute;putation des VCs, montants et conditions publics.</p></div></div>
+    <div class="numitem"><div class="num">08</div><div class="body"><h3>Historique &amp; Roadmap</h3><p>Promesses tenues vs non tenues, retards chroniques, r&eacute;alisme de la feuille de route future.</p></div></div>
+    <div class="numitem"><div class="num">09</div><div class="body"><h3>Mod&egrave;le de Revenus</h3><p>Source de revenus r&eacute;elle, soutenabilit&eacute; sans afflux de nouveaux entrants, test de viabilit&eacute; &eacute;conomique.</p></div></div>
+    <div class="numitem"><div class="num">10</div><div class="body"><h3>Signaux Comportementaux</h3><p>Ton du marketing, promesses de rendement, urgence artificielle, FOMO, comparaisons trompeuses, red flags discursifs.</p></div></div>
+  </div>
+  <div class="dark-block">
+    <div class="title">Le filtre.</div>
+    <p>Ces 10 pr&eacute;requis constituent un filtre syst&eacute;matique. Chaque point est scor&eacute;, pond&eacute;r&eacute;, et contribue &agrave; un score de viabilit&eacute; fondamentale. En dessous d&rsquo;un seuil d&eacute;fini, l&rsquo;analyse s&rsquo;arr&ecirc;te — le projet ne justifie pas d&rsquo;investir du temps suppl&eacute;mentaire. Au-dessus, on passe &agrave; l&rsquo;analyse technique.</p>
+  </div>
+  <div class="ftr">ENNEA &middot; ben@ennea.dev &middot; ennea.dev<span class="right">Document confidentiel</span></div>
+</div>
+
+<!-- ════════ PAGE 5 — PARTIE 2 (router + A/B) ════════ -->
+<div class="page">
+  <div class="hdr"><b>ENNEA</b> <span>STUDIO</span></div>
+  <hr class="hdr-rule">
+  <div class="kicker">Partie 2.</div>
+  <h2>Analyse technique<br><span class="accent">adaptative</span></h2>
+  <hr class="section-rule">
+  <p class="muted" style="margin-bottom:6mm;">Tous les projets crypto ne se ressemblent pas. Un token DeFi et un bot de trading n&rsquo;appellent pas les m&ecirc;mes v&eacute;rifications. Le framework identifie automatiquement le type de projet et active la branche d&rsquo;analyse correspondante.</p>
+
+  <div class="card">
+    <p style="font-family:Georgia,serif; font-weight:bold; font-size:12pt; margin-bottom:2mm;">Routeur de d&eacute;cision</p>
+    <p class="muted" style="font-size:9.5pt;">Selon les caract&eacute;ristiques du projet — pr&eacute;sence d&rsquo;un smart contract, d&rsquo;un token, d&rsquo;un repo de code, nature on-chain ou off-chain — le framework oriente l&rsquo;analyse vers la branche adapt&eacute;e. Chaque branche dispose de ses propres grilles de v&eacute;rification, crit&egrave;res de scoring, et seuils d&rsquo;alerte.</p>
+  </div>
+
+  <div class="branch-card">
+    <p class="branch-title"><span class="branch-label">Branche A</span><span class="branch-name">Smart Contract &amp; Tokens</span></p>
+    <p class="branch-sub">Token DeFi, protocole, NFT, staking, liquidity pool</p>
+    <ul class="dash">
+      <li>Lecture et audit du smart contract (fonctions critiques, privil&egrave;ges owner)</li>
+      <li>V&eacute;rification de la liquidit&eacute;, des locks, de la concentration des wallets</li>
+      <li>D&eacute;tection de patterns de rug pull et honeypot</li>
+      <li>Analyse des rapports d&rsquo;audit existants</li>
+      <li>Tokenomics on-chain : vesting r&eacute;el vs annonc&eacute;</li>
+    </ul>
+  </div>
+
+  <div class="branch-card">
+    <p class="branch-title"><span class="branch-label">Branche B</span><span class="branch-name">Bots &amp; Outils Techniques</span></p>
+    <p class="branch-sub">Bot de trading, arbitrage, sniper, copy trading, signal</p>
+    <ul class="dash">
+      <li>Audit du code source (si acc&egrave;s au repo) ou analyse en bo&icirc;te noire</li>
+      <li>Mod&egrave;le de custody : qui d&eacute;tient les cl&eacute;s et les fonds ?</li>
+      <li>V&eacute;rifiabilit&eacute; des performances annonc&eacute;es</li>
+      <li>Risques de front-running et manipulation</li>
+      <li>Mod&egrave;le de r&eacute;mun&eacute;ration : fees vs performance vs acc&egrave;s</li>
+    </ul>
+  </div>
+  <div class="ftr">ENNEA &middot; ben@ennea.dev &middot; ennea.dev<span class="right">Document confidentiel</span></div>
+</div>
+
+<!-- ════════ PAGE 6 — PARTIE 2 (C/D) ════════ -->
+<div class="page">
+  <div class="hdr"><b>ENNEA</b> <span>STUDIO</span></div>
+  <hr class="hdr-rule">
+  <div class="branch-card">
+    <p class="branch-title"><span class="branch-label">Branche C</span><span class="branch-name">Infrastructure &amp; Plateformes</span></p>
+    <p class="branch-sub">Exchange, wallet, bridge, oracle, L2</p>
+    <ul class="dash">
+      <li>Licences et conformit&eacute; r&eacute;glementaire (AMF, MiCA, FCA)</li>
+      <li>Proof of Reserves v&eacute;rifiable</li>
+      <li>Historique d&rsquo;incidents et de hacks</li>
+      <li>Architecture de s&eacute;curit&eacute; et politique d&rsquo;assurance</li>
+      <li>Transparence op&eacute;rationnelle et gouvernance</li>
+    </ul>
+  </div>
+
+  <div class="branch-card">
+    <p class="branch-title"><span class="branch-label">Branche D</span><span class="branch-name">Projets Off-chain &amp; SaaS</span></p>
+    <p class="branch-sub">App web3, fintech crypto-adjacent, SaaS blockchain</p>
+    <ul class="dash">
+      <li>N&eacute;cessit&eacute; r&eacute;elle du token (ou artifice marketing ?)</li>
+      <li>Analyse fonctionnelle et stack technique</li>
+      <li>Traction r&eacute;elle : utilisateurs, revenus, m&eacute;triques v&eacute;rifiables</li>
+      <li>Positionnement concurrentiel et diff&eacute;renciation</li>
+      <li>Viabilit&eacute; sans composante blockchain</li>
+    </ul>
+  </div>
+
+  <div class="dark-block">
+    <div class="title">Avec ou sans code.</div>
+    <p>Le framework s&rsquo;adapte aux informations disponibles. Acc&egrave;s au repo GitHub ? Audit de code complet. Projet closed-source ? Analyse en bo&icirc;te noire avec des m&eacute;thodes de v&eacute;rification alternatives. Chaque branche inclut un chemin &laquo; avec acc&egrave;s &raquo; et un chemin &laquo; sans acc&egrave;s &raquo;, avec un scoring adapt&eacute;.</p>
+  </div>
+  <div class="ftr">ENNEA &middot; ben@ennea.dev &middot; ennea.dev<span class="right">Document confidentiel</span></div>
+</div>
+
+<!-- ════════ PAGE 7 — VERDICT + OUTIL IA ════════ -->
+<div class="page">
+  <div class="hdr"><b>ENNEA</b> <span>STUDIO</span></div>
+  <hr class="hdr-rule">
+  <div class="kicker">Le verdict.</div>
+  <h2>Un scoring, une d&eacute;cision</h2>
+  <hr class="section-rule">
+  <div class="card">
+    <p style="margin-bottom:4mm;">Chaque analyse produit un score composite sur 100, pond&eacute;r&eacute; entre les pr&eacute;requis fondamentaux et l&rsquo;analyse technique. Le score d&eacute;bouche sur un verdict clair et actionnable :</p>
+    <p class="verdict-line"><span class="v-fonce">FONCE</span> &nbsp;—&nbsp; Les fondamentaux sont solides, les risques identifi&eacute;s sont acceptables</p>
+    <p class="verdict-line"><span class="v-prudence">PRUDENCE</span> &nbsp;—&nbsp; Des signaux positifs mais des zones d&rsquo;ombre &agrave; clarifier avant d&rsquo;investir</p>
+    <p class="verdict-line"><span class="v-risque">RISQU&Eacute;</span> &nbsp;—&nbsp; Plus de red flags que de signaux positifs, ratio risque/reward d&eacute;favorable</p>
+    <p class="verdict-line"><span class="v-evite">&Eacute;VITE</span> &nbsp;—&nbsp; Red flags &eacute;liminatoires d&eacute;tect&eacute;s, ne pas investir</p>
+    <p class="muted" style="margin-top:4mm;">Chaque verdict est accompagn&eacute; d&rsquo;une matrice de risques, des points forts identifi&eacute;s, et d&rsquo;une liste de questions pr&eacute;cises &agrave; poser &agrave; l&rsquo;&eacute;quipe du projet avant toute d&eacute;cision.</p>
+  </div>
+
+  <div style="margin-top:9mm;">
+    <div class="kicker">L&rsquo;outil.</div>
+    <h2>Assist&eacute; par IA</h2>
+    <hr class="section-rule">
+    <div class="card">
+      <p style="margin-bottom:3mm;">En compl&eacute;ment de la m&eacute;thodologie, vous repartez avec un <b>outil d&rsquo;analyse propuls&eacute; par intelligence artificielle</b> qui automatise les v&eacute;rifications r&eacute;p&eacute;titives et acc&eacute;l&egrave;re le processus de due diligence.</p>
+      <ul class="dash">
+        <li>D&eacute;roulement automatique du framework en 4 &eacute;tapes</li>
+        <li>Interrogation des sources on-chain et off-chain en temps r&eacute;el</li>
+        <li>G&eacute;n&eacute;ration d&rsquo;un rapport structur&eacute; avec scoring et verdict</li>
+        <li>Installation guid&eacute;e pas &agrave; pas — voir l&rsquo;annexe en fin de document</li>
+      </ul>
+      <p class="muted" style="font-style:italic; font-size:9pt; margin-top:3mm;">L&rsquo;outil ne remplace pas le jugement : il structure l&rsquo;analyse, automatise les v&eacute;rifications, et garantit qu&rsquo;aucun point de contr&ocirc;le n&rsquo;est oubli&eacute;.</p>
+    </div>
+  </div>
+  <div class="ftr">ENNEA &middot; ben@ennea.dev &middot; ennea.dev<span class="right">Document confidentiel</span></div>
+</div>
+
+<!-- ════════ PAGE 8 — LIVRABLES ════════ -->
+<div class="page">
+  <div class="hdr"><b>ENNEA</b> <span>STUDIO</span></div>
+  <hr class="hdr-rule">
+  <div class="kicker">La th&eacute;orie, c&rsquo;est bien. La pratique, c&rsquo;est <span class="accent">mieux.</span></div>
+  <h2>Livrables</h2>
+  <hr class="section-rule">
+  <div class="numlist tight">
+    <div class="numitem"><div class="num">01</div><div class="body"><h3>Outil d&rsquo;analyse IA</h3><p>Le framework complet, automatis&eacute; et install&eacute; sur votre environnement. Pr&ecirc;t &agrave; l&rsquo;emploi d&egrave;s la fin de la session.</p></div></div>
+    <div class="numitem"><div class="num">02</div><div class="body"><h3>Grille de scoring personnalis&eacute;e</h3><p>Template d&rsquo;&eacute;valuation structur&eacute; couvrant les 10 pr&eacute;requis et les crit&egrave;res techniques, adapt&eacute; &agrave; votre profil de risque.</p></div></div>
+    <div class="numitem"><div class="num">03</div><div class="body"><h3>Checklist de red flags</h3><p>R&eacute;f&eacute;rentiel complet des signaux d&rsquo;alerte class&eacute;s par s&eacute;v&eacute;rit&eacute; : &eacute;liminatoire, attention, acceptable.</p></div></div>
+    <div class="numitem"><div class="num">04</div><div class="body"><h3>Bo&icirc;te &agrave; outils comment&eacute;e</h3><p>S&eacute;lection d&rsquo;outils d&rsquo;analyse avec cas d&rsquo;usage concrets : explorateurs blockchain, analyseurs de tokens, v&eacute;rification d&rsquo;&eacute;quipe.</p></div></div>
+    <div class="numitem"><div class="num">05</div><div class="body"><h3>Guide d&rsquo;installation de A &agrave; Z</h3><p>Annexe pas &agrave; pas en fin de document : installer l&rsquo;outil chez vous, depuis z&eacute;ro, sans connaissance technique pr&eacute;alable.</p></div></div>
+  </div>
+
+  <div class="card" style="margin-bottom:4mm; padding:4.5mm 6mm;">
+    <p style="font-family:Georgia,serif; font-weight:bold; font-size:12pt; margin-bottom:2.5mm;">Format de la session</p>
+    <ul class="dash">
+      <li>Session individuelle intensive, environ 3h30</li>
+      <li>Visioconf&eacute;rence ou pr&eacute;sentiel selon votre pr&eacute;f&eacute;rence</li>
+      <li>Cas pratiques sur vos projets r&eacute;els</li>
+      <li>Installation et configuration de l&rsquo;outil IA incluses</li>
+    </ul>
+  </div>
+
+  <div class="dark-block" style="margin-top:0; padding:5mm 7mm;">
+    <div class="title">Prochaine &eacute;tape.</div>
+    <p>Un &eacute;change de 15 minutes pour identifier les projets que vous souhaitez analyser pendant la session et v&eacute;rifier que le format est adapt&eacute; &agrave; votre situation.</p>
+    <p style="margin-top:2.5mm;"><b class="accent">ennea.dev</b> &nbsp;&middot;&nbsp; ben@ennea.dev</p>
+  </div>
+  <div class="ftr">ENNEA &middot; ben@ennea.dev &middot; ennea.dev<span class="right">Document confidentiel</span></div>
+</div>
+
+<!-- ════════ ANNEXE A — AVANT DE COMMENCER ════════ -->
+<div class="page">
+  <div class="hdr"><b>ENNEA</b> <span>STUDIO</span></div>
+  <hr class="hdr-rule">
+  <div class="kicker">Annexe.</div>
+  <h2>Guide d&rsquo;installation<br><span class="accent">de A &agrave; Z</span></h2>
+  <hr class="section-rule">
+  <p class="muted" style="margin-bottom:6mm;">Ce guide part de z&eacute;ro : aucune connaissance technique n&rsquo;est requise. Il vous m&egrave;ne du premier clic jusqu&rsquo;au premier audit. Trois parcours : <b>macOS</b> ci-dessous, <b>Linux</b> en note rapide, et <b>Windows</b> dans sa propre section (via WSL). Chaque &eacute;tape indique la commande exacte &agrave; copier-coller et ce que vous devez voir &agrave; l&rsquo;&eacute;cran.</p>
+
+  <div class="oslabel">Parcours macOS</div>
+  <div class="card">
+    <p style="font-family:Georgia,serif; font-weight:bold; font-size:12pt; margin-bottom:2.5mm;">Ce dont vous avez besoin</p>
+    <ul class="dash">
+      <li>Un <b>Mac</b> (Apple Silicon ou Intel) connect&eacute; &agrave; Internet</li>
+      <li>Le <b>mot de passe administrateur</b> de votre Mac (celui de l&rsquo;ouverture de session)</li>
+      <li>Un <b>compte Claude</b> avec abonnement Pro ou Max — cr&eacute;ation sur <b>claude.ai</b></li>
+      <li>20 &agrave; 30 minutes devant vous</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <p style="font-family:Georgia,serif; font-weight:bold; font-size:12pt; margin-bottom:2.5mm;">La base de la base : le Terminal</p>
+    <p>Toute l&rsquo;installation se fait dans le <b>Terminal</b>, une application d&eacute;j&agrave; pr&eacute;sente sur votre Mac qui permet de taper des commandes au lieu de cliquer.</p>
+    <p style="margin-top:2mm;"><b>Pour l&rsquo;ouvrir :</b> appuyez sur <code>Cmd + Espace</code> (la recherche Spotlight s&rsquo;ouvre), tapez <code>Terminal</code>, puis appuyez sur <code>Entr&eacute;e</code>. Une fen&ecirc;tre avec du texte s&rsquo;affiche : c&rsquo;est l&agrave; que tout se passe.</p>
+    <p style="margin-top:2mm;"><b>Pour ex&eacute;cuter une commande :</b> copiez-la depuis ce document (<code>Cmd + C</code>), collez-la dans le Terminal (<code>Cmd + V</code>), puis appuyez sur <code>Entr&eacute;e</code>. Attendez que la commande se termine — c&rsquo;est le cas quand une nouvelle ligne se terminant par <code>%</code> ou <code>$</code> r&eacute;appara&icirc;t et que le curseur clignote &agrave; nouveau.</p>
+  </div>
+
+  <div class="tip"><b>R&egrave;gle d&rsquo;or :</b> ex&eacute;cutez les commandes une par une, dans l&rsquo;ordre, et attendez la fin de chacune avant de passer &agrave; la suivante. Si un mot de passe est demand&eacute;, tapez celui de votre Mac : <b>rien ne s&rsquo;affiche pendant la frappe, c&rsquo;est normal</b> — tapez-le puis validez avec Entr&eacute;e.</div>
+  <div class="ftr">ENNEA &middot; ben@ennea.dev &middot; ennea.dev<span class="right">Document confidentiel</span></div>
+</div>
+
+<!-- ════════ ANNEXE B — ÉTAPES 1-2 ════════ -->
+<div class="page">
+  <div class="hdr"><b>ENNEA</b> <span>STUDIO</span></div>
+  <hr class="hdr-rule">
+
+  <div class="step">
+    <div class="num">1</div>
+    <div class="body">
+      <h3>Installer Homebrew</h3>
+      <p class="why">Homebrew est le &laquo; magasin d&rsquo;applications &raquo; du Terminal : il permet d&rsquo;installer proprement des logiciels techniques en une commande. Tout le reste du guide s&rsquo;appuie dessus.</p>
+      <div class="cmd-label">Copiez-collez dans le Terminal, puis Entr&eacute;e</div>
+      <div class="cmd">/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</div>
+      <p>L&rsquo;installeur demande votre <b>mot de passe Mac</b> puis d&rsquo;appuyer sur <b>Entr&eacute;e</b> pour confirmer. L&rsquo;installation prend quelques minutes.</p>
+      <p><b>Important :</b> &agrave; la fin, Homebrew affiche parfois une section <i>&laquo; Next steps &raquo;</i> avec 1 ou 2 commandes &agrave; ex&eacute;cuter pour l&rsquo;activer. Copiez-collez-les telles quelles. Sur la plupart des Mac r&eacute;cents, c&rsquo;est :</p>
+      <div class="cmd">echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' &gt;&gt; ~/.zprofile
+eval "$(/opt/homebrew/bin/brew shellenv)"</div>
+      <div class="cmd-label">V&eacute;rification</div>
+      <div class="cmd">brew --version</div>
+      <p class="expect">Attendu : une ligne du type &laquo; Homebrew 4.x.x &raquo;. Si vous voyez &laquo; command not found &raquo;, fermez le Terminal, rouvrez-le, et r&eacute;essayez.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="num">2</div>
+    <div class="body">
+      <h3>Installer Claude Code et se connecter</h3>
+      <p class="why">Claude Code est l&rsquo;assistant IA en ligne de commande d&rsquo;Anthropic. C&rsquo;est lui qui ex&eacute;cute l&rsquo;outil d&rsquo;analyse. Si vous l&rsquo;avez d&eacute;j&agrave;, passez directement &agrave; la v&eacute;rification.</p>
+      <div class="cmd-label">Copiez-collez dans le Terminal, puis Entr&eacute;e</div>
+      <div class="cmd">curl -fsSL https://claude.ai/install.sh | bash</div>
+      <div class="cmd-label">V&eacute;rification</div>
+      <div class="cmd">claude --version</div>
+      <p class="expect">Attendu : un num&eacute;ro de version. Si &laquo; command not found &raquo;, fermez et rouvrez le Terminal.</p>
+      <p>Lancez ensuite Claude Code une premi&egrave;re fois pour vous connecter :</p>
+      <div class="cmd">claude</div>
+      <p>Au premier lancement, Claude Code ouvre votre navigateur pour vous <b>connecter &agrave; votre compte Claude</b> (claude.ai). Connectez-vous avec votre abonnement Pro ou Max, autorisez l&rsquo;acc&egrave;s, puis revenez au Terminal. Tapez <code>/exit</code> puis Entr&eacute;e pour quitter — la configuration est m&eacute;moris&eacute;e.</p>
+    </div>
+  </div>
+  <div class="ftr">ENNEA &middot; ben@ennea.dev &middot; ennea.dev<span class="right">Document confidentiel</span></div>
+</div>
+
+<!-- ════════ ANNEXE C — ÉTAPES 3-4 ════════ -->
+<div class="page">
+  <div class="hdr"><b>ENNEA</b> <span>STUDIO</span></div>
+  <hr class="hdr-rule">
+
+  <div class="step">
+    <div class="num">3</div>
+    <div class="body">
+      <h3>Installer les d&eacute;pendances</h3>
+      <p class="why">Trois briques n&eacute;cessaires &agrave; l&rsquo;outil : <b>git</b> (r&eacute;cup&eacute;rer le code et les mises &agrave; jour), <b>jq</b> (lire les donn&eacute;es de la m&eacute;moire interne), <b>weasyprint</b> (g&eacute;n&eacute;rer les rapports PDF).</p>
+      <div class="cmd-label">Copiez-collez dans le Terminal, puis Entr&eacute;e</div>
+      <div class="cmd">brew install jq weasyprint git</div>
+      <p class="expect">L&rsquo;installation peut prendre plusieurs minutes. Attendu &agrave; la fin : retour &agrave; la ligne de commande sans message d&rsquo;erreur rouge.</p>
+      <div class="cmd-label">V&eacute;rification</div>
+      <div class="cmd">jq --version &amp;&amp; weasyprint --version &amp;&amp; git --version</div>
+      <p class="expect">Attendu : trois num&eacute;ros de version, un par ligne.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="num">4</div>
+    <div class="body">
+      <h3>Installer cryptostack</h3>
+      <p class="why">On t&eacute;l&eacute;charge maintenant l&rsquo;outil lui-m&ecirc;me depuis GitHub, puis on lance son installeur, qui branche l&rsquo;outil dans Claude Code et cr&eacute;e les dossiers de travail.</p>
+      <div class="cmd-label">Copiez-collez dans le Terminal, puis Entr&eacute;e (3 commandes, une par une)</div>
+      <div class="cmd">git clone https://github.com/KOLMennea/cryptostack ~/cryptostack</div>
+      <div class="cmd">cd ~/cryptostack</div>
+      <div class="cmd">./install.sh</div>
+      <p>L&rsquo;installeur fait tout le reste automatiquement :</p>
+      <ul class="dash" style="margin-top:1.5mm;">
+        <li>V&eacute;rifie que les d&eacute;pendances de l&rsquo;&eacute;tape 3 sont bien pr&eacute;sentes</li>
+        <li>Branche les commandes <code>/crypto</code> et <code>/crypto-update</code> dans Claude Code</li>
+        <li>Initialise la m&eacute;moire interne (<code>~/.cryptostack/memory/</code>)</li>
+        <li>Cr&eacute;e le dossier des rapports (<code>~/Documents/cryptostack/audits/</code>)</li>
+      </ul>
+      <p class="expect" style="margin-top:2mm;">Attendu : un r&eacute;capitulatif de fin d&rsquo;installation sans erreur. Si une d&eacute;pendance manque, l&rsquo;installeur affiche la commande exacte pour l&rsquo;installer.</p>
+    </div>
+  </div>
+  <div class="ftr">ENNEA &middot; ben@ennea.dev &middot; ennea.dev<span class="right">Document confidentiel</span></div>
+</div>
+
+<!-- ════════ ANNEXE D — ÉTAPE 5 + STRUCTURE ════════ -->
+<div class="page">
+  <div class="hdr"><b>ENNEA</b> <span>STUDIO</span></div>
+  <hr class="hdr-rule">
+
+  <div class="step">
+    <div class="num">5</div>
+    <div class="body">
+      <h3>Tester : votre premier audit</h3>
+      <p class="why">Derni&egrave;re &eacute;tape : v&eacute;rifier que tout fonctionne de bout en bout.</p>
+      <p>Ouvrez un <b>nouveau Terminal</b> (Cmd + N) pour que les nouveaut&eacute;s soient prises en compte, puis lancez Claude Code :</p>
+      <div class="cmd">claude</div>
+      <p>Une fois Claude Code ouvert, tapez :</p>
+      <div class="cmd">/crypto</div>
+      <p class="expect">Attendu : le d&eacute;marrage de l&rsquo;audit guid&eacute; en 12 phases, avec son dashboard et sa premi&egrave;re question d&rsquo;intake. C&rsquo;est gagn&eacute; — laissez-vous guider (35 &agrave; 50 minutes par audit complet).</p>
+      <p>&Agrave; la fin de chaque audit, le rapport PDF est d&eacute;pos&eacute; dans <code>Documents &gt; cryptostack &gt; audits</code>.</p>
+      <div class="tip" style="margin-bottom:0;"><b>Ce que vous fournissez :</b> l&rsquo;outil ne scanne <b>aucun dossier ni fichier local</b>. &Agrave; l&rsquo;intake, il demande simplement le <b>nom + ticker</b> du projet (et, si vous les avez, l&rsquo;URL du site, l&rsquo;adresse du contract, la chain). Il va ensuite chercher l&rsquo;information <b>lui-m&ecirc;me</b>, en ligne et on-chain (CoinGecko, site officiel, Etherscan/BscScan, GitHub). Seul cas o&ugrave; un chemin local est utile : auditer le <i>code source</i> d&rsquo;un bot dont vous avez le repo — vous le lui indiquez alors explicitement.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <p style="font-family:Georgia,serif; font-weight:bold; font-size:12pt; margin-bottom:2.5mm;">O&ugrave; tout se trouve apr&egrave;s l&rsquo;installation</p>
+<div class="arch">~/cryptostack/                     outil t&eacute;l&eacute;charg&eacute; (ne pas modifier)
+~/.claude/skills/crypto            branchement dans Claude Code
+~/.claude/skills/crypto-update     branchement des mises &agrave; jour
+~/.cryptostack/memory/             m&eacute;moire interne des audits (cach&eacute;e)
+~/Documents/cryptostack/audits/    vos rapports, un dossier par audit</div>
+    <ul class="dash">
+      <li><code>/crypto</code> — d&eacute;marre un audit complet (12 phases, 35-50 min)</li>
+      <li><code>/crypto-update</code> — r&eacute;cup&egrave;re la derni&egrave;re version de l&rsquo;outil</li>
+    </ul>
+  </div>
+
+  <div class="dark-block">
+    <div class="title">Mises &agrave; jour.</div>
+    <p>Quand une nouvelle version est publi&eacute;e, tapez simplement <b>/crypto-update</b> dans Claude Code : l&rsquo;outil affiche les nouveaut&eacute;s, se met &agrave; jour, et la nouvelle version est active imm&eacute;diatement. Aucune r&eacute;installation n&eacute;cessaire.</p>
+  </div>
+  <div class="ftr">ENNEA &middot; ben@ennea.dev &middot; ennea.dev<span class="right">Document confidentiel</span></div>
+</div>
+
+<!-- ════════ ANNEXE E — DÉPANNAGE ════════ -->
+<div class="page">
+  <div class="hdr"><b>ENNEA</b> <span>STUDIO</span></div>
+  <hr class="hdr-rule">
+  <div class="kicker">En cas de p&eacute;pin.</div>
+  <h2>D&eacute;pannage</h2>
+  <hr class="section-rule">
+
+  <table class="trouble">
+    <tr><th style="width:42%;">Sympt&ocirc;me</th><th>Solution</th></tr>
+    <tr>
+      <td><code>brew: command not found</code> juste apr&egrave;s l&rsquo;&eacute;tape 1</td>
+      <td>Fermez et rouvrez le Terminal. Si &ccedil;a persiste, ex&eacute;cutez : <code>eval "$(/opt/homebrew/bin/brew shellenv)"</code></td>
+    </tr>
+    <tr>
+      <td><code>claude: command not found</code> apr&egrave;s l&rsquo;&eacute;tape 2</td>
+      <td>Fermez et rouvrez le Terminal (l&rsquo;installeur modifie la configuration, prise en compte &agrave; l&rsquo;ouverture).</td>
+    </tr>
+    <tr>
+      <td>Le mot de passe ne s&rsquo;affiche pas quand je le tape</td>
+      <td>C&rsquo;est normal : le Terminal masque totalement la saisie. Tapez votre mot de passe &agrave; l&rsquo;aveugle puis Entr&eacute;e.</td>
+    </tr>
+    <tr>
+      <td><code>git clone</code> &eacute;choue (erreur r&eacute;seau ou SSL)</td>
+      <td>V&eacute;rifiez votre connexion et r&eacute;essayez quelques minutes plus tard. Sur un r&eacute;seau d&rsquo;entreprise, essayez depuis un autre r&eacute;seau (proxys/filtrage fr&eacute;quents).</td>
+    </tr>
+    <tr>
+      <td><code>permission denied</code> au lancement de <code>./install.sh</code></td>
+      <td>Ex&eacute;cutez : <code>chmod +x ~/cryptostack/install.sh</code> puis relancez <code>./install.sh</code></td>
+    </tr>
+    <tr>
+      <td><code>/crypto</code> n&rsquo;appara&icirc;t pas dans Claude Code</td>
+      <td>Quittez compl&egrave;tement Claude Code (<code>/exit</code>) et relancez-le depuis un nouveau Terminal. V&eacute;rifiez le branchement : <code>ls -la ~/.claude/skills/crypto</code> doit pointer vers <code>~/cryptostack/crypto</code>.</td>
+    </tr>
+    <tr>
+      <td>L&rsquo;export PDF &eacute;choue en fin d&rsquo;audit</td>
+      <td>V&eacute;rifiez weasyprint : <code>weasyprint --version</code>. S&rsquo;il est absent : <code>brew install weasyprint</code>, puis relancez la derni&egrave;re phase de l&rsquo;audit.</td>
+    </tr>
+    <tr>
+      <td>Claude Code demande une reconnexion</td>
+      <td>Tapez <code>/login</code> dans Claude Code et suivez la connexion via le navigateur avec votre compte claude.ai.</td>
+    </tr>
+  </table>
+
+  <div class="card" style="margin-top:5mm; margin-bottom:4mm; padding:4mm 6mm;">
+    <p style="font-family:Georgia,serif; font-weight:bold; font-size:12pt; margin-bottom:2mm;">Et sous Linux ?</p>
+    <p class="muted" style="font-size:9.5pt;">M&ecirc;me parcours, seul le gestionnaire de paquets change. Debian/Ubuntu : <code>sudo apt-get install -y jq weasyprint git</code> &middot; Fedora : <code>sudo dnf install -y jq python3-weasyprint git</code> &middot; Arch : <code>sudo pacman -S jq weasyprint git</code>. Puis reprenez &agrave; l&rsquo;&eacute;tape 2 du guide.</p>
+  </div>
+
+  <div class="dark-block" style="margin-top:0; padding:4.5mm 7mm;">
+    <div class="title">Bloqu&eacute; malgr&eacute; tout ?</div>
+    <p>&Eacute;crivez-moi avec une capture d&rsquo;&eacute;cran du Terminal : <b class="accent">ben@ennea.dev</b>. L&rsquo;installation guid&eacute;e est de toute fa&ccedil;on incluse dans la session de formation.</p>
+  </div>
+  <div class="ftr">ENNEA &middot; ben@ennea.dev &middot; ennea.dev<span class="right">Document confidentiel</span></div>
+</div>
+
+<!-- ════════ ANNEXE F — WINDOWS : INTRO + WSL ════════ -->
+<div class="page">
+  <div class="hdr"><b>ENNEA</b> <span>STUDIO</span></div>
+  <hr class="hdr-rule">
+  <div class="kicker">Annexe &mdash; Windows.</div>
+  <h2>Installation sur<br><span class="accent">Windows</span></h2>
+  <hr class="section-rule">
+  <p class="muted" style="margin-bottom:6mm;">Sur Windows, la m&eacute;thode la plus fiable passe par <b>WSL</b> (Windows Subsystem for Linux) : un v&eacute;ritable environnement Linux int&eacute;gr&eacute; &agrave; Windows, gratuit et officiel chez Microsoft. L&rsquo;outil tourne alors exactement comme sous Linux, sans bricolage. Comptez 25 &agrave; 35 minutes (le t&eacute;l&eacute;chargement initial de WSL prend un moment).</p>
+
+  <div class="card">
+    <p style="font-family:Georgia,serif; font-weight:bold; font-size:12pt; margin-bottom:2.5mm;">Ce dont vous avez besoin</p>
+    <ul class="dash">
+      <li><b>Windows 10</b> (version 2004 ou plus r&eacute;cente) ou <b>Windows 11</b></li>
+      <li>Un <b>compte administrateur</b> Windows</li>
+      <li>Un <b>compte Claude</b> avec abonnement Pro ou Max — cr&eacute;ation sur <b>claude.ai</b></li>
+      <li>25 &agrave; 35 minutes devant vous</li>
+    </ul>
+  </div>
+
+  <div class="tip"><b>Le principe :</b> on installe d&rsquo;abord WSL (une seule fois), puis <b>toutes</b> les commandes suivantes se tapent dans la fen&ecirc;tre <b>Ubuntu</b> — pas dans PowerShell ni l&rsquo;Invite de commandes. &Agrave; partir de l&agrave;, vous &ecirc;tes sous Linux.</div>
+
+  <div class="step">
+    <div class="num">1</div>
+    <div class="body">
+      <h3>Installer WSL (Ubuntu)</h3>
+      <p class="why">WSL ajoute un syst&egrave;me Linux complet &agrave; Windows. C&rsquo;est lui qui h&eacute;bergera l&rsquo;outil.</p>
+      <p>Ouvrez <b>PowerShell en administrateur</b> : menu D&eacute;marrer &rarr; tapez <code>PowerShell</code> &rarr; clic droit sur l&rsquo;app &rarr; <b>&laquo; Ex&eacute;cuter en tant qu&rsquo;administrateur &raquo;</b> &rarr; accepter.</p>
+      <div class="cmd-label">Dans PowerShell (admin), puis Entr&eacute;e</div>
+      <div class="cmd">wsl --install</div>
+      <p>WSL et Ubuntu s&rsquo;installent. <b>Red&eacute;marrez le PC</b> quand c&rsquo;est demand&eacute;. Au red&eacute;marrage, une fen&ecirc;tre <b>Ubuntu</b> s&rsquo;ouvre seule et demande de cr&eacute;er un <b>nom d&rsquo;utilisateur</b> et un <b>mot de passe Linux</b> (&agrave; retenir — il est diff&eacute;rent de votre mot de passe Windows).</p>
+      <p class="expect">Si la fen&ecirc;tre Ubuntu ne s&rsquo;ouvre pas d&rsquo;elle-m&ecirc;me : menu D&eacute;marrer &rarr; tapez <code>Ubuntu</code> &rarr; Entr&eacute;e.</p>
+    </div>
+  </div>
+
+  <div class="tip"><b>Astuce copier-coller dans Ubuntu :</b> pour coller une commande dans la fen&ecirc;tre Ubuntu, faites un <b>clic droit</b> (ou <code>Ctrl + Maj + V</code>) — le <code>Ctrl + V</code> classique n&rsquo;y fonctionne pas.</div>
+  <div class="ftr">ENNEA &middot; ben@ennea.dev &middot; ennea.dev<span class="right">Document confidentiel</span></div>
+</div>
+
+<!-- ════════ ANNEXE G — WINDOWS : ÉTAPES 2-5 ════════ -->
+<div class="page">
+  <div class="hdr"><b>ENNEA</b> <span>STUDIO</span></div>
+  <hr class="hdr-rule">
+  <div class="oslabel">Parcours Windows &mdash; dans la fen&ecirc;tre Ubuntu</div>
+
+  <div class="step">
+    <div class="num">2</div>
+    <div class="body">
+      <h3>Mettre &agrave; jour Ubuntu et installer les d&eacute;pendances</h3>
+      <p class="why">On installe les briques de l&rsquo;outil : <b>git</b>, <b>jq</b>, <b>weasyprint</b> (PDF) et <b>curl</b>.</p>
+      <div class="cmd-label">Dans Ubuntu, puis Entr&eacute;e</div>
+      <div class="cmd">sudo apt update &amp;&amp; sudo apt install -y jq weasyprint git curl</div>
+      <p class="expect">Le <b>mot de passe Linux</b> (cr&eacute;&eacute; &agrave; l&rsquo;&eacute;tape 1) est demand&eacute; : la saisie reste invisible, c&rsquo;est normal. L&rsquo;installation prend quelques minutes.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="num">3</div>
+    <div class="body">
+      <h3>Installer Claude Code et se connecter</h3>
+      <div class="cmd-label">Dans Ubuntu, puis Entr&eacute;e</div>
+      <div class="cmd">curl -fsSL https://claude.ai/install.sh | bash</div>
+      <p>Fermez puis rouvrez la fen&ecirc;tre Ubuntu (ou tapez <code>source ~/.bashrc</code>), puis lancez Claude Code pour vous connecter :</p>
+      <div class="cmd">claude</div>
+      <p>Au premier lancement, votre navigateur s&rsquo;ouvre pour vous <b>connecter &agrave; votre compte Claude</b> (Pro ou Max). Autorisez l&rsquo;acc&egrave;s, revenez &agrave; Ubuntu, et tapez <code>/exit</code>.</p>
+      <p class="expect">V&eacute;rification : <code>claude --version</code> doit afficher un num&eacute;ro. Si &laquo; command not found &raquo;, fermez et rouvrez Ubuntu.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="num">4</div>
+    <div class="body">
+      <h3>Installer cryptostack</h3>
+      <div class="cmd-label">Dans Ubuntu, puis Entr&eacute;e (3 commandes, une par une)</div>
+      <div class="cmd">git clone https://github.com/KOLMennea/cryptostack ~/cryptostack</div>
+      <div class="cmd">cd ~/cryptostack</div>
+      <div class="cmd">./install.sh</div>
+      <p class="expect">L&rsquo;installeur d&eacute;tecte Ubuntu, branche <code>/crypto</code> et <code>/crypto-update</code> dans Claude Code, et cr&eacute;e les dossiers de travail. Attendu : un r&eacute;capitulatif sans erreur.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="num">5</div>
+    <div class="body">
+      <h3>Tester : votre premier audit</h3>
+      <p>Toujours dans Ubuntu, lancez Claude Code puis l&rsquo;outil :</p>
+      <div class="cmd">claude</div>
+      <div class="cmd">/crypto</div>
+      <p class="expect">Attendu : le d&eacute;marrage de l&rsquo;audit guid&eacute; en 12 phases. C&rsquo;est gagn&eacute;.</p>
+      <p>&Agrave; l&rsquo;intake, donnez-lui le <b>nom + ticker</b> du projet (et URL/contract si vous les avez) : l&rsquo;outil ne lit aucun fichier local, il va chercher l&rsquo;info lui-m&ecirc;me en ligne et on-chain.</p>
+    </div>
+  </div>
+  <div class="ftr">ENNEA &middot; ben@ennea.dev &middot; ennea.dev<span class="right">Document confidentiel</span></div>
+</div>
+
+<!-- ════════ ANNEXE H — WINDOWS : FICHIERS + DÉPANNAGE ════════ -->
+<div class="page">
+  <div class="hdr"><b>ENNEA</b> <span>STUDIO</span></div>
+  <hr class="hdr-rule">
+  <div class="oslabel">Parcours Windows &mdash; o&ugrave; tout se trouve &amp; d&eacute;pannage</div>
+
+  <div class="card">
+    <p style="font-family:Georgia,serif; font-weight:bold; font-size:12pt; margin-bottom:2.5mm;">Retrouver vos rapports depuis Windows</p>
+    <p style="font-size:9.5pt;">Sous WSL, vos fichiers vivent &laquo; dans &raquo; Ubuntu. Pour ouvrir le dossier des rapports depuis l&rsquo;<b>Explorateur de fichiers</b> Windows, collez ceci dans la barre d&rsquo;adresse (remplacez <code>VOTRE_NOM</code> par votre nom d&rsquo;utilisateur Linux) :</p>
+    <div class="cmd" style="word-break:break-all;">\\wsl.localhost\Ubuntu\home\VOTRE_NOM\Documents\cryptostack\audits</div>
+    <p style="font-size:9.5pt;">Ou, plus simple, depuis Ubuntu dans le bon dossier : <code>explorer.exe .</code> ouvre l&rsquo;Explorateur Windows directement sur ce dossier.</p>
+  </div>
+
+  <p class="kicker" style="margin-top:4mm; font-size:11pt;">D&eacute;pannage Windows</p>
+  <table class="trouble">
+    <tr><th style="width:42%;">Sympt&ocirc;me</th><th>Solution</th></tr>
+    <tr>
+      <td><code>wsl --install</code> &eacute;choue ou commande inconnue</td>
+      <td>Windows pas &agrave; jour : lancez <b>Windows Update</b>, puis r&eacute;essayez. V&eacute;rifiez aussi que la <b>virtualisation</b> est activ&eacute;e dans le BIOS/UEFI.</td>
+    </tr>
+    <tr>
+      <td>&laquo; WSL n&eacute;cessite une mise &agrave; jour du composant noyau &raquo;</td>
+      <td>Dans PowerShell admin : <code>wsl --update</code>, puis relancez Ubuntu.</td>
+    </tr>
+    <tr>
+      <td>La fen&ecirc;tre Ubuntu ne s&rsquo;ouvre pas apr&egrave;s le red&eacute;marrage</td>
+      <td>Menu D&eacute;marrer &rarr; tapez <code>Ubuntu</code> &rarr; Entr&eacute;e. Au premier lancement, cr&eacute;ez le nom d&rsquo;utilisateur et le mot de passe Linux.</td>
+    </tr>
+    <tr>
+      <td><code>Ctrl + V</code> ne colle rien dans Ubuntu</td>
+      <td>Dans le terminal Ubuntu, collez avec un <b>clic droit</b> ou <code>Ctrl + Maj + V</code>.</td>
+    </tr>
+    <tr>
+      <td><code>claude</code> ou <code>/crypto</code> introuvable</td>
+      <td>Fermez et rouvrez la fen&ecirc;tre Ubuntu (ou <code>source ~/.bashrc</code>). V&eacute;rifiez le branchement : <code>ls -la ~/.claude/skills/crypto</code>.</td>
+    </tr>
+    <tr>
+      <td>Le mot de passe Linux est refus&eacute;</td>
+      <td>C&rsquo;est celui cr&eacute;&eacute; &agrave; l&rsquo;&eacute;tape 1 (pas le mot de passe Windows). Oubli&eacute; ? Dans PowerShell : <code>wsl -u root passwd VOTRE_NOM</code> pour le red&eacute;finir.</td>
+    </tr>
+  </table>
+  <p class="expect" style="margin-top:3mm;">Une fois dans Ubuntu, le reste est identique &agrave; Linux : les cas <code>git clone</code>, <code>permission denied</code> et &laquo; export PDF &raquo; du tableau macOS s&rsquo;appliquent &agrave; l&rsquo;identique.</p>
+
+  <div class="dark-block" style="margin-top:5mm; padding:4.5mm 7mm;">
+    <div class="title">Bloqu&eacute; malgr&eacute; tout ?</div>
+    <p>&Eacute;crivez-moi avec une capture d&rsquo;&eacute;cran : <b class="accent">ben@ennea.dev</b>. L&rsquo;installation guid&eacute;e est incluse dans la session de formation, Windows compris.</p>
+  </div>
+  <div class="ftr">ENNEA &middot; ben@ennea.dev &middot; ennea.dev<span class="right">Document confidentiel</span></div>
+</div>
+
+</body>
+</html>
