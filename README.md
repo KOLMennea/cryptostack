@@ -109,8 +109,12 @@ Dans Claude Code :
 | 11 | Scorecard finale + update mémoire | 2 min |
 | 12 | Export PDF expurgé | 1 min |
 
-**Override AVOID automatique** : MLM 4+ niveaux, contract non-vérifié, mention
-Rekt.news / SEC / DOJ.
+**Override AVOID automatique** : substance Ponzi prouvée (commissions financées
+par les dépôts des nouveaux entrants), fingerprint structurel (rank-up + custody
+centralisée + revenu non vérifiable), contract non-vérifié, mention Rekt.news /
+SEC / DOJ. L'affiliation multi-niveau n'est **jamais** un AVOID à elle seule :
+elle est analysée par la substance économique, et le verdict est **INCERTAIN**
+(pas une présomption de fraude) quand les preuves manquent.
 
 ## Mémoire inter-projets
 
