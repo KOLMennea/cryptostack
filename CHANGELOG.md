@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.2.0 — 2026-07-29
+
+- Nouveau skill `/audit-affiliation` : audit approfondi d'un projet Web3 avec
+  système d'affiliation, sur une grille étendue avec diagnostic de phase de
+  croissance et lecture des équilibres.
+- Restitution en un document à deux niveaux de lecture (synthèse + annexe).
+
 ## v1.1.0 — 2026-06-30
 
 - Analyse des systèmes d'affiliation revue : évaluation par la substance économique

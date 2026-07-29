@@ -99,7 +99,7 @@ fi
 mkdir -p "$SKILL_DIR"
 
 # 4. Symlink crypto et crypto-update
-for skill in crypto crypto-update; do
+for skill in crypto audit-affiliation crypto-update; do
   TARGET="$REPO_DIR/$skill"
   LINK="$SKILL_DIR/$skill"
 
@@ -173,8 +173,9 @@ echo ""
 cyan "🎉 cryptostack installé."
 echo ""
 echo "Skills disponibles dans Claude Code :"
-echo "  /crypto         — démarre un audit complet (12 phases)"
-echo "  /crypto-update  — met à jour cryptostack"
+echo "  /crypto            — screening rapide (12 phases, 10 critères)"
+echo "  /audit-affiliation — audit approfondi (20 fonctions, 5 axes, phases)"
+echo "  /crypto-update     — met à jour cryptostack"
 echo ""
 echo "Rapports d'audit : $DOCS_DIR"
 echo "Mémoire interne  : $MEMORY_DIR"
