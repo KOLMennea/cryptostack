@@ -15,11 +15,93 @@ allowed-tools:
 
 # /crypto-update — Mise à jour cryptostack
 
-Tu mets à jour le skill `/crypto` vers la dernière version publiée sur le repo
-GitHub `cryptostack`. Aucune action destructive : tu vérifies l'état local, tu
-demandes confirmation si conflit, sinon tu lances un `git pull` propre.
+Tu mets à jour cryptostack vers la dernière version publiée sur le repo GitHub.
+Aucune action destructive : tu vérifies l'état local, tu demandes confirmation si
+conflit, sinon tu lances un `git pull` propre. **Si git est absent ou cassé** (cas
+fréquent sur un Mac sans Command Line Tools), tu bascules sur une mise à jour
+**sans git** via `curl` (voir Phase 0).
 
-## Phase 1 — Vérifier l'install
+## Phase 0 — Préflight : git est-il utilisable ?
+
+Beaucoup de Mac n'ont pas de git fonctionnel (`/usr/bin/git` est un stub qui échoue
+avec « No developer tools » tant que les Command Line Tools ne sont pas installés).
+On teste **réellement** git, pas juste sa présence dans le PATH :
+
+```bash
+REPO_DIR="${HOME}/cryptostack"
+if git --version >/dev/null 2>&1; then
+  echo "GIT_OK"
+else
+  echo "GIT_BROKEN"
+fi
+```
+
+- Si `GIT_OK` : continue le parcours git normal (Phase 1 → 7).
+- Si `GIT_BROKEN` : **ne lance AUCUNE commande git** (elles échoueront toutes). Propose
+  via `AskUserQuestion` :
+
+  > "Git n'est pas disponible sur cette machine. Comment mettre à jour cryptostack ?"
+
+  Options :
+  - A) "Mise à jour sans git (téléchargement direct)" — **recommandé, marche tout de suite**
+  - B) "Installer git d'abord, puis réessayer"
+  - C) "Annuler"
+
+  Si A : va à **Phase 0-bis** (mise à jour curl). Si B : affiche les deux commandes
+  ci-dessous et stoppe (l'user les lance dans son terminal, elles demandent son mot de
+  passe admin — tu ne peux pas les faire à sa place) :
+
+  ```
+  xcode-select --install        # réinstalle les Command Line Tools (git inclus)
+  # ou, plus rapide si Homebrew est présent :
+  brew install git
+  ```
+
+  Si C : stop.
+
+## Phase 0-bis — Mise à jour sans git (curl)
+
+Chemin de secours, n'utilise QUE des outils du système de base macOS (`curl`, `tar`,
+`mktemp`, `cp` — tous présents sans Command Line Tools). Télécharge l'archive de la
+branche `main` et écrase les fichiers de skill dans `$REPO_DIR` (les symlinks
+`~/.claude/skills/*` pointent vers ce dossier, donc l'update est immédiatement actif).
+
+```bash
+REPO_DIR="${HOME}/cryptostack"
+TARBALL="https://github.com/KOLMennea/cryptostack/archive/refs/heads/main.tar.gz"
+TMP=$(mktemp -d)
+
+echo "⬇️  Téléchargement de la dernière version…"
+if ! curl -fsSL "$TARBALL" -o "$TMP/cs.tar.gz"; then
+  echo "❌ Téléchargement échoué. Vérifie ta connexion et réessaie."
+  rm -rf "$TMP"; exit 1
+fi
+if ! tar -xzf "$TMP/cs.tar.gz" -C "$TMP"; then
+  echo "❌ Extraction échouée."
+  rm -rf "$TMP"; exit 1
+fi
+
+SRC="$TMP/cryptostack-main"
+OLD_VERSION=$([ -f "$REPO_DIR/VERSION" ] && cat "$REPO_DIR/VERSION" || echo "inconnue")
+mkdir -p "$REPO_DIR"
+
+# Synchronise skills + méta (copie récursive, écrase l'existant)
+for item in crypto audit-affiliation crypto-update install.sh VERSION CHANGELOG.md README.md docs; do
+  [ -e "$SRC/$item" ] && cp -R "$SRC/$item" "$REPO_DIR/"
+done
+rm -rf "$TMP"
+
+NEW_VERSION=$([ -f "$REPO_DIR/VERSION" ] && cat "$REPO_DIR/VERSION" || echo "inconnue")
+echo "✅ Mise à jour sans git : $OLD_VERSION → $NEW_VERSION"
+```
+
+Puis vérifie les symlinks (**Phase 6**), affiche le CHANGELOG récent
+(`head -20 "$REPO_DIR/CHANGELOG.md"`), et termine. **Ne fais pas les phases git 1-5**
+sur ce chemin. Note à l'user : « Mise à jour appliquée sans git. Pour retrouver les
+mises à jour incrémentales (changelog par commit, stash), installe git quand tu peux
+(`xcode-select --install`). »
+
+## Phase 1 — Vérifier l'install (chemin git uniquement)
 
 ```bash
 REPO_DIR="${HOME}/cryptostack"
