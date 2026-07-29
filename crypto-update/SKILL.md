@@ -114,7 +114,7 @@ Si A : `git pull --ff-only origin <branch>`.
 ```bash
 SKILL_DIR="${HOME}/.claude/skills"
 
-for skill in crypto crypto-update; do
+for skill in crypto audit-affiliation crypto-update; do
   if [ -L "$SKILL_DIR/$skill" ]; then
     TARGET=$(readlink "$SKILL_DIR/$skill")
     echo "✅ $SKILL_DIR/$skill → $TARGET"
