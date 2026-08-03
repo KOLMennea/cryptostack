@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.2.2 — 2026-07-29
+
+- `/audit-affiliation` : le rapport et le PDF ne décrivent ni n'énoncent jamais la
+  méthodologie sous-jacente (ni les noms, ni la mécanique de calcul). Le livrable
+  présente les constats et le verdict, avec l'analyse détaillée conservée.
+
 ## v1.2.1 — 2026-07-29
 
 - `/crypto-update` : mise à jour robuste quand git est absent ou cassé. Préflight
