@@ -502,11 +502,31 @@ Les deux ne se traitent pas avec le même degré d'insistance.
 Restitue tout dans **un document unique** (`$AUDIT_DIR/scorecard.md`), jamais deux fichiers séparés.
 
 ### Gate de correctness #1 — masquage strict (passe de vérification finale)
-**Ne jamais faire apparaître** dans le document (synthèse ET annexe) : `Expert 5A`, `L-QHIN`, `n-2`, `canevas
-organique`, `algorithme organique`, `Holisyntonie`, ni les noms d'axes internes (Développement, Production,
-Intelligence, Pilotage, Connectivité, Bois/Métal/Eau/Feu/Terre). Ce sont des outils de calcul internes.
-Fais une **passe de relecture finale dédiée** avant de rendre : cherche chacun de ces termes et remplace/supprime.
-Les noms des 20 sous-fonctions (Marketing, Vente, R&D, Finance, RH, Décisions…) sont du langage courant et restent tels quels.
+
+**(a) Noms/marques — jamais affichés** dans le document (synthèse ET annexe) : `Expert 5A`, `L-QHIN`,
+`n-2`, `canevas organique`, `algorithme organique`, `Holisyntonie`, ni les noms d'axes internes
+(Développement, Production, Intelligence, Pilotage, Connectivité, Bois/Métal/Eau/Feu/Terre), ni les mots
+`dialectique`, `organique`, `fractal`. Ce sont des outils de calcul internes.
+
+**(b) Méthodologie — jamais décrite ni énoncée.** Au-delà des noms, le document ne **décrit jamais la
+mécanique** de l'audit et ne se présente jamais comme une méthode/un système. Interdits :
+- toute phrase du type « cet audit repose sur une grille/méthode/framework/algorithme en N fonctions / N axes »,
+  « analyse en 20 fonctions », « 5 axes », « module de lecture dialectique », « canevas », « modèle propriétaire » ;
+- toute explication du **procédé de calcul** du score (formule de normalisation, pondération, sous-totaux d'axe,
+  seuils, façon dont les indicateurs sont composés en tant que *méthode*) ;
+- toute méta-description « voici comment nous procédons / comment le score est construit ».
+Le rapport présente des **constats** et un **verdict**. La structure (grandes fonctions renommées, indicateurs,
+stades) sert uniquement de **plan de présentation** des résultats — jamais d'exposé de méthode. Le lecteur voit
+**ce qu'on a trouvé**, pas **comment la machine calcule**.
+
+**(c) Ce qui reste, en revanche** (ne PAS confondre masquer la méthode et cacher l'analyse) : les **constats
+par sous-fonction** (nom courant), les **notes**, les **justifications sourcées**, le **raisonnement** derrière
+chaque tension et chaque stade, et les **sources** — tout ça reste, en détail, en Partie 2. Masquer la méthode
+≠ appauvrir l'analyse. Le PDF aussi profond, juste sans jamais nommer ni décrire la mécanique.
+
+Fais une **passe de relecture finale dédiée** avant de rendre (markdown ET HTML/PDF) : cherche chacun des termes
+de (a), traque toute phrase de (b), remplace/supprime. Les noms des 20 sous-fonctions (Marketing, Vente, R&D,
+Finance, RH, Décisions…) sont du langage courant et restent tels quels.
 
 **Table de correspondance (à utiliser partout) :**
 
@@ -540,8 +560,8 @@ Les noms des 20 sous-fonctions (Marketing, Vente, R&D, Finance, RH, Décisions�
 
 ### Règles de discipline
 - **Cohérence stricte des scores** synthèse ⇄ annexe : une note affichée en Partie 1 se retrouve identique dans le détail de la Partie 2.
-- **Aucune marque ni jargon de méthode nulle part**, y compris dans l'annexe.
-- La Partie 2 reste écrite pour un lecteur motivé **non-expert** : elle rentre dans le détail, elle ne redevient pas un document d'audit interne.
+- **Aucune marque, aucun jargon de méthode, aucune description de la mécanique nulle part** (voir gate #1 a+b), y compris dans l'annexe et le PDF.
+- La Partie 2 reste écrite pour un lecteur motivé **non-expert** : elle rentre dans le détail des constats, elle ne redevient pas un document d'audit interne et n'expose jamais la méthode.
 
 ---
 
@@ -568,7 +588,11 @@ Après la scorecard, propose l'export PDF via `AskUserQuestion` (A générer / B
 Vérifie `weasyprint` (`command -v weasyprint`, sinon indique `brew install weasyprint` et laisse le markdown).
 Le PDF est construit depuis un HTML rempli (template 2-parties : synthèse puis annexe), avec expurgation **stricte** :
 zéro mention des autres projets internes, zéro « N projets internes » ou vigilance-mémoire, comparables publics
-conservés, arguments structurels/juridiques conservés, **et la passe de masquage des marques (gate #1) appliquée au HTML**.
+conservés, arguments structurels/juridiques conservés. **Applique le gate #1 au HTML avant génération, dans ses
+DEUX volets** : (a) aucun nom/marque de méthode ni nom d'axe interne ; (b) **aucune description de la mécanique**
+(pas de « grille/méthode/algorithme en N fonctions/axes », pas de formule de score, pas de méta-description du
+procédé). Le PDF montre les constats et le verdict, jamais comment ils sont calculés. C'est **la** exigence
+critique de ce livrable.
 
 ---
 
