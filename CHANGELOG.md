@@ -1,5 +1,14 @@
 # Changelog
 
+## v1.3.0 — 2026-07-29
+
+- `/audit-affiliation` : protocole anti-biais. Les preuves sont pondérées par leur
+  solidité (une conclusion décisive exige une preuve de première main, tierce
+  réputée, ou convergente ; un signal auto-rapporté isolé ne peut pas trancher).
+  Couverture systématique des fonctions pour éviter le biais de sélection, et
+  recherche du signal contraire avant de conclure. La solidité de chaque constat
+  est indiquée en langage clair dans le rapport (sans exposer la méthode).
+
 ## v1.2.2 — 2026-07-29
 
 - `/audit-affiliation` : le rapport et le PDF ne décrivent ni n'énoncent jamais la

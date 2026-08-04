@@ -67,6 +67,45 @@ Pour chacune des 20 fonctions, attribue un score et une couleur :
 ### Gate de correctness #2 — neutre ≠ force
 Une fonction ⚪ (0) n'est **jamais** lue comme un point de solidité. C'est une absence de preuve.
 
+### Échelle de poids des preuves (discipline INTERNE — jamais nommée dans le livrable)
+
+Toute source utilisée pour justifier un score est classée dans l'un des 5 niveaux. Ce classement
+**gouverne le score en interne** ; dans le rapport il se traduit en **langage clair** (jamais les codes T1-T5).
+
+| Niveau | Nature | Exemples |
+|--------|--------|----------|
+| T1 | Preuve de première main, vérifiable directement | Lecture du smart contract, adresse de trésorerie publique, registre du commerce |
+| T2 | Source tierce indépendante et réputée | Rapport CertiK/Hacken, registre AMF/SEC, article de presse organique |
+| T3 | Signal convergent (≥3 témoignages indépendants et concordants, sans lien entre eux) | 3+ témoignages Reddit/Telegram distincts rapportant le même fait (ex. échec de retrait) |
+| T4 | Déclaration auto-rapportée non vérifiée | Communication officielle du projet, whitepaper, témoignage isolé |
+| T5 | Indice / rumeur circonstancielle | Mention isolée, sentiment général, « ça sent le scam » sans fait vérifiable |
+
+**Règles de conversion preuve → score :**
+- Un score **décisif** (+1 ou −1) exige une preuve **T1, T2 ou T3**.
+- Si seules des preuves **T4 ou T5** sont disponibles, le score ne peut pas dépasser **+0.5 / −0.5** (orange),
+  même si le signal semble fort — et la justification indique explicitement que le signal n'est **pas consolidé**.
+- Plusieurs preuves T4/T5 **réellement indépendantes** qui convergent sur le même fait peuvent être requalifiées
+  en T3 — mais cette requalification est **justifiée explicitement, jamais silencieuse**.
+- Si le niveau de preuve est ambigu, retiens **toujours le niveau le plus bas** plutôt que le plus haut.
+
+Cette échelle complète (ne remplace pas) la **règle de corroboration** de la section Sources : une accusation
+grave d'une seule source (≤ T3 non convergent) reste un signal à investiguer, pas une preuve décisive.
+
+### Discipline de couverture systématique (anti-biais de sélection — INTERNE)
+
+1. **Avant** de commencer la recherche, parcours les 20 fonctions **dans l'ordre** et engage, pour chacune, au
+   minimum les sources listées dans sa fiche — **y compris les fonctions qui semblent moins spectaculaires**
+   (Gestion, SI, Implémentation, Contrôle de gestion). Ne saute aucune fonction au prétexte qu'elle semble
+   moins déterminante a priori : c'est précisément ce jugement a priori qui introduit le biais.
+2. **Ne t'arrête pas** sur une fonction dès qu'un premier résultat « confirme » une impression. **Cherche
+   activement le signal contraire** avant de conclure — surtout pour les red flags qui semblent évidents dès
+   la première source.
+3. L'**effort de recherche reste comparable** entre les 20 fonctions. Si une fonction a nécessité un effort
+   significativement inférieur, note-le explicitement dans la justification plutôt que de le laisser invisible.
+4. **Vérifiabilité a posteriori** : le rapport porte, par constat, la **provenance en langage clair** de la
+   preuve (voir Format de restitution) — ce qui a été vérifié et à quel point c'est solide — SANS jamais nommer
+   l'échelle T1-T5 ni décrire le procédé (gate #1).
+
 ---
 
 ## 💾 Setup du dossier d'audit (réutilise l'infra /crypto)
@@ -521,8 +560,12 @@ stades) sert uniquement de **plan de présentation** des résultats — jamais d
 
 **(c) Ce qui reste, en revanche** (ne PAS confondre masquer la méthode et cacher l'analyse) : les **constats
 par sous-fonction** (nom courant), les **notes**, les **justifications sourcées**, le **raisonnement** derrière
-chaque tension et chaque stade, et les **sources** — tout ça reste, en détail, en Partie 2. Masquer la méthode
-≠ appauvrir l'analyse. Le PDF aussi profond, juste sans jamais nommer ni décrire la mécanique.
+chaque tension et chaque stade, les **sources**, et la **solidité de chaque preuve en langage clair** (« vérifié
+on-chain », « source tierce réputée », « déclaratif non confirmé »…) ainsi que le récap « Ce qui a été vérifié »
+par fonction — tout ça reste, en détail, en Partie 2. Décrire la **qualité d'une preuve** en mots simples n'est
+PAS décrire la méthode : c'est de la transparence sur les faits, autorisée et souhaitée. Ce qui est interdit,
+c'est nommer/expliquer le **procédé** (échelle T1-T5, formule de score, grille en N fonctions/axes). Masquer la
+méthode ≠ appauvrir l'analyse. Le PDF aussi profond, juste sans jamais nommer ni décrire la mécanique.
 
 Fais une **passe de relecture finale dédiée** avant de rendre (markdown ET HTML/PDF) : cherche chacun des termes
 de (a), traque toute phrase de (b), remplace/supprime. Les noms des 20 sous-fonctions (Marketing, Vente, R&D,
@@ -550,13 +593,14 @@ Finance, RH, Décisions…) sont du langage courant et restent tels quels.
 7. Verdict + mention « **ne constitue pas un conseil en investissement personnalisé** ».
 
 ### Partie 2 — Annexe détaillée (longueur libre, orientée compréhension/investissement)
-1. Pour chacune des 5 grandes fonctions (nom affiché) : le détail des 4 sous-fonctions (nom courant), avec note individuelle, statut 🟢🟡⚪🔴 et justification sourcée.
+1. Pour chacune des 5 grandes fonctions (nom affiché) : le détail des 4 sous-fonctions (nom courant), avec note individuelle, statut 🟢🟡⚪🔴 et justification sourcée. **Chaque constat porte la solidité de sa preuve en langage clair** : ex. « adresse de trésorerie lue on-chain » (fort) · « rapport d'audit d'un cabinet reconnu » (fort) · « plusieurs témoignages indépendants concordants » (moyen) · « annoncé par le projet, non confirmé par une source indépendante » (faible, signal non consolidé) · « rumeur isolée sans fait vérifiable » (très faible). Jamais de codes internes ni de règle de score.
 2. Les 4 indicateurs transversaux, détaillés avec leur composition.
 3. Le raisonnement complet derrière chaque tension structurelle identifiée en Partie 1.
 4. Le raisonnement complet derrière le stade identifié (indicateurs, niveau de confiance, fonctions relues à la lumière de la phase).
 5. Liste complète des points de vigilance / zones à vérifier, avec la question précise pour chacune.
-6. Sources citées.
-7. **Sources écartées** (une ligne, uniquement si une source du registre a été rencontrée).
+6. **Ce qui a été vérifié** — récap de couverture, fonction par fonction : ce qui a été cherché et la solidité de ce qui a été trouvé (en langage clair). Signale explicitement toute fonction pour laquelle la recherche a été plus limitée. Objectif : un lecteur peut reconstituer l'effort de vérification. **Sans jamais titrer « Méthodologie », sans échelle T1-T5, sans décrire le procédé** (gate #1 b).
+7. Sources citées.
+8. **Sources écartées** (une ligne, uniquement si une source du registre a été rencontrée).
 
 ### Règles de discipline
 - **Cohérence stricte des scores** synthèse ⇄ annexe : une note affichée en Partie 1 se retrouve identique dans le détail de la Partie 2.
