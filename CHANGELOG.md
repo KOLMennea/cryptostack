@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.4.1 — 2026-07-29
+
+- `/crypto-update` branche désormais les skills automatiquement : un nouveau skill
+  publié en amont devient disponible sans étape manuelle. Les skills personnels
+  déjà présents ne sont jamais modifiés.
+
 ## v1.4.0 — 2026-07-29
 
 - `/audit-affiliation` : vocabulaire du rapport rendu crypto-natif et plus lisible
