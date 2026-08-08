@@ -439,12 +439,16 @@ score global moyen uniformément réparti.
 ### 4 indicateurs transversaux (composition EXACTE — encodée, non déductible)
 Chaque indicateur = moyenne de 5 fonctions (une par axe), plage −1 à +1. Se calculent APRÈS les 20 scores.
 
-| Indicateur | Nom affiché | Composition (5 fonctions) |
-|-----------|-------------|---------------------------|
-| Résonance & Intégration Marché | (idem) | Marketing (1) · Positionnement stratégique (13) · Communication (17) · Qualité Corporate (10) · Product Management (5) |
-| Capacité d'Adaptation | (idem) | Vente (2) · Décisions (14) · Qualité produit (6) · Finance (9) · Contrôle de gestion (18) |
-| Potentiel de Croissance | (idem) | R&D (4) · Structuration (16) · SI (20) · Moyens & Méthodes (7) · Management expérience (12) |
-| Capacité d'Exécution | (idem) | Implémentation (3) · Gestion (15) · RH (19) · Exécution (8) · Performance Indiv & Collective (11) |
+⚠️ **La colonne « Composition » est un outil de calcul INTERNE — elle n'apparaît JAMAIS dans le rapport
+ni dans le PDF** (elle exposerait la mécanique, gate #1 b). Dans le livrable, chaque indicateur est présenté
+avec sa **définition** (dernière colonne), jamais avec la liste des fonctions qui le composent.
+
+| Indicateur | Composition INTERNE (jamais affichée) | Définition — À AFFICHER dans le rapport |
+|-----------|----------------------------------------|------------------------------------------|
+| Résonance & Intégration Marché | Marketing (1) · Positionnement stratégique (13) · Communication (17) · Qualité Corporate (10) · Product Management (5) | Capacité du système à entrer durablement en résonance avec son marché. |
+| Capacité d'Adaptation | Vente (2) · Décisions (14) · Qualité produit (6) · Finance (9) · Contrôle de gestion (18) | Capacité du système à maintenir son équilibre malgré les changements de son environnement. |
+| Potentiel de Croissance | R&D (4) · Structuration (16) · SI (20) · Moyens & Méthodes (7) · Management expérience (12) | Capacité du système à changer d'échelle sans créer de déséquilibres internes. |
+| Capacité d'Exécution | Implémentation (3) · Gestion (15) · RH (19) · Exécution (8) · Performance Indiv & Collective (11) | Capacité du système à convertir efficacement ses ressources en résultats opérationnels. |
 
 Un projet peut afficher un bon score global tout en ayant une **Capacité d'Exécution** très faible — c'est
 ce type de dissonance transversale que ces indicateurs révèlent, et qui échappe à une lecture par axe.
@@ -553,6 +557,9 @@ mécanique** de l'audit et ne se présente jamais comme une méthode/un système
   « analyse en 20 fonctions », « 5 axes », « module de lecture dialectique », « canevas », « modèle propriétaire » ;
 - toute explication du **procédé de calcul** du score (formule de normalisation, pondération, sous-totaux d'axe,
   seuils, façon dont les indicateurs sont composés en tant que *méthode*) ;
+- **toute colonne/mention « Composition » d'un indicateur transversal** (ex. « Marketing + Positionnement
+  stratégique + Communication + … ») : c'est du sous-calcul. Les indicateurs sont présentés avec leur
+  **définition** (à quoi ils correspondent) et leur score, jamais avec leurs ingrédients ;
 - toute méta-description « voici comment nous procédons / comment le score est construit ».
 Le rapport présente des **constats** et un **verdict**. La structure (grandes fonctions renommées, indicateurs,
 stades) sert uniquement de **plan de présentation** des résultats — jamais d'exposé de méthode. Le lecteur voit
@@ -594,7 +601,7 @@ Finance, RH, Décisions…) sont du langage courant et restent tels quels.
 
 ### Partie 2 — Annexe détaillée (longueur libre, orientée compréhension/investissement)
 1. Pour chacune des 5 grandes fonctions (nom affiché) : le détail des 4 sous-fonctions (nom courant), avec note individuelle, statut 🟢🟡⚪🔴 et justification sourcée. **Chaque constat porte la solidité de sa preuve en langage clair** : ex. « adresse de trésorerie lue on-chain » (fort) · « rapport d'audit d'un cabinet reconnu » (fort) · « plusieurs témoignages indépendants concordants » (moyen) · « annoncé par le projet, non confirmé par une source indépendante » (faible, signal non consolidé) · « rumeur isolée sans fait vérifiable » (très faible). Jamais de codes internes ni de règle de score.
-2. Les 4 indicateurs transversaux, détaillés avec leur composition.
+2. Les 4 indicateurs transversaux : nom, **définition** (à quoi l'indicateur correspond), score, et lecture en une phrase. ⚠️ **JAMAIS la composition** (la liste des fonctions qui le composent) — c'est du sous-calcul interne, il ne doit pas apparaître (gate #1 b). Colonnes : Indicateur / Définition / Score / Lecture.
 3. Le raisonnement complet derrière chaque tension structurelle identifiée en Partie 1.
 4. Le raisonnement complet derrière le stade identifié (indicateurs, niveau de confiance, fonctions relues à la lumière de la phase).
 5. Liste complète des points de vigilance / zones à vérifier, avec la question précise pour chacune.
