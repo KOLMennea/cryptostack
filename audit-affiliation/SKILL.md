@@ -91,6 +91,12 @@ Toute source utilisée pour justifier un score est classée dans l'un des 5 nive
 Cette échelle complète (ne remplace pas) la **règle de corroboration** de la section Sources : une accusation
 grave d'une seule source (≤ T3 non convergent) reste un signal à investiguer, pas une preuve décisive.
 
+**Charge de justification — calibrée (allègement) :** la mention de solidité de preuve dans le rapport
+(en langage clair, jamais les codes T1-T5) est **obligatoire uniquement pour les scores décisifs (+1 / −1)**,
+et **facultative pour les +0.5 / −0.5 / 0**. Le classement interne, lui, s'applique toujours aux 20 fonctions :
+c'est l'affichage qui est allégé, pas la rigueur. Objectif : concentrer l'effort de justification là où il
+change réellement le verdict, au lieu d'alourdir chaque ligne.
+
 ### Discipline de couverture systématique (anti-biais de sélection — INTERNE)
 
 1. **Avant** de commencer la recherche, parcours les 20 fonctions **dans l'ordre** et engage, pour chacune, au
@@ -102,9 +108,10 @@ grave d'une seule source (≤ T3 non convergent) reste un signal à investiguer,
    la première source.
 3. L'**effort de recherche reste comparable** entre les 20 fonctions. Si une fonction a nécessité un effort
    significativement inférieur, note-le explicitement dans la justification plutôt que de le laisser invisible.
-4. **Vérifiabilité a posteriori** : le rapport porte, par constat, la **provenance en langage clair** de la
-   preuve (voir Format de restitution) — ce qui a été vérifié et à quel point c'est solide — SANS jamais nommer
-   l'échelle T1-T5 ni décrire le procédé (gate #1).
+4. **Vérifiabilité a posteriori** : chaque **score décisif** porte dans le rapport la **provenance en langage
+   clair** de sa preuve (voir Format de restitution) — ce qui a été vérifié et à quel point c'est solide —
+   SANS jamais nommer l'échelle T1-T5 ni décrire le procédé (gate #1). Le récap de couverture complet, lui,
+   est optionnel (mode « Audit renforcé », sur demande).
 
 ---
 
@@ -197,7 +204,7 @@ les deux autres y renvoient par mention croisée **sans redonner de score** (gat
 *Sain : la croissance suit un besoin réel, tirée par la demande. Malade : croissance poussée
 artificiellement — recrutement forcé, hype sans substance, FOMO en lieu de besoin.*
 
-**1. Marketing** — *Exploration/connaissance des marchés (veille, benchmarking, tests).*
+**1. Marketing** *(dans le rapport : « Marketing »)* — *Exploration/connaissance des marchés (veille, benchmarking, tests).*
 Question distinctive : le discours s'adresse-t-il à la bonne cible avec le bon niveau de
 sophistication, indépendamment de savoir si la conversion fonctionne (ça, c'est Vente) ?
 Web3 : veille sectorielle ET discours de marché ; cible affichée vs cible réellement visée
@@ -205,7 +212,7 @@ par le ton/vocabulaire (technique vs FOMO/« places limitées ») ; cohérence p
 Sources : site officiel, pitch deck, Meta/TikTok Ads Library, **contenu produit par les
 affiliés** (souvent plus révélateur que la com officielle).
 
-**2. Vente** — *Conversion de l'opportunité de marché en valeur transigée (le moteur de croissance).*
+**2. Vente** *(dans le rapport : « Conversion »)* — *Conversion de l'opportunité de marché en valeur transigée (le moteur de croissance).*
 Question distinctive : le moteur de conversion est-il tiré par la valeur du produit ou poussé
 par le recrutement, indépendamment de qui le contrôle (Structuration) ou de l'adhésion humaine (RH) ?
 Web3 + affiliation (**fonction centrale du modèle**) — chaque client peut devenir un vecteur
@@ -224,15 +231,19 @@ Sources : onboarding, Trustpilot/Reddit/forums crypto, évolution du nb d'users 
 mais que le volume/la part de marché reculent face à la concurrence, **NE PAS scorer ce recul
 sous Vente** — le documenter sous **Product Management** (« différenciation concurrentielle »)
 avec la mention « croissance structurellement saine, recul conjoncturel face à la concurrence ».
+🔀 **Si le projet n'a PAS de système d'affiliation** : ne note pas 0 par défaut (l'info ne manque pas — la
+question ne s'applique pas). Réoriente vers l'équivalent générique et **score normalement** : moteur de
+croissance organique, SEO/contenu, partenariats de distribution, coût d'acquisition, part de croissance
+tirée par l'usage vs par la dépense marketing.
 
-**3. Implémentation** — *Captation : intégration d'une innovation externe sans rompre la cohérence (éviter les « chimères »).*
+**3. Implémentation** *(dans le rapport : « Intégrations »)* — *Captation : intégration d'une innovation externe sans rompre la cohérence (éviter les « chimères »).*
 Question distinctive : le projet absorbe-t-il correctement une innovation externe sans rompre
 sa cohérence, indépendamment de savoir s'il innove lui-même (ça, c'est R&D) ?
 Web3 : blockchains/wallets réellement supportés vs annoncés ; partenariats vérifiables **auprès
 du partenaire lui-même** (pas via la com du projet audité) ; cohérence des intégrations avec le
 positionnement initial (pas de dérive opportuniste). Sources : GitHub (activité réelle), doc technique, comptes officiels des partenaires.
 
-**4. R&D** — *Innovation produit/protocole.*
+**4. R&D** *(dans le rapport : « R&D »)* — *Innovation produit/protocole.*
 Question distinctive : le produit est-il une innovation réelle et propriétaire, ou une reproduction
 générique d'un modèle déjà existant ailleurs ?
 Web3 : fréquence des MAJ produit vs fréquence des changements de barème de récompense ; part de la
@@ -252,7 +263,7 @@ ou la reproduction d'un template répertorié ? (même vérif Similar Contracts)
 *Sain : ce qui est annoncé existe, fonctionne, se livre. Malade : la promesse reste vapeur —
 « coming soon » perpétuel, rendement qui ne se traduit jamais en retrait effectif.*
 
-**5. Product Management** — *Pilotage du produit réel (product-market fit).*
+**5. Product Management** *(dans le rapport : « Product Management »)* — *Pilotage du produit réel (product-market fit).*
 Question distinctive : le produit répond-il à un vrai besoin avec une vraie adhérence utilisateur,
 indépendamment de sa fiabilité technique (ça, c'est Qualité produit) ?
 Web3 : le produit est-il utilisé **indépendamment de la spéculation/l'affiliation** ? Existe-t-il
@@ -262,7 +273,7 @@ whitepaper (fonctionnalités livrées vs strict module de dépôt/parrainage). D
 concurrentielle. UX/UI soignée ou négligée. Sources : app stores, DappRadar/DeFiLlama (usage/TVL),
 témoignages spontanés vs relayés par affiliés, comparatif direct avec 2-3 concurrents.
 
-**6. Qualité produit** — *Fiabilité et sécurité de ce qui est produit.*
+**6. Qualité produit** *(dans le rapport : « Sécurité & Fiabilité »)* — *Fiabilité et sécurité de ce qui est produit.*
 Question distinctive : le produit est-il fiable et **sécurisé techniquement**, indépendamment de
 savoir s'il répond à un vrai besoin (Product Management) ? Checklist sécurité complète :
 - Audit(s) publié(s), par quel cabinet (CertiK, Hacken, PeckShield, Quantstamp, Trail of Bits, OpenZeppelin), scope complet ou partiel.
@@ -273,7 +284,7 @@ savoir s'il répond à un vrai besoin (Product Management) ? Checklist sécurit�
 - Couverture assurantielle (Nexus Mutual, InsurAce).
 Sources : plateformes d'audit ci-dessus, Etherscan/BscScan (onglet Contract, statut Verified), ScamAdviser pour l'URL.
 
-**7. Moyens & Méthodes** — *Ressources ET méthodes/procédures pour produire de façon fiable et reproductible.*
+**7. Moyens & Méthodes** *(dans le rapport : « Infrastructure & Ressources »)* — *Ressources ET méthodes/procédures pour produire de façon fiable et reproductible.*
 Question distinctive : le projet a-t-il les ressources humaines et les procédures pour produire de
 façon fiable, indépendamment de qui détient le pouvoir de décision (Structuration) ou de si le
 résultat est sécurisé (Qualité produit) ? Web3 :
@@ -284,7 +295,7 @@ résultat est sécurisé (Qualité produit) ? Web3 :
 - **Automatisation des processus récurrents** : distribution des commissions/rendements automatisée (smart contract) ou intervention manuelle régulière ?
 Sources : GitHub (contributeurs, licence, commits, doc), LinkedIn équipe technique, doc d'architecture, lecture du contrat.
 
-**8. Exécution** — *Tenue réelle de la promesse.*
+**8. Exécution** *(dans le rapport : « Delivery »)* — *Tenue réelle de la promesse.*
 Question distinctive : ce qui est promis est-il effectivement livré/payé dans les faits transactionnels,
 indépendamment de savoir si le modèle sous-jacent est soutenable (ça, c'est Finance) ? Web3 (liquidité
 et sortie) : capacité réelle à **retirer** capital, profits, gains d'affiliation ; blocages/conditions
@@ -299,7 +310,7 @@ plutôt que par un revenu externe identifiable. Sources : témoignages de retrai
 *Sain : le projet sait d'où vient réellement l'argent et anticipe les risques. Malade : le déni —
 ignorer les signaux faibles, confondre trésorerie disponible et trésorerie soutenable.*
 
-**9. Finance** — *Dynamique financière, modèle économique réel.*
+**9. Finance** *(dans le rapport : « Tokenomics & Trésorerie »)* — *Dynamique financière, modèle économique réel.*
 Question distinctive : d'où vient concrètement l'argent, et le modèle serait-il viable si l'on
 retirait complètement la couche affiliation, indépendamment de savoir si les paiements sont honorés
 au jour le jour (ça, c'est Exécution) ? Web3 :
@@ -316,7 +327,7 @@ pression de vente serait-elle absorbable par la demande réelle ? Sources : whit
 Dune/Nansen/Arkham (flux si contrat public), DeFiLlama/CoinGecko (rendements moyens du secteur),
 Etherscan (répartition wallets, vesting contracts).
 
-**10. Qualité Corporate** — *Qualité des interactions entreprise/environnement ; notoriété.*
+**10. Qualité Corporate** *(dans le rapport : « Réputation & Conformité »)* — *Qualité des interactions entreprise/environnement ; notoriété.*
 Question distinctive : ce système est-il légalement qualifiable de vente pyramidale, et quelle est sa
 réputation externe vérifiable, indépendamment de la sincérité de sa propre communication (ça, c'est
 Communication) ? Web3 : entité juridique identifiable ; le programme d'affiliation est-il qualifiable
@@ -324,15 +335,18 @@ de vente pyramidale dans la juridiction visée ; presse organique (rédactionnel
 (contenu payé). Sources : registres du commerce (Infogreffe, Companies House, OpenCorporates), registres
 de régulateurs (AMF, SEC EDGAR, FCA), recherche « [nom du projet] + scam / lawsuit / warning ».
 
-**11. Performance Indiv & Collective** — *Middle management : formation/suivi des cadres intermédiaires.*
+**11. Performance Indiv & Collective** *(dans le rapport : « Encadrement & Coordination »)* — *Middle management : formation/suivi des cadres intermédiaires.*
 Question distinctive : les relais/leaders intermédiaires du réseau sont-ils formés et alignés avec le
 discours officiel, indépendamment de la santé de la base communautaire dans son ensemble (ça, c'est RH) ?
 Web3 + affiliation : l'équivalent du management intermédiaire est la couche des **leaders d'affiliation /
 top recruteurs**. Vérifier : formation officielle pour les top-affiliés ; divergence entre discours des
 leaders et communication officielle. Sources : contenu Telegram/Discord des groupes de leaders, replays
 de formations si publiques.
+🔀 **Si le projet n'a PAS de système d'affiliation** : ne note pas 0 par défaut. Réoriente vers la couche
+de relais équivalente et **score normalement** : ambassadeurs, community leads, modérateurs, delegates DAO —
+sont-ils formés, encadrés, alignés avec le discours officiel ?
 
-**12. Management expérience** — *Réseau de conseillers/advisors ; expertise externe mobilisée.*
+**12. Management expérience** *(dans le rapport : « Advisors & Expertise »)* — *Réseau de conseillers/advisors ; expertise externe mobilisée.*
 Question distinctive : l'expertise externe mobilisée (advisors, auditeurs) est-elle réelle et vérifiable,
 indépendamment de la composition de l'équipe interne (ça, c'est Structuration/Moyens & Méthodes) ? Web3 :
 advisors réels et vérifiables ; fondateurs doxxés avec historique de projets précédents vérifiable ;
@@ -348,27 +362,27 @@ existence d'un canal d'alerte/signalement. Sources : LinkedIn (ancienneté du pr
 *Sain : un cap net, ajusté avec lucidité. Malade : absence de cap (improvisation), cap rigide qui refuse
 de s'adapter, ou pouvoir concentré entre trop peu de mains (surtout en contexte d'affiliation).*
 
-**13. Positionnement stratégique** — *ADN, raison d'être, résonance avec le marché.*
+**13. Positionnement stratégique** *(dans le rapport : « Positionnement stratégique »)* — *ADN, raison d'être, résonance avec le marché.*
 Question distinctive : le projet a-t-il une raison d'être qui survivrait à la disparition de l'affiliation,
 indépendamment de la qualité de ses arbitrages au jour le jour (ça, c'est Décisions) ? Web3 : vision et
 différenciation **indépendantes de l'affiliation** ; le projet peut-il énoncer un « pourquoi » qui ne
 dépend pas du rendement de parrainage ; cohérence whitepaper/roadmap sur 12-24 mois. Sources : whitepaper
 (vision/mission), cohérence pitch initial vs com actuelle (Wayback Machine). *(Lecture pondérée par la phase.)*
 
-**14. Décisions** — *Qualité des arbitrages critiques.*
+**14. Décisions** *(dans le rapport : « Arbitrages »)* — *Qualité des arbitrages critiques.*
 Question distinctive : les pivots et arbitrages passés sont-ils fondés et bien anticipés/communiqués,
 indépendamment du cap stratégique de fond (Positionnement) ou du suivi opérationnel courant (Gestion) ?
 Web3 : nombre de pivots récents du modèle économique ; préavis donné avant un changement majeur (barème,
 conditions de retrait). **Rappel : à pondérer selon la phase — pivots fréquents normaux en Q2, suspects en Q3.**
 Sources : historique des annonces officielles, archives du site.
 
-**15. Gestion** — *Suivi opérationnel quotidien, garder le cap.*
+**15. Gestion** *(dans le rapport : « Opérations »)* — *Suivi opérationnel quotidien, garder le cap.*
 Question distinctive : le pilotage opérationnel courant est-il régulier et fiable dans la durée,
 indépendamment de la qualité des grandes décisions ponctuelles (Décisions) ? Web3 : rapports d'activité
 réguliers et publics ; régularité du calendrier annoncé vs respecté. Sources : fréquence des posts
 officiels, existence d'un rapport périodique. *(Réflexe gouvernance : chercher espace public avant ⚪.)*
 
-**16. Structuration** — *Répartition du pouvoir dans l'organisation (management des n-2).*
+**16. Structuration** *(dans le rapport : « Structuration »)* — *Répartition du pouvoir dans l'organisation (management des n-2).*
 Question distinctive : qui détient réellement le pouvoir — techniquement, économiquement, ET
 humainement/organisationnellement — indépendamment de la performance du moteur de croissance (Vente) ou
 des ressources de production (Moyens & Méthodes) ? Web3 (**fonction critique — la structure de parrainage
@@ -383,6 +397,10 @@ EST une structure de pouvoir**) : trois dimensions à auditer sans les confondre
    déséquilibre de pouvoir de même nature que la concentration des gains sur le top des recruteurs. **Sans
    dupliquer** le score déjà donné en Finance sur la soutenabilité du déblocage (ici on regarde la
    concentration du pouvoir, pas la soutenabilité économique).
+   🔀 **Si le projet n'a PAS d'affiliation** : ne note pas 0 par défaut sur cette dimension. Évalue la
+   concentration du pouvoir économique par les autres canaux disponibles et **score normalement** :
+   concentration de l'allocation du token, répartition des revenus, dépendance à un petit nombre de gros
+   porteurs/clients, capture de valeur par l'équipe vs les utilisateurs.
 3. **Pouvoir organisationnel/humain** : rôles clés distincts et nommés (CEO, CTO, COO, Head of Growth…) vs
    fondateur unique cumulant tout ; **risque de « juge et partie »** — une même personne contrôle-t-elle des
    fonctions d'axes opposés (ex. Développement ET Production, ou Intelligence ET Pilotage) ? Cette configuration
@@ -399,27 +417,37 @@ Sources : lecture du smart contract (fonctions admin), plan de compensation, pag
 déformation. Malade : la dépendance — le projet ne relie plus, il utilise ; la communauté devient un
 instrument de recrutement plutôt qu'un lien vivant.*
 
-**17. Communication** — *Points de contact entreprise/environnement (marketing, branding, réseaux, corporate).*
+📌 **Note de traçabilité — Connectivité EST le 5ᵉ axe (point tranché, ne pas rouvrir).** Le manuel source
+comporte une note ambiguë sur la Connectivité au niveau (n-2), mais la vérification directe contre le
+Tableau 1 du manuel est sans appel : il liste explicitement **5 lignes à 4 fonctions chacune, Connectivité
+incluse**. Le traitement retenu ici est donc fidèle au texte source. Ne rouvre pas ce point sans preuve
+contraire documentée.
+
+**17. Communication** *(dans le rapport : « Communication »)* — *Points de contact entreprise/environnement (marketing, branding, réseaux, corporate).*
 Question distinctive : le discours est-il honnête et cohérent sur l'ensemble des canaux, indépendamment de
 la réputation externe qui en résulte (ça, c'est Qualité Corporate) ? Web3 : promesses de rendement chiffrées
 et tenues ; mention explicite du risque ; cohérence des messages entre canaux (site, X, Telegram). Sources :
 comparaison annonces passées vs versements réels rapportés par la communauté.
 
-**18. Contrôle de gestion** — *Mesure de l'efficacité consolidée (reporting).*
+**18. Contrôle de gestion** *(dans le rapport : « Suivi & Reporting »)* — *Mesure de l'efficacité consolidée (reporting).*
 Question distinctive : les engagements annoncés sont-ils effectivement suivis et vérifiables dans les faits,
 indépendamment de savoir si les paiements eux-mêmes sont honorés (ça, c'est Exécution) ? Ici on regarde le
 **reporting**, pas le versement. Web3 : traçabilité et transparence des flux ; flux vérifiables on-chain vs
 fonctionnement opaque (trésorerie off-chain, CEX privé) ; écart entre rendement annoncé et rendement réellement
 versé. Sources : Etherscan/BscScan (adresse de trésorerie publique ou non), dashboards Dune communautaires.
 
-**19. RH** — *Qualité du lien humain avec les collaborateurs/la communauté.*
+**19. RH** *(dans le rapport : « Communauté & Équipe »)* — *Qualité du lien humain avec les collaborateurs/la communauté.*
 Question distinctive : la communauté humaine est-elle un lien vivant ou un réservoir de recrutement,
 indépendamment de la qualité de l'encadrement des leaders intermédiaires (ça, c'est Performance Indiv &
 Collective) ? Web3 + affiliation (**cœur du diagnostic pyramidal**) : ratio nouveaux membres recrutés /
 membres actifs non-recruteurs ; rétention des affiliés à 3-6 mois ; ratio évangélistes (parlent du produit)
 vs recruteurs purs (parlent uniquement des gains). Sources : croissance des groupes Telegram/Discord, sentiment des posts.
+🔀 **Si le projet n'a PAS de système d'affiliation** : ne note pas 0 par défaut. Évalue la qualité du lien
+communautaire par les indicateurs génériques et **score normalement** : rétention et activité réelle des
+membres, ratio contributeurs/spectateurs, qualité des échanges (produit vs prix du token), réponse de
+l'équipe aux critiques.
 
-**20. SI** — *Systèmes d'information, outils, traçabilité.*
+**20. SI** *(dans le rapport : « Traçabilité & Dashboards »)* — *Systèmes d'information, outils, traçabilité.*
 Question distinctive : les outils de traçabilité mis à disposition des utilisateurs sont-ils réels et
 accessibles, indépendamment de si les flux sous-jacents sont sains (ça, c'est Contrôle de gestion) ? Ici on
 regarde l'outillage, pas la donnée qu'il révèle. Web3 : dashboard affilié transparent (filleuls, commissions
@@ -578,17 +606,21 @@ Fais une **passe de relecture finale dédiée** avant de rendre (markdown ET HTM
 de (a), traque toute phrase de (b), remplace/supprime. Les noms des 20 sous-fonctions (Marketing, Vente, R&D,
 Finance, RH, Décisions…) sont du langage courant et restent tels quels.
 
-**Table de correspondance (à utiliser partout) :**
+**Table de correspondance des 5 axes (à utiliser partout) :**
 
 | Terme interne (jamais affiché) | Nom affiché |
 |--------------------------------|-------------|
 | Développement (Bois) | Croissance & Traction |
 | Production (Métal) | Solidité de la livraison |
 | Intelligence (Eau) | Santé financière et légale |
-| Pilotage (Feu) | Direction & Pilotage |
+| Pilotage (Feu) | Gouvernance & Direction |
 | Connectivité (Terre) | Transparence & Relations |
 | Phase Q1/Q2/Q3/Q4 | Stade ① Démarrage / ② Construction / ③ Maturité opérationnelle / ④ Autonomie complète |
 | Déséquilibres organiques / tensions dialectiques | Tensions structurelles |
+
+**Les 20 sous-fonctions ne sont PAS renommées via une table** : leur nom affiché est indiqué
+**directement dans l'en-tête de chaque fonction** (`*(dans le rapport : « … »)*`), à l'endroit même où
+elle est analysée. Utilise ce nom affiché partout dans le livrable, jamais le nom technique.
 
 ### Partie 1 — Synthèse (2 pages max, ~3 min de lecture)
 1. Bandeau verdict : note globale /20 + une phrase de statut.
@@ -598,14 +630,18 @@ Finance, RH, Décisions…) sont du langage courant et restent tels quels.
 5. Tensions à surveiller : 2-3 max, en phrases de bon sens.
 6. Ce qui rassure / ce qui reste à vérifier.
 7. Verdict + mention « **ne constitue pas un conseil en investissement personnalisé** ».
+   **Tout score −1, même isolé, est nommé dans le Verdict** (fonction concernée + pourquoi c'est éliminatoire
+   ou pénalisant). C'est le **fond** qui est obligatoire — nommer la fonction et justifier — **pas une
+   formulation littérale imposée** : rédige-le naturellement, adapté au cas. Un −1 isolé au milieu d'un profil
+   correct est précisément l'information qu'un lecteur pressé raterait ; il ne doit jamais être noyé.
 
 ### Partie 2 — Annexe détaillée (longueur libre, orientée compréhension/investissement)
-1. Pour chacune des 5 grandes fonctions (nom affiché) : le détail des 4 sous-fonctions (nom courant), avec note individuelle, statut 🟢🟡⚪🔴 et justification sourcée. **Chaque constat porte la solidité de sa preuve en langage clair** : ex. « adresse de trésorerie lue on-chain » (fort) · « rapport d'audit d'un cabinet reconnu » (fort) · « plusieurs témoignages indépendants concordants » (moyen) · « annoncé par le projet, non confirmé par une source indépendante » (faible, signal non consolidé) · « rumeur isolée sans fait vérifiable » (très faible). Jamais de codes internes ni de règle de score.
+1. Pour chacune des 5 grandes fonctions (nom affiché) : le détail des 4 sous-fonctions (**nom affiché** de leur en-tête), avec note individuelle, statut 🟢🟡⚪🔴 et justification sourcée. **Tout score décisif (+1 / −1) porte obligatoirement la solidité de sa preuve en langage clair** (facultatif pour +0.5 / −0.5 / 0) : ex. « adresse de trésorerie lue on-chain » (fort) · « rapport d'audit d'un cabinet reconnu » (fort) · « plusieurs témoignages indépendants concordants » (moyen) · « annoncé par le projet, non confirmé par une source indépendante » (faible, signal non consolidé) · « rumeur isolée sans fait vérifiable » (très faible). Jamais de codes internes ni de règle de score.
 2. Les 4 indicateurs transversaux : nom, **définition** (à quoi l'indicateur correspond), score, et lecture en une phrase. ⚠️ **JAMAIS la composition** (la liste des fonctions qui le composent) — c'est du sous-calcul interne, il ne doit pas apparaître (gate #1 b). Colonnes : Indicateur / Définition / Score / Lecture.
 3. Le raisonnement complet derrière chaque tension structurelle identifiée en Partie 1.
 4. Le raisonnement complet derrière le stade identifié (indicateurs, niveau de confiance, fonctions relues à la lumière de la phase).
 5. Liste complète des points de vigilance / zones à vérifier, avec la question précise pour chacune.
-6. **Ce qui a été vérifié** — récap de couverture, fonction par fonction : ce qui a été cherché et la solidité de ce qui a été trouvé (en langage clair). Signale explicitement toute fonction pour laquelle la recherche a été plus limitée. Objectif : un lecteur peut reconstituer l'effort de vérification. **Sans jamais titrer « Méthodologie », sans échelle T1-T5, sans décrire le procédé** (gate #1 b).
+6. **« Ce qui a été vérifié » — SECTION OPTIONNELLE (mode « Audit renforcé »)** : ne l'inclus **que si l'user la demande explicitement**. Par défaut, elle n'apparaît pas — la solidité des preuves décisives est déjà portée par chaque constat (point 1), ce qui suffit au lecteur. Si demandée : récap de couverture fonction par fonction (ce qui a été cherché, solidité de ce qui a été trouvé, en langage clair), en signalant toute fonction où la recherche a été plus limitée. **Sans jamais titrer « Méthodologie », sans échelle T1-T5, sans décrire le procédé** (gate #1 b).
 7. Sources citées.
 8. **Sources écartées** (une ligne, uniquement si une source du registre a été rencontrée).
 
@@ -613,6 +649,47 @@ Finance, RH, Décisions…) sont du langage courant et restent tels quels.
 - **Cohérence stricte des scores** synthèse ⇄ annexe : une note affichée en Partie 1 se retrouve identique dans le détail de la Partie 2.
 - **Aucune marque, aucun jargon de méthode, aucune description de la mécanique nulle part** (voir gate #1 a+b), y compris dans l'annexe et le PDF.
 - La Partie 2 reste écrite pour un lecteur motivé **non-expert** : elle rentre dans le détail des constats, elle ne redevient pas un document d'audit interne et n'expose jamais la méthode.
+
+---
+
+## ✅ CHECKLIST OBLIGATOIRE — avant de livrer un audit
+
+Un audit n'est **pas livrable** tant que ces 6 points ne sont pas faits. Vérifie-les explicitement avant de
+rendre le document. Sans eux, deux audits produits avec ce même parcours ne sont pas comparables entre eux —
+ce qui détruit l'intérêt d'avoir un référentiel unique.
+
+- [ ] **Les 20 fonctions sont scorées** (aucune oubliée ; une fonction non vérifiée est ⚪ 0, pas absente).
+- [ ] **Les 5 sous-totaux d'axe sont calculés** et affichés.
+- [ ] **Les 4 indicateurs transversaux sont calculés ET affichés dans leur tableau** (Indicateur / Définition /
+      Score / Lecture — jamais la composition).
+- [ ] **Le module de diagnostic est appliqué** (règle de garde, puis A1/A2/A3/B/C) — **même si la conclusion est
+      « aucun déséquilibre significatif »**, auquel cas on l'écrit explicitement (c'est une information positive).
+- [ ] **La phase de croissance est identifiée** et affichée (stade + niveau de confiance).
+- [ ] **Tout score −1 est nommé dans le Verdict**, avec la fonction concernée et sa justification.
+
+---
+
+## 🔄 PROTOCOLE DE MISE À JOUR D'UN AUDIT EXISTANT
+
+Un audit n'est pas un one-shot : c'est un **dossier vivant**, mis à jour sur plusieurs jours ou semaines à
+mesure que l'information arrive. Sans convention, chaque session réinvente la sienne et l'historique se perd.
+Quand tu reprends un audit déjà existant dans `$AUDIT_DIR` :
+
+1. **Date chaque entrée, n'écrase jamais l'historique.** Une nouvelle information s'ajoute avec sa date ; elle
+   ne remplace pas silencieusement la précédente. L'évolution du dossier doit rester lisible.
+2. **Affiche le score avant/après en cas de changement.** Toute révision de score est explicite :
+   « Fonction X : −1 → +0.5 (nouvelle preuve : audit publié le JJ/MM, cabinet reconnu) ». Jamais une
+   modification muette.
+3. **Recalcule en cascade.** Un score qui change impose de recalculer et de réafficher : le score global
+   normalisé, le sous-total de l'axe concerné, et **tous les indicateurs transversaux qui contiennent cette
+   fonction** (voir composition interne). Un audit dont le détail a bougé mais dont les agrégats sont restés
+   figés est incohérent.
+4. **Portée transversale d'une preuve.** Une preuve nouvelle vaut pour **toutes** les fonctions qu'elle
+   éclaire, pas seulement celle qu'on était en train de regarder. Repasse les fonctions concernées.
+5. **Un changement de phase de croissance est un événement de mise à jour à part entière.** Si le projet
+   passe d'un stade au suivant, dis-le, date-le, et **relis les fonctions dont l'interprétation dépend de la
+   phase** (Arbitrages, Structuration, Positionnement stratégique) — une instabilité normale au stade
+   précédent peut devenir un signal d'alerte au stade suivant.
 
 ---
 
