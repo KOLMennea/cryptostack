@@ -3,9 +3,11 @@ name: crypto-update
 description: |
   Met à jour cryptostack vers la dernière version publiée sur GitHub. Lance
   un git pull dans le repo local (~/cryptostack/), affiche le changelog des
-  nouveaux commits, et confirme que les symlinks vers ~/.claude/skills/ sont
-  bien actifs. Aucune action destructive — si tu as des éditions locales non
-  commitées dans le repo, le skill stoppe et te demande quoi faire.
+  nouveaux commits, et branche automatiquement les skills dans ~/.claude/skills/
+  (crée les symlinks manquants, y compris pour un nouveau skill publié en amont).
+  Fonctionne aussi sans git (chemin de secours par téléchargement direct).
+  Aucune action destructive — si tu as des éditions locales non commitées dans
+  le repo, le skill stoppe et te demande quoi faire.
   Use when user asks to "update crypto", "/crypto-update", "/update crypto",
   "mets à jour cryptostack", "pull latest crypto", "y a-t-il des updates crypto".
 allowed-tools:
@@ -191,28 +193,63 @@ Options :
 
 Si A : `git pull --ff-only origin <branch>`.
 
-## Phase 6 — Vérifier les symlinks
+## Phase 6 — Vérifier ET réparer les symlinks (auto)
+
+Un `git pull` récupère les **dossiers** des skills, mais pas les symlinks vers `~/.claude/skills/`.
+Sans symlink, un skill nouvellement publié en amont (ex. un nouveau `/audit-affiliation`) est présent
+sur le disque mais **la commande n'existe pas** dans Claude Code. Cette phase répare automatiquement.
+
+Le parcours des skills est **dérivé du repo**, pas codé en dur : tout nouveau skill publié en amont est
+donc pris en charge sans modifier ce fichier.
 
 ```bash
+REPO_DIR="${HOME}/cryptostack"
 SKILL_DIR="${HOME}/.claude/skills"
+mkdir -p "$SKILL_DIR"
+CREATED=0
 
-for skill in crypto audit-affiliation crypto-update; do
-  if [ -L "$SKILL_DIR/$skill" ]; then
-    TARGET=$(readlink "$SKILL_DIR/$skill")
-    echo "✅ $SKILL_DIR/$skill → $TARGET"
+# Tout dossier du repo contenant un SKILL.md est un skill à brancher.
+for SKILL_PATH in "$REPO_DIR"/*/SKILL.md; do
+  [ -e "$SKILL_PATH" ] || continue
+  skill=$(basename "$(dirname "$SKILL_PATH")")
+  TARGET="$REPO_DIR/$skill"
+  LINK="$SKILL_DIR/$skill"
+
+  if [ -L "$LINK" ]; then
+    CURRENT=$(readlink "$LINK")
+    if [ "$CURRENT" = "$TARGET" ]; then
+      echo "✅ $skill"
+    else
+      rm "$LINK" && ln -s "$TARGET" "$LINK"
+      echo "🔧 $skill : symlink repointé ($CURRENT → $TARGET)"
+      CREATED=$((CREATED+1))
+    fi
+  elif [ -e "$LINK" ]; then
+    # Vrai fichier/dossier : NE PAS écraser (risque de perte de travail).
+    echo "⛔ $LINK existe et n'est PAS un symlink — non modifié."
+    echo "   Sauvegarde-le puis relance : mv \"$LINK\" \"$LINK.bak\" && cd $REPO_DIR && ./install.sh"
   else
-    echo "⚠️ $SKILL_DIR/$skill n'est PAS un symlink"
-    echo "   Lance : ./install.sh depuis ~/cryptostack pour réparer"
+    ln -s "$TARGET" "$LINK"
+    echo "🆕 $skill : symlink créé (nouveau skill disponible)"
+    CREATED=$((CREATED+1))
   fi
 done
+
+[ "$CREATED" -gt 0 ] && echo "" && echo "→ $CREATED symlink(s) ajouté(s)/réparé(s). Redémarre Claude Code pour que les commandes apparaissent."
 ```
+
+Si un ou plusieurs symlinks ont été **créés** (nouveau skill), annonce-le explicitement à l'user en
+Phase 7 avec le nom de la ou des nouvelles commandes disponibles, et rappelle le redémarrage de
+Claude Code (les skills sont chargés au démarrage).
 
 ## Phase 7 — Sortie finale
 
 Affiche :
 - Hash du nouveau commit local
 - VERSION (lis le fichier `~/cryptostack/VERSION` s'il existe)
-- "✅ cryptostack à jour. Le nouveau /crypto est immédiatement actif (symlink)."
+- La liste des skills actifs (issue de la Phase 6)
+- **Si un nouveau symlink a été créé** : "🆕 Nouvelle(s) commande(s) disponible(s) : /<skill>. **Redémarre Claude Code** pour qu'elle(s) apparaisse(nt)."
+- Sinon : "✅ cryptostack à jour. Les skills sont immédiatement actifs (symlinks)."
 - Si stash A choisi en Phase 2 : "Restore terminé." OU si conflit "⚠️ stash pop a échoué, résous les conflits dans ~/cryptostack/"
 
 ## Contraintes
@@ -220,5 +257,5 @@ Affiche :
 - **Aucune action destructive** : pas de `git reset --hard`, pas de `git clean`, pas de `--force`.
 - **Stash auto** seulement avec confirmation explicite de l'user (option A en Phase 2).
 - **Si push manqué côté mainteneur** : indique simplement "déjà à jour" sans paniquer.
-- **Pas de réinstallation des symlinks** : juste vérification. Si cassé, propose `./install.sh`.
+- **Symlinks réparés automatiquement** (Phase 6) : création d'un symlink manquant et repointage d'un symlink erroné sont des actions sûres et non destructives. **Exception stricte** : si le chemin existe et n'est **pas** un symlink (vrai fichier/dossier), on n'y touche JAMAIS — on affiche la marche à suivre et on continue.
 - **Affiche toujours** le changelog avant de puller — l'user doit voir ce qui change.
