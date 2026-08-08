@@ -1,5 +1,16 @@
 # Changelog
 
+## v1.4.0 — 2026-07-29
+
+- `/audit-affiliation` : vocabulaire du rapport rendu crypto-natif et plus lisible
+  pour un lecteur non-expert.
+- Projets sans système d'affiliation : les critères concernés sont réorientés vers
+  leur équivalent générique au lieu de rester sans réponse.
+- Charge de justification recentrée sur les constats décisifs ; récapitulatif de
+  couverture désormais optionnel (mode approfondi, sur demande).
+- Nouveau protocole de mise à jour d'un audit existant (historique daté, score
+  avant/après, recalcul en cascade) et checklist de contrôle avant livraison.
+
 ## v1.3.1 — 2026-07-29
 
 - `/audit-affiliation` : les indicateurs transversaux sont présentés avec leur
