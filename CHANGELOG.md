@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.3.1 — 2026-07-29
+
+- `/audit-affiliation` : les indicateurs transversaux sont présentés avec leur
+  définition (à quoi ils correspondent) au lieu du détail de leur sous-calcul.
+
 ## v1.3.0 — 2026-07-29
 
 - `/audit-affiliation` : protocole anti-biais. Les preuves sont pondérées par leur
