@@ -38,6 +38,15 @@ ou explicitement marqué comme non vérifié**.
 sécurité technique et la gouvernance sont évaluées avec la **même rigueur** que le risque
 pyramidal — ce ne sont pas des dimensions secondaires.
 
+**Ce que le score mesure, et ce qu'il ne mesure pas.** La note globale répond à une question précise : *ce
+projet est-il structurellement sain, gouverné proprement, transparent ?* — une question d'**audit de
+gouvernance**. Elle ne répond pas à « est-ce qu'une petite position spéculative sur tel produit précis serait
+rationnelle ? » — une question d'**opportunité d'investissement**, plus étroite, qui peut avoir une réponse
+positive même quand la gouvernance d'ensemble échoue l'audit (un produit isolé peut fonctionner honnêtement
+au sein d'une structure par ailleurs opaque). **Rends cette distinction explicite dans le Verdict de la
+Partie 1** plutôt que de laisser le lecteur la déduire — voir aussi l'indicateur de risque combiné, qui
+adresse le risque global mais ne remplace pas ce cadrage initial.
+
 ⚠️ **L'affiliation multi-niveau n'est jamais un red flag en soi.** Un système d'affiliation
 sain, financé par une création de valeur réelle, est un atout. Le signal d'alerte central
 est : *rendement/commissions financés par les nouveaux dépôts plutôt que par un revenu
@@ -149,6 +158,15 @@ Toute source utilisée pour justifier un score est classée dans l'un des 5 nive
 | T4 | Déclaration auto-rapportée non vérifiée | Communication officielle du projet, whitepaper, témoignage isolé |
 | T5 | Indice / rumeur circonstancielle | Mention isolée, sentiment général, « ça sent le scam » sans fait vérifiable |
 
+**Cas particulier — sources d'investigation spécialisées à fiabilité connue mais imparfaite** (ex. BehindMLM
+et sites équivalents dédiés au repérage de schémas pyramidaux). Ce ne sont **ni des sources T2 par défaut**
+(leur taux de confirmation, quand il est documenté, est significativement inférieur à celui d'un régulateur ou
+d'un cabinet d'audit — souvent de l'ordre de 40 à 90 % selon le niveau de preuve exigé, jamais garanti), **ni
+du pur T4** (elles ont un travail d'investigation et un track record, pas une simple déclaration).
+**Règle** : classe-les en **T3 uniquement si le fait est corroboré par une deuxième source indépendante** ;
+sinon en **T4**, avec mention explicite du niveau de fiabilité connu de la source si tu le connais ou le
+trouves (« source à fiabilité partielle documentée, non corroborée ici »).
+
 **Règles de conversion preuve → score :**
 - Un score **décisif** (+1 ou −1) exige une preuve **T1, T2 ou T3**.
 - Si seules des preuves **T4 ou T5** sont disponibles, le score ne peut pas dépasser **+0.5 / −0.5** (orange),
@@ -227,6 +245,22 @@ le fait brut, jamais la conclusion qu'on en tire.
    clair** de sa preuve (voir Format de restitution) — ce qui a été vérifié et à quel point c'est solide —
    SANS jamais nommer l'échelle T1-T5 ni décrire le procédé (gate #1). Le récap de couverture complet, lui,
    est optionnel (mode « Audit renforcé », sur demande).
+5. **Portée transversale d'une preuve** : un fait nouveau vaut pour **toutes** les fonctions qu'il éclaire, pas
+   seulement celle qu'on regardait — repasse les fonctions concernées.
+6. **⚠️ Signal corrélé vs signaux indépendants — ne jamais laisser un seul fait se compter plusieurs fois sans
+   le dire.** Cette règle est le **pendant obligatoire de la précédente** : faire remonter un même fait
+   sous-jacent dans plusieurs fonctions (ce que la règle 5 impose) fait mécaniquement baisser le score agrégé
+   plusieurs fois pour une seule cause réelle — la non-pondération des 20 fonctions n'a pas de garde-fou
+   naturel contre ce doublement.
+   Dès qu'un même fait sous-jacent justifie un red flag ou un signal négatif sur **deux fonctions ou plus**,
+   marque-le explicitement comme **« 1 signal corrélé impactant N fonctions »** (nomme le fait et les fonctions
+   concernées). Dans le **Verdict de la Partie 1** et dans le décompte des red flags, distingue toujours le
+   **nombre de red flags bruts** (ce que le score reflète mécaniquement) du **nombre de causes racines
+   indépendantes** (ce que le lecteur doit vraiment retenir) — pour qu'il comprenne « 3 fonctions touchées par
+   le même problème » plutôt que de croire à 3 problèmes distincts et non liés.
+   *Exemple* : un réseau de fondateurs recyclé d'un projet frauduleux précédent justifie un red flag sur
+   Marketing, Qualité Corporate, Performance des relais et Structuration — c'est **1 cause racine, 4 fonctions
+   touchées**, pas 4 problèmes.
 
 ---
 
@@ -660,6 +694,13 @@ Communication) ?
 - **Pôle A — Perception externe** : entité juridique identifiable ; le programme d'affiliation est-il
   qualifiable de vente pyramidale dans la juridiction visée ; presse organique (rédactionnel indépendant) vs
   sponsorisée (contenu payé).
+  ⚠️ **Granularité obligatoire des avertissements réglementaires** : ne jamais agréger des avertissements de
+  gravité différente dans un compteur unique (ex. « 5 avertissements réglementaires » en bloc). Distingue
+  explicitement au minimum : un régulateur qui déclare le projet **« non autorisé à opérer »** dans sa
+  juridiction (gravité modérée — statut administratif, courant pour un projet étranger non enregistré
+  localement) d'un avertissement nommant explicitement une **« fraude »** ou une **« activité illicite »**
+  (gravité forte — accusation qualifiée). Compter les deux de la même façon gonfle artificiellement le poids
+  de cette fonction et déforme la lecture du lecteur.
   *Sources* : registres du commerce (Infogreffe, Companies House, OpenCorporates), registres de régulateurs
   (AMF, SEC EDGAR, FCA), recherche « [nom du projet] + scam / lawsuit / warning ».
   *Interview (repli)* : « Sous quelle entité juridique et dans quelle juridiction le projet opère-t-il ? »
@@ -1165,39 +1206,87 @@ vitrine vs arrière-boutique vide (RM≫CE), bon projet mal positionné (CE≫RM
 d'absorption (RM≫PC), fondations prêtes mais marché absent (PC≫RM), décisions jamais concrétisées (CA≫CE),
 exécution disciplinée d'un cap obsolète (CE≫CA), tout prêt mais rien ne sort (PC≫CE), exécution non soutenable (CE≫PC), etc.
 
-### D. Vérification des tensions inter-fonctionnelles significatives
+### D. Tensions clés à surveiller (lecture investisseur)
 
-Chaque fonction porte sa propre tension interne (voir sa fiche). Mais certaines **paires de fonctions**, bien
-qu'appartenant à des axes différents, doivent en plus être lues l'une contre l'autre — leur écart révèle un
-risque qu'aucune des deux ne montre isolément. Ne pas se limiter aux paires ci-dessous si le contexte du
-projet en révèle d'autres, mais celles-ci sont **systématiquement à vérifier**.
+Chaque fonction porte sa propre tension interne (voir sa fiche). Certaines **paires de fonctions** partagent la
+même position dans la structure et doivent en plus être lues l'une contre l'autre : le croisement de leurs
+deux tensions internes révèle un risque qu'aucune ne montre isolément. Affichage à **deux niveaux** pour ne pas
+noyer un lecteur pressé quand tout est équilibré.
 
-| Paire | Ce que l'écart révèle |
-|---|---|
-| Vente ↔ Exécution/Production | Une Vente forte (conversion/croissance élevée) avec une Production faible signale une croissance que le projet ne peut pas absorber — le moteur avance plus vite que la capacité de livraison. |
-| Vente ↔ Finance | Une part disproportionnée du budget global allouée à l'acquisition/l'incitatif plutôt qu'au produit (R&D, infrastructure) est un signal en soi, indépendamment de la performance du moteur de conversion. |
-| Vente ↔ Phase de croissance | Une agressivité commerciale/incitative forte est normale en ② Construction (le moteur se teste) mais devient suspecte si elle persiste identique en ③ et au-delà (le moteur aurait dû se stabiliser vers une croissance plus filtrée). |
-| Marketing ↔ Positionnement stratégique | Ne jamais confondre : Marketing juge la justesse du ciblage/discours, Positionnement juge la vision/l'ADN. Un bon ciblage sur une vision incohérente n'est pas un point positif pour Positionnement, et une belle vision mal ciblée n'est pas un point négatif pour elle. |
-| Structuration ↔ R&D/Production | C'est la tension interne propre de Structuration (Innovation vs Production) — vérifier concrètement si la gouvernance en place absorbe l'innovation sans désorganiser la capacité de livraison, ou l'inverse. |
-| Qualité produit ↔ Product Management | Un produit fiable qui ne répond à aucun besoin réel (Qualité produit haute, Product Management basse) et un produit qui répond à un besoin mais n'est pas sécurisé (l'inverse) sont deux pathologies très différentes à ne pas confondre dans le diagnostic global. |
-| Finance ↔ Structuration | Au-delà du seul cas tokenomics déjà traité en fiche : une trésorerie saine mais un pouvoir de décision sur cette trésorerie concentré entre une seule main reste un risque, même si Finance seule apparaît verte. |
-| RH ↔ Performance Indiv & Collective | Une base communautaire saine mais des leaders/relais mal encadrés (ou l'inverse : des leaders bien formés qui pilotent une base fantôme) sont deux signaux distincts qu'un score agrégé pourrait masquer l'un derrière l'autre. |
-| Communication ↔ Qualité Corporate | Un discours cohérent en interne (Communication haute) mais une réputation externe dégradée (Qualité Corporate basse) signale un décalage entre ce que le projet dit de lui-même et ce que le marché/les institutions en perçoivent réellement — vérifier lequel des deux reflète la réalité. |
-| SI ↔ Structuration | De bons outils de traçabilité affichés (SI haute) ne compensent jamais une concentration réelle du pouvoir technique/économique (Structuration basse) — la transparence de façade ne doit jamais être confondue avec une gouvernance saine. |
+#### NIVEAU 1 — toujours affichées (quel que soit l'équilibre constaté)
 
-**Enrichir la lecture avec la direction du déséquilibre.** Quand une paire ci-dessus est effectivement en
-alerte (une ou les deux fonctions concernées à −1), ne te contente pas de juxtaposer deux scores négatifs —
-**cite la direction nommée de chacune** (voir « Nomme toujours la direction d'un −1 », Méthodologie de
-scoring). « Vente −1 (excès Volume, manque de Filtre) ↔ Exécution −1 (manque de Process) » raconte une
-histoire précise et actionnable ; « Vente −1 ↔ Exécution −1 » seul ne le fait pas. Cette précision ne demande
-aucune recherche supplémentaire — la direction est déjà nommée dans chaque fiche individuelle, il s'agit
-seulement de la citer au moment de croiser les deux fonctions.
+**1. R&D ↔ Moyens & Méthodes — « Écart Ambition-Capacité »**
+Croisement : Idée vs Pertinence (R&D) × Besoins vs « Réponse » (M&M).
+- *excès-Idée + excès-Besoins* → double emballement : innovation dans le vide **et** infrastructure promise mais absente — **le cas le plus dangereux de cette paire**.
+- *excès-Idée + excès-Réponse* → capacité réelle disponible mais gaspillée sur de l'innovation gratuite plutôt qu'utile.
+- *excès-Pertinence + excès-Besoins* → même le mode réactif est sous-doté — fragilité chronique.
+- *excès-Pertinence + excès-Réponse* → moyens disponibles mais jamais mobilisés pour anticiper — stagnation malgré les ressources.
+
+**2. Vente ↔ Qualité produit — « Écart Accueil-Livraison »**
+Croisement : Packaging vs Volume (Vente) × Productivité vs Promesse (Qualité produit).
+- *excès-Volume + excès-Productivité* → afflux massif non filtré + corners coupés sur la sécurité — **la combinaison la plus prédictive d'un effondrement de réputation brutal**.
+- *excès-Volume + excès-Promesse* → beaucoup de monde laissé entrer, mais le produit reste fiable — risque atténué, mais à surveiller.
+- *excès-Packaging + excès-Productivité* → peu de monde laissé entrer, livré vite mais fragile — risque concentré sur peu d'utilisateurs.
+- *excès-Packaging + excès-Promesse* → double prudence — stagnation plutôt que danger immédiat.
+
+**3. Positionnement stratégique ↔ Finance — « Écart Narratif-Substance »**
+Croisement : Nature du produit vs Segments (Positionnement) × Micro vs Macro (Finance).
+- *Positionnement fort (Nature du produit) + excès-Micro* → belle histoire qui finance une mécanique intenable — le narratif masque la fragilité structurelle.
+- *Positionnement fort + excès-Macro* → vision cohérente, finances globalement saines mais mal gérées au niveau individuel — friction opérationnelle, pas fraude structurelle.
+- *excès-Segments (cosmétique) + excès-Micro* → double signal d'alerte, aucune substance ni narrative ni financière.
+- *excès-Segments + excès-Macro* → chiffres propres mais aucune direction — un shell financier sans âme.
+
+**4. Indice de dispersion positionnelle (Développement ↔ Production)**
+Ne compare pas deux fonctions entre elles : mesure l'**homogénéité des 4 paires horizontales** position-à-position
+de l'axe Développement/Production — R&D↔M&M, Vente↔Qualité produit, Marketing↔Product Management,
+Implémentation↔Exécution.
+- *Dispersion faible* (les 4 paires racontent une histoire cohérente entre elles) : le déséquilibre
+  Accélération/Fondations du Module B, s'il existe, est uniforme sur tout l'axe — prévisible.
+- *Dispersion forte* (une ou deux positions très déséquilibrées, les autres saines) : signal qu'une moyenne
+  d'axe rassurante **cache un problème localisé** — nomme explicitement quelle paire tire la dispersion.
+
+#### NIVEAU 2 — affichées seulement si déséquilibre significatif
+
+Seuil de déclenchement : **une des deux fonctions à −1, OU écart de score ≥ 1.5 entre les deux.**
+
+**5. Marketing ↔ Product Management — « Écart Promesse-Produit »**
+Croisement : Segment vs Volume (Marketing) × « Marché » vs Conditions de fabrication (PM).
+- *excès-Volume + manque-« Marché »* → overselling classique — le discours crée une attente que le produit ne tient pas.
+- *excès-Segment + excès-Fabrication* → produit bien construit pour une audience que le marketing, trop prudent, ne fait pas venir — pépite mal vendue.
+
+**6. Implémentation ↔ Exécution — « Indice Vitrine Opérationnelle »**
+Croisement : Opportunité externe vs Cohérence de positionnement (Implémentation) × Pratique vs Process (Exécution).
+- *excès-Opportunité + excès-Process* → façade d'innovation externe sur des engagements de base déjà non tenus — communique plus vite qu'il ne construit.
+- *excès-Cohérence (isolement) + excès-Pratique* → projet technique fermé mais qui tient ses promesses au jour le jour de façon fragile/manuelle.
+
+**7. Management expérience ↔ Structuration — « Indice Légitimité de Façade »**
+Croisement : Externe vs Interne (Mgmt expérience) × dimension pouvoir organisationnel (Structuration).
+- *excès-Externe + pouvoir concentré* → **« advisor washing »** : des noms connus en vitrine, aucun contre-pouvoir réel derrière. **Le pattern le plus trompeur pour un investisseur non averti.**
+
+**8. Qualité Corporate ↔ Décisions — « Indice Gouvernance Réactive »**
+Croisement : Externe vs Interne (Qualité Corporate) × Objectifs vs Moyens ($) (Décisions).
+- *excès-Externe (préoccupé par l'image) + excès-Moyens (dépense réactive sans rationale)* → gouvernance qui pilote au gré des crises de réputation plutôt que d'une stratégie — « pilotage par la panique ».
+
+**9. RH ↔ Gestion — « Indice Fragilité Cumulée »**
+Croisement : Humain vs Intelligence collective (RH) × Hommes vs Process (Gestion).
+- *excès-Humain (communauté nombreuse mais purement descendante) + excès-Hommes (pilotage dépendant d'1-2 personnes)* → cumul de deux fragilités humaines à des échelles différentes : base mercenaire + pilotage à un seul point de défaillance — risque d'effondrement rapide en cas de départ d'une personne clé.
+
+**10. SI ↔ Structuration — « Indice Transparence de Façade »**
+Croisement : Accès vs Sécurité/confidentialité (SI) × dimension pouvoir technique (Structuration).
+- *excès-Accès (beaux dashboards publics) + pouvoir concentré* → **transparence-théâtre** : la visibilité de façade masque un contrôle réel verrouillé — exactement le signal qu'un lecteur pressé, rassuré par de beaux outils publics, pourrait rater.
+
+⚠️ **Nomme la combinaison excès/manque constatée**, pas seulement la paire. « Vente excès-Volume + Qualité
+produit excès-Productivité » raconte une histoire actionnable ; « Vente −1 ↔ Qualité produit −1 » ne le fait
+pas. La direction est déjà nommée dans chaque fiche : il s'agit seulement de la citer en croisant.
+⚠️ Les noms de positions internes (Singularité, Conformité, Pertinence, Intégration) sont du vocabulaire de
+méthode : ils servent à sélectionner les paires, ils **n'apparaissent jamais dans le livrable** (gate #1).
 
 ### Utilisation dans le rapport
 1. Calcule d'abord les 5 sous-totaux d'axe et les 4 indicateurs transversaux.
 2. Applique les seuils ci-dessus pour identifier tout écart significatif (**sections A, B, C**).
-3. Pour **chaque paire de la section D**, vérifie explicitement si l'écart de score entre les deux fonctions
-   révèle une des lectures indiquées.
+3. **Section D** : affiche **systématiquement les 4 tensions du Niveau 1**, avec la combinaison excès/manque
+   constatée. Affiche les tensions du **Niveau 2 uniquement si leur seuil de déclenchement est atteint** (une
+   fonction à −1, ou écart ≥ 1.5).
 4. Pour chaque déséquilibre détecté (**A, B, C ou D**), cite la configuration correspondante et son risque
    associé — jamais un chiffre brut sans le faire parler.
 5. Si aucun déséquilibre significatif n'est détecté (tous les axes/indicateurs/paires sont proches les uns des
@@ -1351,11 +1440,12 @@ Finance, RH, Décisions…) sont du langage courant et restent tels quels.
 elle est analysée. Utilise ce nom affiché partout dans le livrable, jamais le nom technique.
 
 ### Partie 1 — Synthèse (2 pages max, ~3 min de lecture)
-1. Bandeau verdict : note globale /20 + une phrase de statut + **l'étiquette de risque combiné** (Faible → Très élevé) **avec sa note de lecture**, aux côtés de toute fonction à −1 déjà signalée.
+1. Bandeau verdict : note globale /20 + une phrase de statut + **l'étiquette de risque combiné** (Faible → Très élevé) **avec sa note de lecture**, aux côtés de toute fonction à −1 déjà signalée. **Si un signal corrélé existe**, affiche le décompte **red flags bruts vs causes racines indépendantes**. Rappelle en une phrase ce que le score mesure (santé structurelle/gouvernance) et ce qu'il ne mesure pas (opportunité d'investissement sur un produit isolé).
 2. En bref : 4-5 puces max.
 3. « Où en est l'entreprise ? » : les 4 stades expliqués simplement, puis position du projet.
 4. Bilan de santé par grande fonction : tableau 4 colonnes (Fonction [nom affiché] / **Note sur 4** / Statut en un mot / Explication en une phrase).
-5. Tensions à surveiller : 2-3 max, en phrases de bon sens.
+5. Tensions à surveiller : **les 4 tensions clés toujours affichées** (Module de diagnostic, section D,
+   Niveau 1) en phrases de bon sens, **plus toute tension du Niveau 2 déclenchée**.
 6. Ce qui rassure / ce qui reste à vérifier.
 7. Verdict + mention « **ne constitue pas un conseil en investissement personnalisé** ».
    **Tout score −1, même isolé, est nommé dans le Verdict** (fonction concernée + pourquoi c'est éliminatoire
@@ -1395,6 +1485,7 @@ ce qui détruit l'intérêt d'avoir un référentiel unique.
 - [ ] **La phase de croissance est identifiée** et affichée (stade + niveau de confiance).
 - [ ] **Le module Cohérence croisée des preuves a été exécuté** (même si la conclusion est « aucune dissonance »), **avant** le calcul des agrégats et du module de diagnostic.
 - [ ] **L'indicateur de risque combiné (score × phase) est calculé**, avec son étiquette et sa note de lecture, et **affiché dans le Bandeau verdict**.
+- [ ] **Tout signal corrélé** (un même fait impactant 2 fonctions ou plus) **est identifié et signalé explicitement**, avec le décompte red flags bruts vs causes racines.
 - [ ] **Tout score −1 est nommé dans le Verdict**, avec la fonction concernée et sa justification.
 
 ---
