@@ -1,5 +1,19 @@
 # Changelog
 
+## v1.5.0 — 2026-08-10
+
+- `/audit-affiliation` : l'audit se déroule désormais en **10 étapes validées une par
+  une** — rien ne s'enchaîne sans confirmation.
+- Chaque critère est lu selon **deux dimensions opposées** plutôt qu'en bloc, ce qui
+  permet de détecter un déséquilibre extrême qui passait inaperçu jusqu'ici.
+- Nouveau **module de cohérence croisée** : les faits collectés sont recoupés entre eux
+  (chronologie, identités, déclarations vs capacité observée, témoignages d'interviews)
+  avant tout calcul, avec réévaluation des scores si nécessaire.
+- Nouveaux **réflexes de vérification de sources** contre les faux signaux coordonnés.
+- Nouvel **indicateur de risque** croisant le résultat et la maturité du projet.
+- Vérification systématique des **tensions entre critères** (10 paires).
+- Vocabulaire du rapport rendu plus lisible ; projets sans affiliation mieux traités.
+
 ## v1.4.1 — 2026-07-29
 
 - `/crypto-update` branche désormais les skills automatiquement : un nouveau skill
