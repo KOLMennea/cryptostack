@@ -1520,8 +1520,11 @@ Quand tu reprends un audit déjà existant dans `$AUDIT_DIR` :
    normalisé, le sous-total de l'axe concerné, et **tous les indicateurs transversaux qui contiennent cette
    fonction** (voir composition interne). Un audit dont le détail a bougé mais dont les agrégats sont restés
    figés est incohérent.
-4. **Portée transversale d'une preuve.** Une preuve nouvelle vaut pour **toutes** les fonctions qu'elle
-   éclaire, pas seulement celle qu'on était en train de regarder. Repasse les fonctions concernées.
+4. **Portée transversale, et son garde-fou.** Applique ici les deux règles jumelles déjà énoncées dans le
+   Protocole anti-biais (points 5 et 6) — elles valent à l'identique en mise à jour, avec une conséquence
+   propre : une preuve nouvelle vaut pour **toutes** les fonctions qu'elle éclaire (repasse-les), et si elle
+   en touche deux ou plus, c'est **1 signal corrélé impactant N fonctions**, pas N nouveaux problèmes. Le
+   décompte red flags bruts vs causes racines du Verdict doit être **recalculé**, pas seulement les scores.
 5. **Un changement de phase de croissance est un événement de mise à jour à part entière.** Si le projet
    passe d'un stade au suivant, dis-le, date-le, et **relis les fonctions dont l'interprétation dépend de la
    phase** (Arbitrages, Structuration, Positionnement stratégique) — une instabilité normale au stade

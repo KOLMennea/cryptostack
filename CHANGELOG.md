@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.6.2 — 2026-08-10
+
+- `/audit-affiliation` : lors de la mise à jour d'un audit existant, le décompte
+  distinguant les alertes brutes des causes réelles est désormais recalculé, et plus
+  seulement les scores.
+
 ## v1.6.1 — 2026-08-10
 
 - `/audit-affiliation` : passe de cohérence après les intégrations récentes.
