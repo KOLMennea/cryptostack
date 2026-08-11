@@ -45,6 +45,43 @@ externe identifiable.*
 
 ---
 
+## 🛑 PROTOCOLE D'EXÉCUTION — 10 étapes validées une par une
+
+**Règle absolue : tu n'enchaînes JAMAIS automatiquement d'une étape à la suivante.** À chaque étape, tu
+t'arrêtes, tu présentes ce que tu as trouvé, et tu attends une **confirmation explicite** de l'user.
+
+Le point d'arrêt se matérialise par un appel **`AskUserQuestion`** (« Valider et passer à l'étape suivante /
+Revoir cette étape / Mettre en pause »). C'est un vrai point d'arrêt géré par l'outil, pas une intention :
+tu ne peux pas continuer sans réponse. N'utilise jamais une simple phrase « dis-moi si tu valides » à la
+place — ça ne bloque rien.
+
+| # | Étape | Ce que tu présentes avant de t'arrêter |
+|---|---|---|
+| 1 | **Diagnostic de phase de croissance** | La phase identifiée, le niveau de confiance, les indicateurs qui l'ont déterminée |
+| 2 | **Axe Développement** (Marketing, Vente, Implémentation, R&D) | Les 4 scores avec justification |
+| 3 | **Axe Production** (Product Management, Qualité produit, Moyens & Méthodes, Exécution) | Les 4 scores avec justification |
+| 4 | **Axe Intelligence** (Finance, Qualité Corporate, Performance Indiv & Collective, Management expérience) | Les 4 scores avec justification |
+| 5 | **Axe Pilotage** (Positionnement stratégique, Décisions, Gestion, Structuration) | Les 4 scores avec justification |
+| 6 | **Axe Connectivité** (Communication, Contrôle de gestion, RH, SI) | Les 4 scores — **à ce stade les 20 fonctions sont scorées** |
+| 7 | **Module Cohérence croisée des preuves** | Hypothèses trouvées, requalifications de preuve, **réévaluations de score** qui en découlent |
+| 8 | **Calcul des agrégats** | Sous-totaux d'axe + 4 indicateurs transversaux, **sur la base des scores réévalués à l'étape 7** |
+| 9 | **Module de diagnostic des déséquilibres (A/B/C/D)** + **indicateur de risque combiné** | Déséquilibres détectés, puis l'étiquette de risque (score × phase) avec sa note de lecture |
+| 10 | **Rédaction du rapport final** (Partie 1 + Partie 2) | Uniquement après validation de toutes les étapes précédentes |
+
+⚠️ **Étape 7 est l'étape charnière** : les scores peuvent changer ici. La validation y est particulièrement
+importante — présente clairement chaque score avant → après avant de poursuivre.
+
+⚠️ **Point d'attention avant l'étape 7 — disponibilité des interviews.** Si des interviews sont menées, elles
+doivent être disponibles **avant** cette étape pour que le recoupement (Étape 4 du module) ait de la matière à
+croiser. Deux cas :
+- Si chaque fonction collecte sa propre réponse d'interview au fil de l'eau (étapes 2-6), tout arrive
+  naturellement à temps.
+- Si l'entretien se fait plutôt comme **un échange global** avec le CEO/CTO couvrant plusieurs sujets à la
+  fois (pas une question par fonction), **place-le explicitement quelque part avant l'étape 7** — sinon le
+  recoupement se ferait sans matière. Signale-le à l'user au moment du checkpoint de l'étape 6.
+
+---
+
 ## ⚙️ MÉTHODOLOGIE DE SCORING
 
 Pour chacune des 20 fonctions, attribue un score et une couleur :
@@ -57,6 +94,38 @@ Pour chacune des 20 fonctions, attribue un score et une couleur :
 | **0** | ⚪ Neutre | Info non trouvée malgré recherche active — **ne pas pénaliser**, signaler comme point à vérifier en priorité |
 
 **Aucune pondération** entre fonctions — chacune compte pour 1 point de poids identique.
+
+### Notation à partir des deux pôles de la tension dialectique interne
+
+Chaque fonction est explorée selon ses **deux pôles** (Pôle A / Pôle B — voir chaque fiche). La tension
+**oriente la lecture** des preuves, elle ne crée pas un second score séparé :
+
+| Constat sur les deux pôles | Score |
+|---|---|
+| Aucun red flag confirmé sur aucun des deux pôles (peu importe le niveau de détail obtenu sur chacun) | **+1** |
+| Un pôle documenté avec preuve solide, l'autre non vérifiable ou preuve faible (T4-T5) | **0.5** |
+| Preuve solide (T1-T3) d'un déséquilibre extrême et confirmé vers un seul pôle (manque ou excès, peu importe le sens) | **−1** |
+| Aucun pôle vérifiable | **0** (⚪ neutre) |
+
+**Nomme toujours la direction d'un −1.** Un score de −1 n'est jamais suffisant tel quel : la justification
+doit nommer explicitement **lequel des deux pôles est en excès et lequel est en manque** — ex. « −1 — excès
+Volume, manque de Filtre » plutôt que juste « −1 ». Cette direction n'est pas à inventer : chaque fiche
+contient déjà sa « Lecture du déséquilibre » qui décrit les deux sens possibles (Pôle A ≫ Pôle B et
+Pôle B ≫ Pôle A) — il s'agit seulement de citer explicitement lequel des deux correspond au cas constaté.
+Aucune recherche supplémentaire n'est nécessaire : c'est une exigence de rédaction, pas une étape de plus.
+
+**Garde-fou anti-dégradation du score** : le +1 **n'exige pas** une preuve positive solide sur les deux pôles
+— seulement l'**absence de red flag confirmé** sur les deux. Ça évite qu'un projet sain, mais pour lequel un
+pôle est simplement moins documenté que l'autre (sans que ce soit un signal négatif), voie sa note baisser
+artificiellement par rapport au système précédent. Le niveau d'exigence pour un bon score reste le même
+qu'avant ; la nouveauté porte uniquement sur une **nouvelle façon de détecter un mauvais score** qui
+échappait au système précédent (un déséquilibre extrême vers un seul pôle, même si l'autre a l'air normal).
+
+**Nuance de maturité** (à ne pas confondre avec une absence de preuve) : si un pôle est **structurellement
+non observable à ce stade de croissance** du projet (ex. un process formalisé n'a pas de raison d'exister à
+2 mois de vie), note-le explicitement « non mature à ce stade » — ne l'assimile pas à une preuve manquante,
+et ne plafonne pas le score à 0.5 pour ce seul motif si l'autre pôle est solidement documenté et sain.
+Recoupe avec la phase Q1-Q4 déjà identifiée.
 
 ### Calcul du score
 - **Score brut** = somme des 20 scores (plage −20 à +20).
@@ -96,6 +165,52 @@ grave d'une seule source (≤ T3 non convergent) reste un signal à investiguer,
 et **facultative pour les +0.5 / −0.5 / 0**. Le classement interne, lui, s'applique toujours aux 20 fonctions :
 c'est l'affichage qui est allégé, pas la rigueur. Objectif : concentrer l'effort de justification là où il
 change réellement le verdict, au lieu d'alourdir chaque ligne.
+
+**Garde-fou T3 — indépendance réelle, pas répétition.** Avant de compter plusieurs témoignages comme
+« convergents » (T3), vérifie qu'ils sont **réellement indépendants**. Trois relais du même promoteur ne
+font pas trois sources : ils font une seule source répétée.
+
+**Réflexes OSINT légers** (opérationnalisent le garde-fou T3, sans outil spécialisé) — avant de valider un
+témoignage comme T3 :
+1. **Provenance du compte** : le compte a-t-il un historique de publication varié (pas uniquement des posts
+   sur ce projet), ou est-ce un compte quasi-vide créé récemment qui ne parle que de ce projet ?
+2. **Similarité textuelle** : plusieurs témoignages « indépendants » utilisent-ils une tournure de phrase
+   quasi identique ? Un signal fort de coordination (ou de génération par un même outil) — à traiter comme
+   **une seule source, pas plusieurs**.
+3. **Ancienneté vérifiée, pas déclarée** : si le projet revendique un historique (« actifs depuis 2021 »),
+   vérifie contre la première capture réelle sur **Wayback Machine** plutôt que d'accepter la date affichée.
+4. **Rafales suspectes** : note la date de chaque source trouvée ; plusieurs témoignages « indépendants »
+   publiés dans une fenêtre anormalement courte = pattern de coordination à signaler, même sans outil
+   d'analyse temporelle dédié.
+5. **Absence de friction comme signal** : une recherche « [projet] avis / critique / arnaque » qui ne
+   retourne que du contenu au ton promotionnel quasi identique, sans aucun forum sceptique ni critique,
+   **n'est pas neutre** — un projet réellement suivi par une communauté organique génère presque toujours
+   un peu de friction visible. Son absence totale est une donnée à noter, pas juste un manque de red flags.
+
+*Limite assumée (à garder en tête, pas à corriger) : ce bloc protège contre l'astroturfing visible à
+l'observation directe (comptes vides, formulations copiées, rafales de publication). Il ne remplace pas une
+investigation OSINT professionnelle (analyse de graphe social, stylométrie automatisée, forensique
+blockchain avancée) — volontairement hors du périmètre.*
+
+**Cas particulier — convergence d'interviews internes** (CEO, CTO, autres membres de l'équipe). Ce n'est
+**pas du T3 classique** : contrairement à des témoins externes sans lien d'intérêt entre eux, plusieurs
+membres d'une même équipe partagent le même intérêt à ce que l'audit se passe bien. Une cohérence parfaite
+entre eux peut être un signe de **coordination préalable** (briefing commun) plutôt qu'un signe de vérité —
+exactement le risque que le réflexe « similarité textuelle » met en garde ci-dessus.
+- **T3 interne** (à noter explicitement comme tel, distinct du T3 externe) : convergence entre plusieurs
+  interviews internes menées **séparément** sur des **détails granulaires et non anticipés** (chiffre exact,
+  date précise, fait technique spécifique) qu'aucun des interviewés ne pouvait savoir que l'autre allait
+  confirmer. C'est la convergence sur le **détail imprévisible**, pas sur le récit général, qui fait la force
+  du signal.
+- **Reste T4** : convergence entre interviews internes uniquement sur le **récit général**, sans détail
+  granulaire distinctif — c'est précisément la configuration d'un discours préparé en commun.
+- **Divergence** sur un détail précis entre deux interviews internes séparées : à traiter comme **un signal
+  en soi**, potentiellement plus révélateur qu'une absence de preuve — à faire remonter explicitement au
+  module Cohérence croisée des preuves (Étape 4 dédiée).
+
+**T1 garantit la provenance, pas l'interprétation.** Une donnée de première main (lecture on-chain, document
+officiel) est fiable sur ce qu'elle **est**, pas sur ce qu'on lui fait **dire** : le niveau de preuve valide
+le fait brut, jamais la conclusion qu'on en tire.
 
 ### Discipline de couverture systématique (anti-biais de sélection — INTERNE)
 
@@ -190,6 +305,37 @@ Pour chaque fonction : cherche activement les preuves via les sources suggérée
 n'est pas publique, **formule la question à poser en interview et marque la fonction ⚪
 (neutre)** plutôt que de deviner.
 
+### Note conceptuelle — pourquoi chaque fonction se lit en deux pôles (INTERNE, jamais dans le livrable)
+
+Chaque fonction porte une **tension dialectique interne** (ex. Vente : Packaging vs Volume). Ce n'est pas un
+ajout arbitraire : cette tension est une réplique, à un niveau plus profond, du couple fondamental
+Singularité/Conformité qui structure tout le modèle depuis le niveau macro (les 5 axes) jusqu'ici. Chaque
+**Pôle A** correspond au pôle Singularité de la fonction (sa capacité à se distinguer, discerner, innover) et
+chaque **Pôle B** à son pôle Conformité (sa capacité à s'aligner, se reproduire, tenir la norme).
+⚠️ Ce paragraphe est du **raisonnement interne** : les termes de méthode qu'il emploie n'apparaissent jamais
+dans le document remis au lecteur (gate #1). Dans le rapport, on parle d'équilibre entre deux dimensions
+concrètes, nommées par leur contenu (« filtrage à l'entrée » vs « volume »), jamais par le vocabulaire du modèle.
+
+### Règle de justification obligatoire (s'ajoute aux exigences ci-dessus, n'en remplace aucune)
+
+La justification écrite du score doit **explicitement situer le projet sur le spectre** des deux pôles, pas
+seulement énoncer un fait isolé. Une justification qui cite une preuve correcte mais **ignore complètement la
+tension est incomplète**, même si le score affiché est juste.
+
+Les quatre exigences sont **cumulatives** : la justification doit (1) s'appuyer sur une preuve hiérarchisée
+(voir Protocole anti-biais), (2) respecter le périmètre de la question distinctive, (3) suivre la checklist de
+déclinaison Web3 propre à la fonction, et (4) expliciter la tension.
+
+*Exemple travaillé (fonction Vente) :*
+- ❌ **Justification incomplète** (preuve correcte, tension ignorée) : « Le K-factor est de 3.2 et la courbe de
+  croissance est exponentielle sur les 6 derniers mois [on-chain]. Score : −1. »
+- ✅ **Justification complète** (preuve + tension explicitée) : « Le K-factor est de 3.2 et la courbe de
+  croissance est exponentielle sur les 6 derniers mois [on-chain]. Aucun mécanisme de filtrage n'a été
+  identifié (pas de critère d'éligibilité, pas de plafond, inscription immédiate). Le projet est donc
+  entièrement du côté Volume de sa tension interne, sans aucun contrepoids de discernement — ce qui est
+  exactement l'inverse de l'objectif de cette fonction (croissance qualifiée, pas brute). Score : −1 — excès
+  Volume, manque de filtrage. »
+
 ### Note transversale — tokenomics (si émission de token propre)
 Pour tout projet à token propre (minage, cloud mining, distribution automatique…), la
 tokenomics est observée sous **trois angles distincts et NON redondants**, chacun rattaché
@@ -205,28 +351,67 @@ les deux autres y renvoient par mention croisée **sans redonner de score** (gat
 artificiellement — recrutement forcé, hype sans substance, FOMO en lieu de besoin.*
 
 **1. Marketing** *(dans le rapport : « Marketing »)* — *Exploration/connaissance des marchés (veille, benchmarking, tests).*
+**Tension interne : Segment vs Volume** → objectif : ciblage pertinent (pas maximisation brute de l'audience touchée).
 Question distinctive : le discours s'adresse-t-il à la bonne cible avec le bon niveau de
 sophistication, indépendamment de savoir si la conversion fonctionne (ça, c'est Vente) ?
-Web3 : veille sectorielle ET discours de marché ; cible affichée vs cible réellement visée
-par le ton/vocabulaire (technique vs FOMO/« places limitées ») ; cohérence promesse/public.
-Sources : site officiel, pitch deck, Meta/TikTok Ads Library, **contenu produit par les
-affiliés** (souvent plus révélateur que la com officielle).
+
+- **Pôle A — Segment** : cible affichée vs cible réellement visée par le ton/vocabulaire (technique vs
+  FOMO/urgence/« places limitées ») ; cohérence entre promesse et sophistication du public visé ; le marketing
+  vise-t-il une niche précise avec critères identifiables (persona documenté, marché vertical défini) ?
+  *Sources* : site officiel, pitch deck, Meta/TikTok Ads Library.
+  *Interview (repli)* : « Qui est votre persona utilisateur type, et comment l'avez-vous validé ? »
+- **Pôle B — Volume** : la publicité cible-t-elle un large public sans filtre (broad targeting, aucun critère
+  démographique resserré) ? présence ou absence de filtres/mises en garde dans les créas elles-mêmes (âge,
+  statut d'investisseur averti) ? le langage est-il générique/universel (applicable à n'importe quel produit
+  financier) plutôt que spécifique au produit réel ?
+  *Sources* : paramètres de ciblage visibles dans les bibliothèques de pub, **contenu produit par les affiliés**
+  (souvent plus révélateur que la com officielle).
+  *Interview (repli)* : « Avez-vous délibérément exclu certains segments d'audience de vos campagnes ? Lesquels ? »
+- **Lecture du déséquilibre** : *Segment ≫ Volume* = ciblage peut-être trop étroit, signal possible de traction
+  réelle faible (le projet ne convainc qu'une niche très spécifique) — à ne pas confondre avec un red flag,
+  plutôt un signal de croissance limitée. *Volume ≫ Segment* = marketing de masse sans discrimination, cohérent
+  avec un objectif de recrutement brut plutôt que d'adoption qualifiée — signal net si combiné à d'autres
+  signes d'agressivité commerciale (voir Vente).
 
 **2. Vente** *(dans le rapport : « Conversion »)* — *Conversion de l'opportunité de marché en valeur transigée (le moteur de croissance).*
+**Tension interne : Packaging du produit vs Volume** → objectif : croissance qualifiée, pas brute.
+*Dans la structure interne de l'axe, Vente occupe la position « Pertinence » — ce n'est pas une fonction de
+volume, c'est une fonction de discernement : décider qui rentre et qui ne rentre pas, pas faire entrer le plus
+de monde possible. Un système qui convertit très bien mais sans aucun filtre n'exerce pas sa fonction : c'est
+Marketing qui tourne en roue libre sous couvert de Vente.*
 Question distinctive : le moteur de conversion est-il tiré par la valeur du produit ou poussé
 par le recrutement, indépendamment de qui le contrôle (Structuration) ou de l'adhésion humaine (RH) ?
 Web3 + affiliation (**fonction centrale du modèle**) — chaque client peut devenir un vecteur
-d'acquisition (croissance virale). Vérifier :
-- Ticket d'entrée, mécaniques de closing (urgence artificielle ?).
-- **K-factor** (coefficient de croissance virale) : nombre moyen de nouveaux users parrainés
-  par user actif — un K-factor élevé et croissant dans la durée est un signal d'alerte
-  (dépendance à une croissance exponentielle, mathématiquement caractéristique d'une pyramide).
-- **Forme de la courbe de croissance** : organique/linéaire (sain) vs exponentielle non soutenable (pathologique).
-- **Ratio ventes directes / ventes via affiliation** : un système sain conserve une part significative de conversion non-affiliée.
-- **Écart de rémunération produit vs recrutement** : la commission d'un 1er niveau de parrainage
-  est-elle disproportionnée par rapport à la valeur/l'usage réel généré par ce filleul ?
-- Fréquence et ton des relances internes vers « parraine plus » (pression au recrutement vs à l'usage).
-Sources : onboarding, Trustpilot/Reddit/forums crypto, évolution du nb d'users (on-chain si estimable), plan de compensation.
+d'acquisition (croissance virale).
+
+- **Pôle A — Packaging du produit (le filtre / discernement)** : existence d'un mécanisme de filtrage réel —
+  critère d'éligibilité, questionnaire de profil de risque, plafond de mise, délai de réflexion avant
+  engagement. **Sa présence est un signal positif fort ; son absence totale est le signal le plus déterminant
+  de cette fonction, plus encore que le K-factor lui-même.** Ticket d'entrée, mécaniques de closing (urgence
+  artificielle ?).
+  *Sources* : parcours d'onboarding, CGU, documentation du plan de compensation.
+  *Interview (repli)* : « Quels critères excluent un prospect de votre offre ? Y en a-t-il ? »
+- **Pôle B — Volume** :
+  - **K-factor** (coefficient de croissance virale) : nombre moyen de nouveaux users parrainés par user actif
+    — un K-factor élevé et croissant dans la durée est un signal d'alerte (dépendance à une croissance
+    exponentielle, mathématiquement caractéristique d'une pyramide).
+  - **Forme de la courbe de croissance** : organique/linéaire (sain) vs exponentielle non soutenable (pathologique).
+  - **Ratio ventes directes / ventes via affiliation** : un système sain conserve une part significative de conversion non-affiliée.
+  - **Écart de rémunération produit vs recrutement** : la commission d'un 1er niveau de parrainage est-elle
+    disproportionnée par rapport à la valeur/l'usage réel généré par ce filleul ?
+  - **Part du budget global allouée à l'acquisition/l'incitatif de recrutement vs allouée au produit**
+    (R&D, infrastructure) : une disproportion marquée vers l'acquisition est en elle-même un signal,
+    indépendamment de la performance du moteur.
+  - Fréquence et ton des relances internes vers « parraine plus » (pression au recrutement vs à l'usage).
+  - **Cohérence avec la phase de croissance identifiée** : une agressivité commerciale/incitative forte est
+    normale en ② Construction (le moteur se teste) mais devient un signal suspect si elle persiste identique
+    en ③ et au-delà.
+  *Sources* : Trustpilot/Reddit/forums crypto, évolution du nb d'users (on-chain si estimable).
+  *Interview (repli)* : « Quel est votre K-factor actuel, et comment évolue-t-il depuis 6 mois ? »
+- **Lecture du déséquilibre** : *Packaging (A) ≫ Volume (B)* = filtre peut-être trop restrictif, croissance
+  ralentie par excès de prudence — rarement un red flag, plutôt un signal de sous-exploitation du potentiel.
+  *Volume (B) ≫ Packaging (A)* = absence de discernement, **signature la plus directe d'un système pyramidal**.
+
 ⚠️ **Anti-double-pénalité** : si le moteur passe le test de pyramidalité SANS signal d'alerte
 mais que le volume/la part de marché reculent face à la concurrence, **NE PAS scorer ce recul
 sous Vente** — le documenter sous **Product Management** (« différenciation concurrentielle »)
@@ -237,23 +422,60 @@ croissance organique, SEO/contenu, partenariats de distribution, coût d'acquisi
 tirée par l'usage vs par la dépense marketing.
 
 **3. Implémentation** *(dans le rapport : « Intégrations »)* — *Captation : intégration d'une innovation externe sans rompre la cohérence (éviter les « chimères »).*
+**Tension interne : Opportunité externe vs Cohérence de positionnement** → objectif : évolution maîtrisée
+(pas absorption opportuniste de tout ce qui passe).
 Question distinctive : le projet absorbe-t-il correctement une innovation externe sans rompre
 sa cohérence, indépendamment de savoir s'il innove lui-même (ça, c'est R&D) ?
-Web3 : blockchains/wallets réellement supportés vs annoncés ; partenariats vérifiables **auprès
-du partenaire lui-même** (pas via la com du projet audité) ; cohérence des intégrations avec le
-positionnement initial (pas de dérive opportuniste). Sources : GitHub (activité réelle), doc technique, comptes officiels des partenaires.
+
+- **Pôle A — Opportunité externe** : blockchains/wallets réellement supportés vs annoncés ; partenariats
+  vérifiables **auprès du partenaire lui-même** (pas seulement via la communication du projet audité).
+  *Sources* : GitHub (activité réelle), documentation technique, comptes officiels des partenaires cités.
+  *Interview (repli)* : « Quelle est votre dernière intégration technique, et à quelle date a-t-elle été livrée ? »
+- **Pôle B — Cohérence de positionnement (détection de « chimères »)** : ces intégrations restent-elles
+  cohérentes avec le positionnement initial, ou le projet enchaîne-t-il des pivots opportunistes vers chaque
+  nouvelle mode (ex. un projet de lending qui ajoute successivement NFT, GameFi, agent IA, memecoin, sans lien
+  avec son cœur de métier initial) ? C'est le pattern « chimère » — une absorption d'opportunités qui finit par
+  dissoudre l'identité du projet. Nombre de verticaux/features non liés ajoutés sur les 12 derniers mois.
+  *Sources* : historique des annonces (Wayback Machine), roadmaps successives, comparaison whitepaper original
+  vs communication actuelle.
+  *Interview (repli)* : « Comment cette intégration / ce nouveau produit s'inscrit-il dans votre thèse de départ ? »
+- **Lecture du déséquilibre** : *Opportunité externe (A) ≫ Cohérence (B)* = poursuite opportuniste de chaque
+  tendance (pattern « chimère »), dilution de l'identité, dette technique accumulée à force d'intégrations mal
+  digérées. *Cohérence (B) ≫ Opportunité (A)* = isolement technique, refus d'intégrer quoi que ce soit
+  d'externe — peut signaler une équipe incapable d'intégrer (compétence limitée) ou volontairement fermée pour
+  éviter l'exposition à un audit externe.
 
 **4. R&D** *(dans le rapport : « R&D »)* — *Innovation produit/protocole.*
+**Tension interne : Idée vs Pertinence** → objectif : changement adaptatif (l'innovation doit rester ancrée
+dans un besoin réel, pas l'innovation pour l'innovation).
 Question distinctive : le produit est-il une innovation réelle et propriétaire, ou une reproduction
 générique d'un modèle déjà existant ailleurs ?
-Web3 : fréquence des MAJ produit vs fréquence des changements de barème de récompense ; part de la
-roadmap technique effectivement livrée ; **le smart contract est-il un fork quasi identique d'un
-template d'affiliation/MLM déjà répertorié (cosmétique près : nom, logo) ou un développement
-réellement propriétaire ?** (un très grand nombre de projets Web3 pyramidaux sont des copier-coller
-de contrats déjà vus). Sources : changelog/historique des releases GitHub, Wayback Machine, outil
-**« Similar Contracts » d'Etherscan**, recherche du nom de fonctions caractéristiques sur GitHub.
-Tokenomics (angle originalité) : le mécanisme d'émission/distribution est-il un design propriétaire
-ou la reproduction d'un template répertorié ? (même vérif Similar Contracts).
+
+- **Pôle A — Idée (originalité)** : fréquence des MAJ produit vs fréquence des changements de barème de
+  récompense ; part de la roadmap technique effectivement livrée ; **le smart contract est-il un fork quasi
+  identique d'un template d'affiliation/MLM déjà répertorié (cosmétique près : nom, logo) ou un développement
+  réellement propriétaire ?** (un très grand nombre de projets Web3 pyramidaux sont des copier-coller de
+  contrats déjà vus).
+  *Sources* : changelog/historique des releases GitHub, Wayback Machine, outil **« Similar Contracts »
+  d'Etherscan**, recherche du nom de fonctions caractéristiques du contrat sur GitHub.
+  *Interview (repli)* : « Qu'est-ce qui, dans votre contrat/protocole, n'existe chez aucun concurrent ? »
+- **Pôle B — Pertinence (ancrage dans un besoin réel)** : l'innovation revendiquée répond-elle à un vrai
+  besoin utilisateur identifiable, ou est-ce de l'innovation cosmétique/gratuite (feature bloat, complexité
+  ajoutée sans usage réel) ? % des features de la roadmap qui répondent à une demande documentée (issue
+  GitHub, vote communautaire, ticket support) vs développées sans consultation utilisateur.
+  *Sources* : forum/GitHub issues du projet, changelog annoté (le projet explique-t-il pourquoi une feature a
+  été développée ?).
+  *Interview (repli)* : « Quelle est la dernière feature développée en réponse directe à une demande
+  utilisateur documentée ? »
+- **Lecture du déséquilibre** : *Idée (A) ≫ Pertinence (B)* = innovation pour l'innovation, complexité
+  technique qui impressionne mais ne sert aucun usage réel — ressources gaspillées, souvent signe d'une équipe
+  technique livrée à elle-même sans lien avec les besoins business. *Pertinence (B) ≫ Idée (A)* = développement
+  purement réactif, aucune contribution technique originale — cohérent avec un projet qui ne fait que
+  copier/revendre le travail des autres (lien direct avec la détection de fork du Pôle A).
+
+*Déclinaison tokenomics (si applicable)* : le mécanisme d'émission/distribution du token (ex. « cloud mining »,
+distribution automatique) est-il un design réellement propriétaire, ou la reproduction d'un template déjà
+répertorié sous un autre nom ? Applique la même vérification que pour le smart contract d'affiliation.
 
 **Checkpoint axe Développement** `AskUserQuestion` avant de passer à Production.
 
@@ -264,43 +486,119 @@ ou la reproduction d'un template répertorié ? (même vérif Similar Contracts)
 « coming soon » perpétuel, rendement qui ne se traduit jamais en retrait effectif.*
 
 **5. Product Management** *(dans le rapport : « Product Management »)* — *Pilotage du produit réel (product-market fit).*
+**Tension interne : « Marché » vs Conditions de fabrication** → objectif : faisabilité produit-marché (pas de
+promesse déconnectée de ce qui est réellement livrable).
 Question distinctive : le produit répond-il à un vrai besoin avec une vraie adhérence utilisateur,
 indépendamment de sa fiabilité technique (ça, c'est Qualité produit) ?
-Web3 : le produit est-il utilisé **indépendamment de la spéculation/l'affiliation** ? Existe-t-il
-des users qui n'ont jamais parrainé personne et utilisent quand même le produit ? Courbe de rétention
-(J7/J30 après premier usage, indépendamment de tout gain d'affiliation perçu). Complétude produit vs
-whitepaper (fonctionnalités livrées vs strict module de dépôt/parrainage). Différenciation
-concurrentielle. UX/UI soignée ou négligée. Sources : app stores, DappRadar/DeFiLlama (usage/TVL),
-témoignages spontanés vs relayés par affiliés, comparatif direct avec 2-3 concurrents.
+
+- **Pôle A — « Marché » (le produit répond-il à un vrai besoin ?)** : le produit est-il utilisé
+  **indépendamment de la spéculation/l'affiliation** ? Existe-t-il des utilisateurs qui n'ont jamais parrainé
+  personne et utilisent quand même le produit ? Courbe de rétention (J7/J30 après premier usage,
+  indépendamment de tout nouveau gain d'affiliation perçu entretemps). Différenciation concurrentielle : le
+  produit présente-t-il un avantage identifiable face à des alternatives, ou est-ce un clone fonctionnel d'un
+  produit existant ?
+  *Sources* : app stores, DappRadar/DeFiLlama (usage/TVL), témoignages spontanés vs relayés par affiliés,
+  comparatif direct avec 2-3 concurrents identifiés.
+  *Interview (repli)* : « Quel pourcentage de vos utilisateurs actifs n'a jamais recruté personne ? »
+- **Pôle B — Conditions de fabrication (le produit est-il réellement livrable/livré ?)** : complétude produit
+  vs whitepaper — les fonctionnalités annoncées sont-elles réellement livrées et utilisables, ou le produit
+  se limite-t-il au strict module de dépôt/parrainage ? UX/UI soignée ou négligée — cohérence entre le niveau
+  de finition et l'ambition affichée.
+  *Sources* : whitepaper vs produit réellement accessible, changelog, captures d'écran datées (Wayback
+  Machine) pour vérifier l'évolution réelle.
+  *Interview (repli)* : « Quelle fonctionnalité du whitepaper original n'a toujours pas été livrée, et pourquoi ? »
+- **Lecture du déséquilibre** : *« Marché » (A) ≫ Conditions de fabrication (B)* = le besoin existe et est
+  validé, mais le produit ne suit pas — promesses commerciales en avance sur la capacité réelle de livraison,
+  roadmap fantaisiste. *Conditions de fabrication (B) ≫ « Marché » (A)* = produit techniquement livré et
+  complet, mais que personne n'utilise réellement — bonne exécution, mauvaise direction, product-market fit
+  manquant malgré la compétence technique.
 
 **6. Qualité produit** *(dans le rapport : « Sécurité & Fiabilité »)* — *Fiabilité et sécurité de ce qui est produit.*
+**Tension interne : Productivité vs Promesse** → objectif : conformité aux engagements (livrer ce qui a été
+annoncé, pas seulement livrer vite).
 Question distinctive : le produit est-il fiable et **sécurisé techniquement**, indépendamment de
-savoir s'il répond à un vrai besoin (Product Management) ? Checklist sécurité complète :
-- Audit(s) publié(s), par quel cabinet (CertiK, Hacken, PeckShield, Quantstamp, Trail of Bits, OpenZeppelin), scope complet ou partiel.
-- Findings critiques/majeurs non résolus.
-- Bug bounty actif (Immunefi, HackerOne) et montant maximal (indicateur de sérieux).
-- Historique d'incidents/exploits (Rekt.news, DeFiYield Rekt, rapports Chainalysis).
-- Contrat vérifié et code source public sur l'explorer.
-- Couverture assurantielle (Nexus Mutual, InsurAce).
-Sources : plateformes d'audit ci-dessus, Etherscan/BscScan (onglet Contract, statut Verified), ScamAdviser pour l'URL.
+savoir s'il répond à un vrai besoin (Product Management) ?
+
+- **Pôle A — Promesse (sécurité tenue)** :
+  - Audit(s) publié(s), par quel(s) cabinet(s) (CertiK, Hacken, PeckShield, Quantstamp, Trail of Bits, OpenZeppelin), scope complet ou partiel du contrat.
+  - Findings critiques/majeurs non résolus.
+  - Bug bounty actif (Immunefi, HackerOne) et montant maximal — indicateur de sérieux.
+  - Historique d'incidents/exploits (Rekt.news, base DeFiYield Rekt, rapports Chainalysis).
+  - Contrat vérifié et code source public sur l'explorer.
+  - Couverture assurantielle disponible (Nexus Mutual, InsurAce) pour ce protocole.
+  *Sources* : plateformes d'audit citées ci-dessus, Etherscan/BscScan (onglet « Contract », statut
+  « Verified »), ScamAdviser pour l'URL du site.
+  *Interview (repli)* : « Quel est le dernier finding non résolu de votre audit le plus récent, et pourquoi
+  n'est-il pas encore corrigé ? »
+- **Pôle B — Productivité (capacité à livrer vite sans sacrifier la fiabilité)** : fréquence et vitesse de
+  résolution des incidents déclarés (délai entre signalement et correctif publié — MTTR) ; cadence de mise à
+  jour du contrat/produit.
+  *Sources* : changelog GitHub, historique des releases, comparaison des dates de signalement/correction sur
+  les forums communautaires ou rapports d'incident publiés.
+  *Interview (repli)* : « Quel est votre délai moyen entre le signalement d'un bug et la publication du correctif ? »
+- **Lecture du déséquilibre** : *Promesse (A) ≫ Productivité (B)* = techniquement solide mais glacial à livrer
+  — signe possible d'une équipe sous-dimensionnée ou d'un projet en mode maintenance minimale (stagnation
+  lente plutôt que risque actif). *Productivité (B) ≫ Promesse (A)* = ça sort vite mais la sécurité en pâtit —
+  « move fast and break things » appliqué dangereusement à un produit financier, red flag sérieux vu l'enjeu.
 
 **7. Moyens & Méthodes** *(dans le rapport : « Infrastructure & Ressources »)* — *Ressources ET méthodes/procédures pour produire de façon fiable et reproductible.*
+**Tension interne : Besoins vs « Réponse » (capacité réelle)** → objectif : optimisation des moyens (ne pas
+promettre plus que ce que les ressources permettent réellement).
 Question distinctive : le projet a-t-il les ressources humaines et les procédures pour produire de
 façon fiable, indépendamment de qui détient le pouvoir de décision (Structuration) ou de si le
-résultat est sécurisé (Qualité produit) ? Web3 :
-- **Ressources** : taille/composition réelle de l'équipe technique (un dev anonyme unique ≠ une équipe identifiable) ; budget dev/maintenance.
-- **Méthodes** : procédures documentées (tests/testnet avant mainnet), méthodologie, discipline de changelog.
-- **Continuité d'activité (« bus factor »)** : le projet dépend-il d'une seule personne avec accès exclusif (clé privée, serveur, identifiants) ?
-- **Infrastructure technique** : code open/fermé, existence technique d'un multisig.
-- **Automatisation des processus récurrents** : distribution des commissions/rendements automatisée (smart contract) ou intervention manuelle régulière ?
-Sources : GitHub (contributeurs, licence, commits, doc), LinkedIn équipe technique, doc d'architecture, lecture du contrat.
+résultat est sécurisé (Qualité produit) ?
+
+- **Pôle A — Besoins (ambitions/roadmap affichées)** : ambitions de scale annoncées (roadmap, croissance
+  visée) — elles servent de référence pour juger la « Réponse » (Pôle B).
+  *Sources* : whitepaper, roadmap publique, annonces de levées de fonds ou d'objectifs de croissance.
+  *Interview (repli)* : « Quelle échelle d'utilisateurs/de volume visez-vous d'ici 12 mois ? »
+- **Pôle B — « Réponse » (capacité réelle)** :
+  1. **Ressources** : taille/composition réelle de l'équipe technique (un dev anonyme unique ≠ une équipe identifiable) ; budget alloué au développement/à la maintenance.
+  2. **Méthodes** : procédures documentées (tests/testnet avant déploiement mainnet), méthodologie de développement, discipline de changelog.
+  3. **Continuité d'activité (« bus factor »)** : le projet dépend-il d'une seule personne ayant un accès exclusif (clé privée, accès serveur, identifiants) ?
+  4. **Infrastructure technique** : code open-source ou fermé, existence *technique* d'un mécanisme multisig.
+  5. **Automatisation des processus récurrents** : la distribution des commissions et des rendements est-elle automatisée (smart contract) ou dépend-elle d'une intervention manuelle régulière ?
+  *Sources* : GitHub (contributeurs, licence, historique des commits, documentation), LinkedIn de l'équipe
+  technique, documentation d'architecture publique, lecture du contrat sur l'explorer.
+  *Interview (repli)* : « Combien de personnes composent l'équipe technique, et que se passe-t-il si l'une
+  d'elles devient indisponible ? »
+- **Lecture du déséquilibre** : *Besoins (A) ≫ Réponse (B)* = ambitions affichées dépassant largement les
+  ressources réelles constatées — surpromesse d'infrastructure, signal classique d'un projet qui ne pourra pas
+  absorber sa propre croissance annoncée. *Réponse (B) ≫ Besoins (A)* = infrastructure surdimensionnée par
+  rapport à la traction actuelle — pas nécessairement mauvais (peut être un choix de préparation), mais à
+  interroger sur le burn rate et l'usage réel des fonds levés.
 
 **8. Exécution** *(dans le rapport : « Delivery »)* — *Tenue réelle de la promesse.*
+**Tension interne : Pratique vs Process** → objectif : fiabilité/reproductibilité (la promesse doit être
+tenue systématiquement, pas seulement de façon ponctuelle ou chanceuse).
 Question distinctive : ce qui est promis est-il effectivement livré/payé dans les faits transactionnels,
-indépendamment de savoir si le modèle sous-jacent est soutenable (ça, c'est Finance) ? Web3 (liquidité
-et sortie) : capacité réelle à **retirer** capital, profits, gains d'affiliation ; blocages/conditions
-cachées dans les CGU. **Signal d'alerte central affiliation** : rendement financé par les nouveaux dépôts
-plutôt que par un revenu externe identifiable. Sources : témoignages de retrait (Reddit/Telegram/Trustpilot), CGU, historique des transactions sur l'explorer.
+indépendamment de savoir si le modèle sous-jacent est soutenable (ça, c'est Finance) ?
+
+- **Pôle A — Pratique (résultat observé)** : capacité réelle à **retirer** capital, profits, gains
+  d'affiliation ; blocages ou conditions cachées dans les CGU.
+  *Sources* : témoignages de retrait (Reddit/Telegram/Trustpilot), CGU, historique des transactions sur l'explorer.
+  *Interview (repli)* : « Quel est votre taux de succès de retrait sur les 30 derniers jours ? »
+- **Pôle B — Process (fiabilité reproductible)** : existe-t-il un process documenté et reproductible de
+  traitement des retraits (SLA affiché, workflow standardisé), ou chaque retrait est-il géré au cas par
+  cas/manuellement sans procédure formalisée ? **Vigilance particulière** : un SLA affiché publiquement mais
+  non respecté dans la pratique (Pôle A) est un signal **plus grave** qu'une absence totale de SLA — ça
+  implique une déclaration sciemment non tenue, pas juste un manque de maturité opérationnelle.
+  *Sources* : CGU, documentation officielle du processus de retrait, comparaison SLA affiché vs délais
+  réellement rapportés par la communauté.
+  *Interview (repli)* : « Quel est le SLA affiché pour un retrait, et est-il automatisé ou nécessite-t-il une
+  validation humaine ? »
+- **Lecture du déséquilibre** : *Pratique (A) ≫ Process (B)* = ça marche aujourd'hui, souvent grâce à une
+  intervention manuelle/héroïque, mais rien ne garantit que ça tienne à l'échelle ou en cas d'absence de la
+  personne qui gère — fragilité invisible tant que rien ne casse. *Process (B) ≫ Pratique (A)* = un SLA/process
+  existe sur le papier mais n'est manifestement pas respecté dans les faits — voir la vigilance particulière
+  ci-dessus, c'est le cas le plus grave des deux.
+
+⚠️ **Signal d'alerte central affiliation** : rendement financé par les nouveaux dépôts plutôt que par un
+revenu externe identifiable.
+*Déclinaison tokenomics (si applicable)* : au-delà du retrait plateforme, la **liquidité de marché du token**
+— volume de trading et profondeur des carnets d'ordre sur DEX/CEX. Un token quasi illiquide pose le même
+risque que des retraits bloqués : la valeur affichée ne peut pas se concrétiser en pratique, même si le prix
+théorique semble correct. *Sources dédiées* : DEXTools/DEXScreener.
 
 **Checkpoint axe Production** `AskUserQuestion` avant de passer à Intelligence.
 
@@ -311,48 +609,134 @@ plutôt que par un revenu externe identifiable. Sources : témoignages de retrai
 ignorer les signaux faibles, confondre trésorerie disponible et trésorerie soutenable.*
 
 **9. Finance** *(dans le rapport : « Tokenomics & Trésorerie »)* — *Dynamique financière, modèle économique réel.*
+**Tension interne : Micro (transaction individuelle) vs Macro (trésorerie système)** → objectif :
+faisabilité/soutenabilité de trésorerie (un modèle peut sembler viable transaction par transaction et être
+intenable à l'échelle du système complet).
 Question distinctive : d'où vient concrètement l'argent, et le modèle serait-il viable si l'on
 retirait complètement la couche affiliation, indépendamment de savoir si les paiements sont honorés
-au jour le jour (ça, c'est Exécution) ? Web3 :
-- Revenus externes identifiables (frais réels, service vendu) vs dépendance aux nouveaux entrants.
-- Soutenabilité du rendement sans croissance infinie du nombre d'utilisateurs.
-- **Test de pensée du modèle de monétisation** : si le programme d'affiliation était neutralisé
-  demain (plus aucun parrainage), quel revenu resterait — frais de transaction, abonnement, vente
-  de service ? Ce revenu résiduel est-il structurellement viable en tant que business ?
-Tokenomics (angle soutenabilité) : courbe d'émission (inflationniste/déflationniste/plafonnée, sur
-quelle durée ?) ; calendrier de vesting/cliff (équipe, investisseurs, trésorerie) ; utilité réelle
-du token (gouvernance, partage de frais, staking productif) vs purement spéculative ; **test de pensée
-(miroir de celui de l'affiliation)** : si le calendrier de déblocage arrivait à échéance demain, la
-pression de vente serait-elle absorbable par la demande réelle ? Sources : whitepaper (tokenomics),
-Dune/Nansen/Arkham (flux si contrat public), DeFiLlama/CoinGecko (rendements moyens du secteur),
-Etherscan (répartition wallets, vesting contracts).
+au jour le jour (ça, c'est Exécution) ?
+
+- **Pôle A — Micro (viabilité de la transaction individuelle)** : revenus externes identifiables (frais
+  réels, service vendu) vs dépendance aux nouveaux entrants. **Test de pensée du modèle de monétisation** :
+  si le programme d'affiliation était neutralisé demain (plus aucun parrainage), quel revenu resterait —
+  frais de transaction, abonnement, vente de service ? Ce revenu résiduel est-il structurellement viable en
+  tant que business, indépendamment de toute couche affiliation ?
+  *Sources* : whitepaper (tokenomics), analyse d'une transaction individuelle type sur l'explorer.
+  *Interview (repli)* : « Si le programme d'affiliation s'arrêtait demain, quel revenu resterait, et comment
+  est-il calculé précisément ? »
+- **Pôle B — Macro (soutenabilité du système agrégé)** : soutenabilité du rendement sans croissance infinie
+  du nombre d'utilisateurs ; **runway de trésorerie en mois**, au rythme de versement actuel.
+  *Sources* : Dune Analytics/Nansen/Arkham (analyse des flux si contrat public), comparaison avec les
+  rendements moyens du secteur (DeFiLlama, CoinGecko).
+  *Interview (repli)* : « Quel est le runway actuel de la trésorerie, en mois, au rythme de versement actuel ? »
+- **Lecture du déséquilibre (la plus critique des 20 fonctions)** : *Micro (A) ≫ Macro (B)* = c'est la
+  **signature mathématique exacte d'un système de Ponzi encore fonctionnel** — chaque transaction individuelle
+  semble légitime (les premiers payés sont bien payés) pendant que le système agrégé est structurellement
+  condamné à s'effondrer dès que les entrées ralentissent. **Un score positif sur le seul Pôle A, sans
+  vérification du Pôle B, est l'erreur d'évaluation la plus dangereuse possible sur ce parcours.**
+  *Macro (B) ≫ Micro (A)* = trésorerie globale saine sur le papier mais mauvaise gestion des flux individuels
+  — retards, erreurs de versement, malgré des moyens suffisants à l'échelle globale : signal de mauvaise
+  gestion opérationnelle plutôt que de fraude structurelle.
+
+*Déclinaison tokenomics (angle soutenabilité)* : courbe d'émission (inflationniste/déflationniste/plafonnée,
+sur quelle durée ?) ; calendrier de vesting/cliff (équipe, investisseurs, trésorerie) ; utilité réelle du
+token (gouvernance, partage de frais, staking productif) vs purement spéculative ; **test de pensée (miroir de
+celui de l'affiliation)** : si le calendrier de déblocage arrivait à échéance demain, la pression de vente
+serait-elle absorbable par la demande réelle ? **Indicateurs de marché (santé financière macro)** : ratio
+Market Cap / FDV (un ratio bas = forte dilution future encore à venir, pression de vente latente) ; volatilité
+et drawdown depuis l'ATH ; corrélation avec BTC/ETH (le token a-t-il une dynamique de valeur propre, ou
+suit-il mécaniquement le marché général sans thèse spécifique ?).
+*Sources dédiées* : whitepaper (tokenomics), Etherscan/BscScan (répartition des wallets, vesting contracts),
+Nansen/Arkham (mouvements des wallets équipe/investisseurs), CoinGecko/CoinMarketCap (market cap, FDV,
+historique de prix).
 
 **10. Qualité Corporate** *(dans le rapport : « Réputation & Conformité »)* — *Qualité des interactions entreprise/environnement ; notoriété.*
+**Tension interne : Perception interne vs Perception externe** → objectif : intégration (l'image que le
+projet a de lui-même doit converger avec celle que le marché et les institutions lui renvoient).
 Question distinctive : ce système est-il légalement qualifiable de vente pyramidale, et quelle est sa
 réputation externe vérifiable, indépendamment de la sincérité de sa propre communication (ça, c'est
-Communication) ? Web3 : entité juridique identifiable ; le programme d'affiliation est-il qualifiable
-de vente pyramidale dans la juridiction visée ; presse organique (rédactionnel indépendant) vs sponsorisée
-(contenu payé). Sources : registres du commerce (Infogreffe, Companies House, OpenCorporates), registres
-de régulateurs (AMF, SEC EDGAR, FCA), recherche « [nom du projet] + scam / lawsuit / warning ».
+Communication) ?
+
+- **Pôle A — Perception externe** : entité juridique identifiable ; le programme d'affiliation est-il
+  qualifiable de vente pyramidale dans la juridiction visée ; presse organique (rédactionnel indépendant) vs
+  sponsorisée (contenu payé).
+  *Sources* : registres du commerce (Infogreffe, Companies House, OpenCorporates), registres de régulateurs
+  (AMF, SEC EDGAR, FCA), recherche « [nom du projet] + scam / lawsuit / warning ».
+  *Interview (repli)* : « Sous quelle entité juridique et dans quelle juridiction le projet opère-t-il ? »
+- **Pôle B — Perception interne** : comparer la réputation externe vérifiée (Pôle A) avec l'image que le
+  projet donne de lui-même en interne (whitepaper, discours officiel, valeurs affichées) — y a-t-il
+  convergence, ou décalage significatif ?
+  *Sources* : whitepaper, page « À propos »/communication institutionnelle, mots-clés employés (« régulé »,
+  « audité », « licencié ») à vérifier un par un contre le Pôle A.
+  *Interview (repli)* : « Le terme "régulé"/"licencié" que vous employez correspond-il à un enregistrement
+  précis, vérifiable où ? »
+- **Lecture du déséquilibre** : *Externe (A) ≫ Interne (B)* = bonne réputation vérifiée mais le discours du
+  projet en interne surclaime par rapport à ce qui est réellement constaté — décalage entre le récit et la
+  réalité administrative. *Interne (B) ≫ Externe (A)* = le projet reste modeste dans ses propres claims mais
+  n'a quasiment aucune couverture/validation externe — normal si le projet est jeune (voir phase), suspect
+  s'il revendique plusieurs années d'existence sans aucune trace externe.
+
+*Déclinaison tokenomics (si applicable)* : le tier des exchanges qui listent le token (Tier 1 type
+Binance/Coinbase, qui font leur propre due diligence avant listing, vs uniquement DEX obscurs) est un signal
+de légitimité externe — un listing Tier 1 implique une validation par un tiers qui a intérêt à ne pas lister
+un projet frauduleux. *Sources dédiées* : CoinGecko/CoinMarketCap (liste des exchanges où le token est coté).
 
 **11. Performance Indiv & Collective** *(dans le rapport : « Encadrement & Coordination »)* — *Middle management : formation/suivi des cadres intermédiaires.*
+**Tension interne : Autonomie individuelle vs Cohésion collective** → objectif : optimisation du
+savoir-faire, de la créativité et de l'agilité (ni des relais isolés qui divergent, ni un discours si
+uniforme qu'il étouffe l'initiative).
 Question distinctive : les relais/leaders intermédiaires du réseau sont-ils formés et alignés avec le
 discours officiel, indépendamment de la santé de la base communautaire dans son ensemble (ça, c'est RH) ?
 Web3 + affiliation : l'équivalent du management intermédiaire est la couche des **leaders d'affiliation /
-top recruteurs**. Vérifier : formation officielle pour les top-affiliés ; divergence entre discours des
-leaders et communication officielle. Sources : contenu Telegram/Discord des groupes de leaders, replays
-de formations si publiques.
+top recruteurs** qui relaient l'information et encadrent leur réseau.
+
+- **Pôle A — Cohésion collective** : formation officielle pour les top-affiliés ; divergence entre discours
+  des leaders et communication officielle. **Vigilance** : une cohésion parfaite (formulations quasi
+  identiques d'un leader à l'autre) n'est **pas automatiquement positive** — voir le réflexe OSINT
+  « similarité textuelle » du Protocole anti-biais : ça peut signaler un script imposé plutôt qu'un
+  alignement organique.
+  *Sources* : contenu Telegram/Discord des groupes de leaders, replays de formations si publiques.
+  *Interview (repli)* : « Comment formez-vous et encadrez-vous vos affiliés les plus actifs ? »
+- **Pôle B — Autonomie individuelle** : les leaders/relais ont-ils une latitude réelle d'initiative (adapter
+  leur discours, proposer des idées, remonter du feedback pris en compte), ou sont-ils de purs exécutants d'un
+  script imposé sans marge de manœuvre ?
+  *Sources* : variations observées d'un leader à l'autre dans le ton/les arguments utilisés, existence de
+  contenu original produit par les leaders (pas seulement relayé).
+  *Interview (repli)* : « Un affilié peut-il adapter son discours commercial, ou doit-il suivre un script imposé ? »
+- **Lecture du déséquilibre** : *Cohésion (A) ≫ Autonomie (B)* = discours uniforme au point d'être suspect —
+  script imposé plutôt qu'alignement organique (lien direct avec le réflexe OSINT de similarité textuelle).
+  *Autonomie (B) ≫ Cohésion (A)* = leaders livrés à eux-mêmes sans contrôle qualité — risque de promesses non
+  autorisées faites par des affiliés que le projet ne pourra pas tenir, le projet perd la maîtrise de son
+  propre discours commercial.
 🔀 **Si le projet n'a PAS de système d'affiliation** : ne note pas 0 par défaut. Réoriente vers la couche
 de relais équivalente et **score normalement** : ambassadeurs, community leads, modérateurs, delegates DAO —
 sont-ils formés, encadrés, alignés avec le discours officiel ?
 
 **12. Management expérience** *(dans le rapport : « Advisors & Expertise »)* — *Réseau de conseillers/advisors ; expertise externe mobilisée.*
-Question distinctive : l'expertise externe mobilisée (advisors, auditeurs) est-elle réelle et vérifiable,
-indépendamment de la composition de l'équipe interne (ça, c'est Structuration/Moyens & Méthodes) ? Web3 :
-advisors réels et vérifiables ; fondateurs doxxés avec historique de projets précédents vérifiable ;
-existence d'un canal d'alerte/signalement. Sources : LinkedIn (ancienneté du profil, connexions crédibles,
-**recherche inversée d'image** — photo volée/générée par IA), Crunchbase, recherche « [fondateur] +
-[projets précédents] + scam/rug pull ». *(Légitimement non-vérifiable en cas d'anonymat — voir réflexe gouvernance.)*
+**Tension interne : Externe vs Interne** → objectif : pertinence de l'expertise mobilisée (un regard
+extérieur crédible complète l'équipe interne sans s'y substituer).
+Question distinctive : l'expertise externe mobilisée (advisors, auditeurs) est-elle réelle et vérifiable, et
+l'identité/l'historique des fondateurs sont-ils eux-mêmes vérifiables — indépendamment de savoir qui occupe
+quel rôle et comment le pouvoir est réparti entre eux (ça, c'est Structuration) ?
+
+- **Pôle A — Externe** : advisors réels et vérifiables ; existence d'un canal d'alerte/signalement documenté.
+  *Sources* : LinkedIn (ancienneté du profil, connexions crédibles), **recherche inversée d'image** (photo
+  volée/générée par IA), Crunchbase.
+  *Interview (repli)* : « Vos advisors ont-ils une implication active vérifiable (contributions publiques,
+  présence aux annonces majeures), ou sont-ils uniquement cités sur le site ? »
+- **Pôle B — Interne** : fondateurs doxxés avec historique de projets précédents vérifiable.
+  *Sources* : recherche « [nom fondateur] + [projets précédents] + scam/rug pull », historique professionnel
+  croisé (LinkedIn, articles antérieurs).
+  *Interview (repli)* : « Pouvez-vous mettre en relation avec un fondateur pour vérifier son identité et son
+  parcours ? »
+- **Lecture du déséquilibre** : *Externe (A) ≫ Interne (B)* = beaucoup d'advisors prestigieux affichés, mais
+  équipe interne anonyme/peu vérifiable — pattern classique de l'« advisor washing » : des noms connus
+  utilisés pour masquer une équipe opérationnelle fantôme, souvent peu engagés réellement. *Interne (B) ≫
+  Externe (A)* = équipe interne solide et vérifiée mais aucune validation externe — peut être un choix assumé
+  (équipe confiante, autosuffisante) ou un signe d'insularité refusant tout regard extérieur critique ; à
+  départager avec la phase de croissance et le reste de l'audit.
+
+*(Légitimement non-vérifiable en cas d'anonymat — voir réflexe gouvernance.)*
 
 **Checkpoint axe Intelligence** `AskUserQuestion` avant de passer à Pilotage.
 
@@ -363,50 +747,140 @@ existence d'un canal d'alerte/signalement. Sources : LinkedIn (ancienneté du pr
 de s'adapter, ou pouvoir concentré entre trop peu de mains (surtout en contexte d'affiliation).*
 
 **13. Positionnement stratégique** *(dans le rapport : « Positionnement stratégique »)* — *ADN, raison d'être, résonance avec le marché.*
+**Tension interne : Nature du produit vs Segments** → objectif : résonance (le positionnement doit émerger
+de ce que le produit est réellement, pas d'un ciblage marketing plaqué après coup — voir la distinction avec
+Marketing, fonction 1).
 Question distinctive : le projet a-t-il une raison d'être qui survivrait à la disparition de l'affiliation,
-indépendamment de la qualité de ses arbitrages au jour le jour (ça, c'est Décisions) ? Web3 : vision et
-différenciation **indépendantes de l'affiliation** ; le projet peut-il énoncer un « pourquoi » qui ne
-dépend pas du rendement de parrainage ; cohérence whitepaper/roadmap sur 12-24 mois. Sources : whitepaper
-(vision/mission), cohérence pitch initial vs com actuelle (Wayback Machine). *(Lecture pondérée par la phase.)*
+indépendamment de la qualité de ses arbitrages au jour le jour (ça, c'est Décisions) ?
+
+- **Pôle A — Nature du produit** : le projet peut-il énoncer un « pourquoi » qui ne dépend pas du rendement de
+  parrainage ; cohérence whitepaper/roadmap sur 12-24 mois.
+  *Sources* : whitepaper (vision/mission), cohérence entre pitch initial et communication actuelle (Wayback Machine).
+  *Interview (repli)* : « Si le programme d'affiliation disparaissait, quelle serait la proposition de valeur restante ? »
+- **Pôle B — Segments** : adéquation structurelle — au-delà de la vision énoncée, le produit tel qu'il est
+  réellement construit (fonctionnalités, mécanique) correspond-il structurellement au segment que le projet
+  dit viser, ou n'y a-t-il de correspondance qu'au niveau du discours marketing (fonction 1), sans que le
+  produit lui-même ne soit pensé pour ce segment ?
+  *Sources* : comparaison directe entre la complexité d'usage réelle du produit (UX) et le niveau d'expérience
+  Web3 supposé du public visé par le marketing.
+  *Interview (repli)* : « Le produit a-t-il été conçu en pensant à un segment précis, ou adapté après coup à un
+  segment identifié par le marketing ? »
+- **Lecture du déséquilibre** : *Nature du produit (A) ≫ Segments (B)* = vision/ADN cohérente mais mal ciblée
+  ou mal communiquée — bon produit, mauvais go-to-market, peut stagner malgré une légitimité réelle.
+  *Segments (B) ≫ Nature du produit (A)* = positionnement piloté par le marketing (fonction 1) sans que le
+  produit lui-même ne soit pensé pour ce segment — cosmétique de ciblage sur un produit qui ne le sert pas
+  structurellement.
+
+*(Lecture pondérée par la phase.)*
 
 **14. Décisions** *(dans le rapport : « Arbitrages »)* — *Qualité des arbitrages critiques.*
+**Tension interne : Objectifs vs Moyens ($)** → objectif : choix adaptatif (arbitrer entre ce qu'on vise et
+ce que les ressources réelles permettent, pas décider dans l'absolu).
 Question distinctive : les pivots et arbitrages passés sont-ils fondés et bien anticipés/communiqués,
 indépendamment du cap stratégique de fond (Positionnement) ou du suivi opérationnel courant (Gestion) ?
-Web3 : nombre de pivots récents du modèle économique ; préavis donné avant un changement majeur (barème,
-conditions de retrait). **Rappel : à pondérer selon la phase — pivots fréquents normaux en Q2, suspects en Q3.**
-Sources : historique des annonces officielles, archives du site.
+
+- **Pôle A — Objectifs (anticipation/communication)** : nombre de pivots récents du modèle économique ;
+  préavis donné avant un changement majeur (barème, conditions de retrait). **Rappel : à pondérer selon la
+  phase identifiée — des pivots fréquents sont normaux en ② Construction, suspects en ③ Maturité.**
+  *Sources* : historique des annonces officielles, archives du site.
+  *Interview (repli)* : « Quel a été le dernier changement majeur du barème de commissions et avec quel préavis
+  a-t-il été communiqué ? »
+- **Pôle B — Moyens ($)** : les pivots identifiés étaient-ils dotés en ressources réelles au moment de la
+  décision (budget alloué, équipe affectée), ou sont-ce des annonces sans moyens derrière (arbitrage dans
+  l'absolu, déconnecté des ressources disponibles) ?
+  *Sources* : recrutements annoncés en parallèle du pivot, levées de fonds documentées dans la même période,
+  comparaison timing annonce/moyens mobilisés.
+  *Interview (repli)* : « Quelles ressources ont été spécifiquement allouées pour mettre en œuvre votre dernier
+  pivot stratégique ? »
+- **Lecture du déséquilibre** : *Objectifs (A) ≫ Moyens (B)* = pivots bien anticipés et communiqués mais jamais
+  réellement dotés en ressources — « la locomotive sans wagons » au niveau d'une décision individuelle (écho
+  direct du module de déséquilibre A2). *Moyens (B) ≫ Objectifs (A)* = ressources mobilisées pour des
+  changements de direction annoncés sans rationale claire ni anticipation — dépense réactive, pilotage à vue.
 
 **15. Gestion** *(dans le rapport : « Opérations »)* — *Suivi opérationnel quotidien, garder le cap.*
+**Tension interne : Hommes vs Process** → objectif : organisation (le pilotage courant doit s'appuyer sur des
+processus, pas dépendre entièrement des individus qui les exécutent).
 Question distinctive : le pilotage opérationnel courant est-il régulier et fiable dans la durée,
-indépendamment de la qualité des grandes décisions ponctuelles (Décisions) ? Web3 : rapports d'activité
-réguliers et publics ; régularité du calendrier annoncé vs respecté. Sources : fréquence des posts
-officiels, existence d'un rapport périodique. *(Réflexe gouvernance : chercher espace public avant ⚪.)*
+indépendamment de la qualité des grandes décisions ponctuelles (Décisions) ?
+
+- **Pôle A — Hommes** : rapports d'activité réguliers et publics ; régularité du calendrier annoncé vs respecté.
+  *Sources* : fréquence des posts officiels, existence d'un rapport périodique.
+  *Interview (repli)* : « Qui est responsable de la communication régulière/du calendrier, et que se passe-t-il
+  en son absence ? »
+- **Pôle B — Process** : le pilotage opérationnel courant (communication régulière, tenue du calendrier)
+  dépend-il visiblement d'une ou deux personnes nommées (fragile en cas d'absence), ou d'un process documenté
+  que d'autres pourraient reprendre ? **Distinct du « bus factor »** déjà couvert en Moyens & Méthodes : ici on
+  regarde la dépendance sur le pilotage courant/la communication, pas sur l'accès technique/les clés.
+  *Sources* : nombre de voix/comptes différents qui communiquent au nom du projet, cohérence entre elles.
+  *Interview (repli)* : « Combien de personnes distinctes peuvent publier une communication officielle au nom
+  du projet ? »
+- **Lecture du déséquilibre** : *Hommes (A) ≫ Process (B)* = pilotage actif et charismatique aujourd'hui, mais
+  fragile — fonctionne tant que la ou les personnes clés restent disponibles, risque élevé en cas de
+  burnout/départ. *Process (B) ≫ Hommes (A)* = process documenté mais personne ne semble le piloter activement
+  — bureaucratie sans portage réel, stagnation silencieuse malgré une structure qui a l'air en place.
+
+*(Réflexe gouvernance : chercher espace public avant ⚪.)*
 
 **16. Structuration** *(dans le rapport : « Structuration »)* — *Répartition du pouvoir dans l'organisation (management des n-2).*
+**Tension interne : Innovation vs Production** → objectif : systémisation (la structure doit permettre
+d'intégrer l'innovation sans désorganiser la capacité de livraison — c'est la même tension que celle de l'axe
+macro Développement/Production, répliquée au niveau de la gouvernance elle-même).
 Question distinctive : qui détient réellement le pouvoir — techniquement, économiquement, ET
 humainement/organisationnellement — indépendamment de la performance du moteur de croissance (Vente) ou
-des ressources de production (Moyens & Méthodes) ? Web3 (**fonction critique — la structure de parrainage
-EST une structure de pouvoir**) : trois dimensions à auditer sans les confondre :
-1. **Pouvoir technique** : qui contrôle les fonds réellement (smart contract autonome vérifiable ou
-   intervention humaine possible) ; fonctions admin sensibles (pause, mint, blacklist, withdraw) et qui
-   les détient ; timelock sur les changements de paramètres critiques.
-2. **Pouvoir économique** : profondeur de l'arbre d'affiliation et concentration des gains sur le top des
-   recruteurs ; le barème incite-t-il structurellement à investir intelligemment ou à recruter/spéculer ?
-   Tokenomics (angle concentration) : concentration de l'allocation initiale du token (équipe, investisseurs,
-   trésorerie) — un token largement détenu par un petit nombre de wallets proches de l'équipe est un
-   déséquilibre de pouvoir de même nature que la concentration des gains sur le top des recruteurs. **Sans
-   dupliquer** le score déjà donné en Finance sur la soutenabilité du déblocage (ici on regarde la
-   concentration du pouvoir, pas la soutenabilité économique).
-   🔀 **Si le projet n'a PAS d'affiliation** : ne note pas 0 par défaut sur cette dimension. Évalue la
-   concentration du pouvoir économique par les autres canaux disponibles et **score normalement** :
-   concentration de l'allocation du token, répartition des revenus, dépendance à un petit nombre de gros
-   porteurs/clients, capture de valeur par l'équipe vs les utilisateurs.
-3. **Pouvoir organisationnel/humain** : rôles clés distincts et nommés (CEO, CTO, COO, Head of Growth…) vs
-   fondateur unique cumulant tout ; **risque de « juge et partie »** — une même personne contrôle-t-elle des
-   fonctions d'axes opposés (ex. Développement ET Production, ou Intelligence ET Pilotage) ? Cette configuration
-   est un obstacle structurel : elle empêche l'autonomie et l'arbitrage indépendant entre fonctions censées se
-   faire contrepoids ; existence d'un board/comité de gouvernance distinct de l'équipe opérationnelle.
-Sources : lecture du smart contract (fonctions admin), plan de compensation, page équipe/organigramme, LinkedIn (croiser qui occupe quel rôle).
+des ressources/méthodes de production (Moyens & Méthodes) ?
+
+*Le lien entre les trois (définition, tension, question) : la répartition du pouvoir n'est pas une question
+annexe à la tension Innovation vs Production — c'est le mécanisme même par lequel cette tension se résout. Un
+pouvoir concentré et agile permet de saisir une innovation vite, au risque de casser la stabilité de
+production ; un pouvoir distribué et contrôlé protège la production, au risque de rater le moment où une
+décision rapide était nécessaire. Systémiser, c'est choisir consciemment comment répartir le pouvoir pour
+arbitrer cette tension — d'où les trois dimensions ci-dessous, qui sont trois terrains où ce même arbitrage
+se joue.*
+
+Web3 + affiliation (**fonction critique — la structure de parrainage EST une structure de pouvoir**) :
+
+| Dimension | **Pôle A** — pouvoir concentré/agile (penche Innovation) | **Pôle B** — pouvoir distribué/contrôlé (penche Production) |
+|---|---|---|
+| **Technique** | Qui peut agir seul et vite sur le contrat : smart contract autonome vérifiable ou intervention humaine possible ; fonctions admin sensibles (pause, mint, blacklist, withdraw) et qui les détient | Contraintes qui limitent ce pouvoir : timelock sur les changements de paramètres critiques ; multisig à signataires distincts de l'équipe cœur |
+| **Économique** | Profondeur de l'arbre d'affiliation et concentration des gains sur le top des recruteurs ; concentration de l'allocation et de la détention réellement observée du token (tokenomics, si applicable — voir note dédiée) | Le barème comporte-t-il des garde-fous (plafonds, dégressivité, redistribution) qui limitent la concentration, ou incite-t-il sans limite à recruter/spéculer en priorité ? |
+| **Organisationnel/humain** | Rôles clés distincts et nommés (CEO, CTO, COO, Head of Growth…) vs fondateur unique cumulant tout — pouvoir individuel identifiable | Contre-pouvoirs qui encadrent ces rôles : board/comité de gouvernance distinct de l'équipe opérationnelle ; absence de « juge et partie » — une même personne contrôle-t-elle des fonctions d'axes opposés ? |
+
+*Déclinaison tokenomics (dimension Économique)* : la concentration de l'allocation initiale du token (équipe,
+investisseurs, trésorerie) est une forme de pouvoir économique équivalente à celle de l'arbre d'affiliation —
+à documenter avec la même rigueur, **sans dupliquer** le score déjà donné en Finance sur la soutenabilité du
+calendrier de déblocage (ici : concentration du pouvoir ; là-bas : soutenabilité économique). Distinct de
+l'allocation initiale : la **concentration réellement observée sur le marché secondaire** (top 10/50 wallets
+détenteurs, hors contrats connus d'exchange/staking) peut diverger fortement de l'allocation d'origine une
+fois le token en circulation libre — vérifier les deux.
+
+🔀 **Si le projet n'a PAS d'affiliation (dimension Économique)** : le volet « arbre d'affiliation » ne
+s'applique pas — le pouvoir économique reste notable via la répartition du capital/des tokens (voir tokenomics
+ci-dessus) ou la structure actionnariale/de revenus classique si documentée. **Ne pas noter 0 par défaut** si
+un autre mécanisme de concentration économique est identifiable.
+
+*Sources* : lecture du smart contract (fonctions admin), documentation du plan de compensation, page
+équipe/organigramme si publié, LinkedIn des membres pour croiser qui occupe quel rôle.
+*Interview (repli)* : « Qui détient les clés d'administration du contrat, et sous quel mécanisme (clé unique,
+multisig, DAO) ? »
+
+**Lecture du déséquilibre (par dimension)** — chacune est une déclinaison concrète du même principe : pouvoir
+concentré = Innovation facilitée mais Production fragilisée ; pouvoir distribué = Production protégée mais
+Innovation ralentie.
+- *Technique* — **A ≫ B** : une seule entité peut agir unilatéralement sur les fonds/paramètres critiques,
+  sans délai ni validation collective — risque de rug pull ou d'abus unilatéral. **B ≫ A** : contrôle si lourd
+  (multisig à validation lente, absence de mécanisme d'urgence) que le projet ne peut pas réagir à une crise
+  réelle — paralysie décisionnelle en cas d'exploit ou d'incident.
+- *Économique* — **A ≫ B** : barème sans aucun garde-fou, concentration des gains croissante sans limite — la
+  lecture centrale du diagnostic pyramidal (voir aussi fonction Vente). **B ≫ A** : redistribution si stricte
+  qu'elle décourage toute performance individuelle — rare en pratique, mais signalerait un système
+  économiquement peu incitatif.
+- *Organisationnel/humain* — **A ≫ B** : rôles individuels puissants sans aucun contre-pouvoir — le risque
+  « juge et partie ». **B ≫ A** : gouvernance si diluée (comité, process de validation multiples) que plus
+  personne n'est clairement responsable d'une décision — dilution de responsabilité.
+
+⚠️ Cette lecture **recoupe et prolonge le Module D** (croisement Structuration ↔ R&D/Production, sur la tension
+Innovation vs Production de la fonction elle-même) — ne pas la traiter deux fois séparément dans le rapport
+final : l'une renvoie à l'autre.
 
 **Checkpoint axe Pilotage** `AskUserQuestion` avant de passer à Connectivité.
 
@@ -424,36 +898,195 @@ incluse**. Le traitement retenu ici est donc fidèle au texte source. Ne rouvre 
 contraire documentée.
 
 **17. Communication** *(dans le rapport : « Communication »)* — *Points de contact entreprise/environnement (marketing, branding, réseaux, corporate).*
+**Tension interne : Transparence vs Maîtrise du récit** → objectif : information (communiquer suppose de
+choisir un cadrage, mais ce choix ne doit jamais aller jusqu'à travestir les faits).
 Question distinctive : le discours est-il honnête et cohérent sur l'ensemble des canaux, indépendamment de
-la réputation externe qui en résulte (ça, c'est Qualité Corporate) ? Web3 : promesses de rendement chiffrées
-et tenues ; mention explicite du risque ; cohérence des messages entre canaux (site, X, Telegram). Sources :
-comparaison annonces passées vs versements réels rapportés par la communauté.
+la réputation externe qui en résulte (ça, c'est Qualité Corporate) ?
+
+- **Pôle A — Transparence** : promesses de rendement chiffrées et tenues ; mention explicite du risque.
+  *Sources* : comparaison annonces passées vs versements réels rapportés par la communauté.
+  *Interview (repli)* : « Quel disclaimer de risque figure dans vos communications officielles ? »
+- **Pôle B — Maîtrise du récit** : cohérence des messages entre canaux (site, X, Telegram) — un cadrage choisi
+  et cohérent est normal, une **contradiction factuelle** entre canaux ne l'est pas.
+  *Sources* : comparaison des messages diffusés simultanément sur plusieurs canaux, recherche de contradictions
+  factuelles (pas seulement de ton) entre eux.
+  *Interview (repli)* : « Qui valide la cohérence des messages entre vos différents canaux de communication ? »
+- **Lecture du déséquilibre** : *Transparence (A) ≫ Maîtrise du récit (B)* = communication brute, parfois
+  contradictoire d'un canal à l'autre, manque de coordination — chaotique mais rarement malhonnête
+  intentionnellement. *Maîtrise du récit (B) ≫ Transparence (A)* = discours trop lisse, aucune reconnaissance
+  de risque ou de difficulté jamais formulée — signal de spin permanent, communication pensée comme un outil
+  marketing plutôt que d'information.
 
 **18. Contrôle de gestion** *(dans le rapport : « Suivi & Reporting »)* — *Mesure de l'efficacité consolidée (reporting).*
+**Tension interne : Développement vs Production** → objectif : efficience (le reporting doit mesurer aussi
+bien l'expansion que la capacité de livraison, pas privilégier l'un au détriment de l'autre dans les
+indicateurs suivis).
 Question distinctive : les engagements annoncés sont-ils effectivement suivis et vérifiables dans les faits,
 indépendamment de savoir si les paiements eux-mêmes sont honorés (ça, c'est Exécution) ? Ici on regarde le
-**reporting**, pas le versement. Web3 : traçabilité et transparence des flux ; flux vérifiables on-chain vs
-fonctionnement opaque (trésorerie off-chain, CEX privé) ; écart entre rendement annoncé et rendement réellement
-versé. Sources : Etherscan/BscScan (adresse de trésorerie publique ou non), dashboards Dune communautaires.
+**reporting**, pas le versement.
+
+- **Pôle A — Développement (reporting de croissance)** : flux vérifiables on-chain ou fonctionnement opaque
+  (trésorerie off-chain, CEX privé).
+  *Sources* : Etherscan/BscScan (adresse de trésorerie publique ou non), dashboards Dune Analytics
+  communautaires existants.
+  *Interview (repli)* : « Publiez-vous des métriques de croissance vérifiables, et à quelle fréquence ? »
+- **Pôle B — Production (reporting de livraison)** : écart entre rendement annoncé et rendement réellement
+  versé ; le reporting couvre-t-il autant les métriques de **livraison** (taux de succès des paiements,
+  respect des SLA) que celles de croissance ?
+  *Sources* : historique des versements vs annonces, comparaison des métriques mises en avant dans les
+  rapports officiels au fil du temps.
+  *Interview (repli)* : « Publiez-vous un taux de succès des paiements/retraits, indépendamment des chiffres
+  de croissance ? »
+- **Lecture du déséquilibre** : *Développement (A) ≫ Production (B)* = le reporting ne met en avant que des
+  métriques de croissance (utilisateurs, volume) — vanity metrics, la livraison réelle n'est jamais rendue
+  publique. *Production (B) ≫ Développement (A)* = reporting opérationnel solide mais aucun contexte de
+  croissance donné — peut masquer une stagnation derrière une compétence opérationnelle réelle mais isolée.
 
 **19. RH** *(dans le rapport : « Communauté & Équipe »)* — *Qualité du lien humain avec les collaborateurs/la communauté.*
+**Tension interne : Humain vs Intelligence collective** → objectif : gestion des talents (valoriser chaque
+membre individuellement sans perdre la cohérence et la force du collectif).
 Question distinctive : la communauté humaine est-elle un lien vivant ou un réservoir de recrutement,
 indépendamment de la qualité de l'encadrement des leaders intermédiaires (ça, c'est Performance Indiv &
-Collective) ? Web3 + affiliation (**cœur du diagnostic pyramidal**) : ratio nouveaux membres recrutés /
-membres actifs non-recruteurs ; rétention des affiliés à 3-6 mois ; ratio évangélistes (parlent du produit)
-vs recruteurs purs (parlent uniquement des gains). Sources : croissance des groupes Telegram/Discord, sentiment des posts.
-🔀 **Si le projet n'a PAS de système d'affiliation** : ne note pas 0 par défaut. Évalue la qualité du lien
-communautaire par les indicateurs génériques et **score normalement** : rétention et activité réelle des
-membres, ratio contributeurs/spectateurs, qualité des échanges (produit vs prix du token), réponse de
-l'équipe aux critiques.
+Collective) ? Web3 + affiliation (**cœur du diagnostic pyramidal**).
+
+- **Pôle A — Humain (valorisation individuelle)** : ratio nouveaux membres recrutés / membres actifs
+  non-recruteurs ; rétention des affiliés à 3-6 mois ; ratio évangélistes (parlent du produit) vs recruteurs
+  purs (parlent uniquement des gains).
+  *Sources* : croissance des groupes Telegram/Discord dans le temps, sentiment des posts.
+  *Interview (repli)* : « Quel est le taux de rétention de vos affiliés à 6 mois ? »
+- **Pôle B — Intelligence collective (cohérence du collectif)** : existe-t-il un canal de feedback structuré
+  (forum, votes, suggestions) où la communauté influence **réellement** les décisions produit, ou la
+  communication reste-t-elle unilatérale (top-down uniquement) ? Les critiques légitimes sont-elles débattues
+  ouvertement, ou supprimées/leurs auteurs bannis (signe d'un collectif étouffé) ?
+  *Sources* : présence de canaux #feedback/#suggestions sur Discord/Telegram, historique de modération
+  visible, forum de gouvernance si applicable.
+  *Interview (repli)* : « Pouvez-vous citer une décision produit récente directement influencée par un retour
+  de la communauté ? »
+- **Lecture du déséquilibre** : *Humain (A) ≫ Intelligence collective (B)* = beaucoup d'individus recrutés et
+  actifs, mais aucun mécanisme de feedback réel — communauté nombreuse mais purement descendante, jamais
+  consultée. *Intelligence collective (B) ≫ Humain (A)* = bons mécanismes de feedback sur le papier, mais base
+  communautaire faible/en déclin — la structure existe sans plus grand-chose à écouter.
+
+🔀 **Si le projet n'a PAS de système d'affiliation** : la fonction reste au cœur du diagnostic communautaire,
+mais réoriente le **Pôle A** vers la santé générale du lien humain — taux de rétention de la communauté
+(Discord/Telegram/forum) indépendamment de tout gain financier, qualité et sincérité des échanges, présence
+d'utilisateurs qui s'engagent sans contrepartie économique directe. **Ne pas noter 0 par défaut.**
 
 **20. SI** *(dans le rapport : « Traçabilité & Dashboards »)* — *Systèmes d'information, outils, traçabilité.*
+**Tension interne : Accès à l'information vs Sécurité/confidentialité** → objectif : circulation
+(l'information doit circuler pour permettre la traçabilité, sans exposer des données qui compromettraient la
+sécurité du système ou des utilisateurs).
 Question distinctive : les outils de traçabilité mis à disposition des utilisateurs sont-ils réels et
 accessibles, indépendamment de si les flux sous-jacents sont sains (ça, c'est Contrôle de gestion) ? Ici on
-regarde l'outillage, pas la donnée qu'il révèle. Web3 : dashboard affilié transparent (filleuls, commissions
-en temps réel) ; explorer public de trésorerie accessible depuis le site. Sources : dashboard user (démo/capture), lien direct vers un explorer depuis le site officiel.
+regarde l'outillage, pas la donnée qu'il révèle.
 
-**Checkpoint axe Connectivité** `AskUserQuestion` avant la lecture croisée.
+- **Pôle A — Accès à l'information** : dashboard affilié transparent (filleuls, commissions en temps réel) ;
+  explorer public de trésorerie accessible depuis le site.
+  *Sources* : dashboard utilisateur (démo/capture), lien direct vers un explorer depuis le site officiel.
+  *Interview (repli)* : « Les utilisateurs ont-ils accès à un dashboard de traçabilité en temps réel des flux
+  de commission ? »
+- **Pôle B — Sécurité/confidentialité** : la transparence de ces outils expose-t-elle par erreur des données
+  sensibles (identité des utilisateurs, montants individuels non anonymisés au-delà de ce qui est nécessaire),
+  ou à l'inverse le système est-il si verrouillé qu'aucune traçabilité minimale n'est accessible même aux
+  utilisateurs légitimes ?
+  *Sources* : examen du dashboard/explorer pour vérifier le niveau d'anonymisation réel (wallets nommément
+  associés à des identités ou non).
+  *Interview (repli)* : « Comment protégez-vous l'identité des utilisateurs dans vos outils de traçabilité
+  publics ? »
+- **Lecture du déséquilibre** : *Accès (A) ≫ Sécurité (B)* = transparence poussée jusqu'à exposer des données
+  individuelles sensibles — doxxing involontaire d'utilisateurs légitimes. *Sécurité (B) ≫ Accès (A)* = système
+  sur-verrouillé, opacité déguisée en prudence, aucune traçabilité minimale accessible même à un utilisateur
+  de bonne foi.
+
+**🛑 Checkpoint étape 6 — axe Connectivité** : `AskUserQuestion` obligatoire. Les 20 fonctions sont
+maintenant scorées. **Avant de valider**, vérifie le point d'attention interviews : si l'audit s'appuie sur un
+échange global (CEO/CTO) plutôt que sur des questions fonction par fonction, il doit avoir eu lieu **avant**
+l'étape 7 — signale-le à l'user maintenant.
+
+---
+
+## 🔗 MODULE — COHÉRENCE CROISÉE DES PREUVES (lecture d'enquêteur)
+
+À exécuter **juste après avoir collecté et scoré les 20 fonctions**, et **avant** de calculer les indicateurs
+transversaux et avant le module de diagnostic des déséquilibres (voir « Séquencement » ci-dessous — l'ordre
+n'est pas optionnel). Jusqu'ici, chaque fonction a regardé ses propres preuves dans son propre silo. Ce module
+prend du recul : il reprend l'ensemble des **faits bruts** collectés sur les 20 fonctions — pas les scores,
+les faits — et cherche activement les **dissonances entre eux**, comme le ferait un enquêteur croisant des
+pièces de dossier plutôt qu'un analyste qui évalue chaque pièce isolément.
+
+### Étape 1 — Reconstruction de chronologie unique
+Rassemble tous les faits datés trouvés dans les 20 fonctions sur **une seule ligne du temps** : date de
+création du site, date d'enregistrement de la société, date du premier commit GitHub, date d'obtention d'une
+licence/agrément, date de lancement du token, ancienneté revendiquée par le CEO ou dans la communication,
+dates des audits de sécurité, etc. Les incohérences les plus parlantes apparaissent souvent à ce stade — une
+licence obtenue avant même que la société existe, un audit daté d'avant le premier commit du contrat qu'il
+est censé auditer.
+
+### Étape 2 — Recoupement d'identité/entité
+Vérifie si un même nom, wallet, domaine, ou adresse email revient de façon inattendue à deux endroits qui
+devraient être indépendants — par exemple un « auditeur externe » (fonction Management expérience) qui
+partage une adresse ou un enregistrement de domaine avec l'équipe du projet elle-même (fonction
+Structuration/RH).
+
+### Étape 3 — Cohérence déclaration vs capacité observable
+Une déclaration faite dans une fonction est-elle compatible avec ce qui est observé ailleurs ? Ex. un budget
+sécurité revendiqué en Communication est-il compatible avec la taille d'équipe réelle constatée en Moyens &
+Méthodes, ou avec le montant réellement versé aux auditeurs constaté en Qualité produit ?
+
+### Étape 4 — Recoupement des témoignages entre eux (si plusieurs interviews ont été menées)
+Si l'audit s'appuie sur plusieurs interviews internes (CEO, CTO, autres membres de l'équipe), menées
+séparément et potentiellement rattachées à des fonctions différentes, **compare-les explicitement entre
+elles** — pas seulement chacune contre les faits externes déjà croisés aux étapes 1-3 :
+- **Convergence sur un détail granulaire non anticipé** (chiffre, date, fait technique précis) entre deux
+  interviews séparées → **requalifie l'évidence concernée de T4 à « T3 interne »** (voir Protocole anti-biais)
+  et documente explicitement **quelles interviews ont convergé sur quel détail**. Cette requalification peut
+  suffire à faire passer une fonction de 0.5 à +1, ou de 0 à 0.5, selon la règle de conversion preuve → score.
+- **Divergence sur un détail précis** entre deux interviews séparées (au-delà de simples nuances de
+  formulation) → traite-la comme **un signal en soi**, potentiellement plus révélateur qu'une absence de
+  preuve. Applique le même mécanisme de réévaluation que pour les étapes 1-3 (Niveau 1 local si la divergence
+  concerne une fonction précise ; Niveau 2 flag global si elle suggère une préparation coordonnée du discours
+  plutôt qu'une simple imprécision).
+
+### Règle de fondement — jamais d'hypothèse flottante
+Chaque hypothèse dégagée par ce module doit rester **rattachée explicitement aux faits précis, datés et
+sourcés** (avec leur fonction d'origine et leur niveau de preuve) qui la fondent. Aucune conclusion générale
+(« ce projet semble louche ») sans les deux faits concrets qui la justifient — même discipline
+anti-hallucination que partout ailleurs.
+
+### Réévaluation en deux niveaux
+- **Niveau 1 — Retour local.** Pour chaque hypothèse fondée sur des faits concrets, reviens sur la ou les
+  fonctions précises concernées (pas toutes les 20) et **réévalue leur score** si la mise en relation le
+  justifie. Utilise le même format d'affichage que le Protocole de mise à jour déjà en place : **score avant
+  → après, daté, motif explicite** renvoyant aux faits croisés qui ont motivé le changement.
+- **Niveau 2 — Flag global de fiabilité déclarative.** Si la dissonance suggère une **fabrication coordonnée**
+  (documents antidatés, identités qui se recoupent entre un « tiers indépendant » et l'équipe du projet), ce
+  n'est pas une fonction isolée qui est en cause — c'est la fiabilité générale de **toute preuve auto-déclarée
+  (T4) sur ce projet** qui doit être revue à la baisse. Lève un flag global, distinct des 20 scores
+  individuels, et relis plus sceptiquement tout T4 déjà noté ailleurs dans l'audit plutôt que de te contenter
+  d'un correctif localisé.
+
+### ⚠️ Séquencement (non optionnel)
+1. Collecte et scoring initial des 20 fonctions.
+2. **Ce module** — cohérence croisée des preuves, réévaluation locale et/ou flag global.
+3. Calcul des indicateurs transversaux et des sous-totaux d'axe (**sur la base des scores déjà réévalués à
+   l'étape 2**).
+4. Module de diagnostic des déséquilibres (A/B/C/D) — sur la base des mêmes scores réévalués.
+
+Si ce module n'intervient pas avant leur calcul, ses éventuelles réévaluations de score arriveraient **trop
+tard** pour être prises en compte dans ces agrégats.
+
+### Impact sur le rapport
+- **Partie 1 (synthèse)** : pas de nouvelle rubrique — la section « Tensions à surveiller » existante peut
+  accueillir un signal de cohérence croisée s'il est assez significatif.
+- **Partie 2 (annexe)** : point dédié « Cohérence croisée des preuves » — chronologie reconstituée, hypothèses
+  sourcées, réévaluations. **Si aucune dissonance n'est trouvée, le dire explicitement** plutôt que d'omettre
+  la section.
+- **Checklist obligatoire avant livraison** : le module doit avoir été exécuté (même conclusion négative)
+  avant le calcul des indicateurs et du module de diagnostic.
+
+**🛑 Checkpoint étape 7 — étape charnière** : `AskUserQuestion` obligatoire. Présente les hypothèses trouvées,
+les requalifications de preuve, et **chaque réévaluation de score au format avant → après** avant de
+poursuivre. C'est ici que les scores bougent : la validation est particulièrement importante.
 
 ---
 
@@ -480,6 +1113,9 @@ avec sa **définition** (dernière colonne), jamais avec la liste des fonctions 
 
 Un projet peut afficher un bon score global tout en ayant une **Capacité d'Exécution** très faible — c'est
 ce type de dissonance transversale que ces indicateurs révèlent, et qui échappe à une lecture par axe.
+
+**🛑 Checkpoint étape 8 — agrégats** : `AskUserQuestion` obligatoire. Présente les 5 sous-totaux d'axe et les
+4 indicateurs transversaux (avec leur définition, jamais leur composition) avant de passer au diagnostic.
 
 ---
 
@@ -529,10 +1165,97 @@ vitrine vs arrière-boutique vide (RM≫CE), bon projet mal positionné (CE≫RM
 d'absorption (RM≫PC), fondations prêtes mais marché absent (PC≫RM), décisions jamais concrétisées (CA≫CE),
 exécution disciplinée d'un cap obsolète (CE≫CA), tout prêt mais rien ne sort (PC≫CE), exécution non soutenable (CE≫PC), etc.
 
+### D. Vérification des tensions inter-fonctionnelles significatives
+
+Chaque fonction porte sa propre tension interne (voir sa fiche). Mais certaines **paires de fonctions**, bien
+qu'appartenant à des axes différents, doivent en plus être lues l'une contre l'autre — leur écart révèle un
+risque qu'aucune des deux ne montre isolément. Ne pas se limiter aux paires ci-dessous si le contexte du
+projet en révèle d'autres, mais celles-ci sont **systématiquement à vérifier**.
+
+| Paire | Ce que l'écart révèle |
+|---|---|
+| Vente ↔ Exécution/Production | Une Vente forte (conversion/croissance élevée) avec une Production faible signale une croissance que le projet ne peut pas absorber — le moteur avance plus vite que la capacité de livraison. |
+| Vente ↔ Finance | Une part disproportionnée du budget global allouée à l'acquisition/l'incitatif plutôt qu'au produit (R&D, infrastructure) est un signal en soi, indépendamment de la performance du moteur de conversion. |
+| Vente ↔ Phase de croissance | Une agressivité commerciale/incitative forte est normale en ② Construction (le moteur se teste) mais devient suspecte si elle persiste identique en ③ et au-delà (le moteur aurait dû se stabiliser vers une croissance plus filtrée). |
+| Marketing ↔ Positionnement stratégique | Ne jamais confondre : Marketing juge la justesse du ciblage/discours, Positionnement juge la vision/l'ADN. Un bon ciblage sur une vision incohérente n'est pas un point positif pour Positionnement, et une belle vision mal ciblée n'est pas un point négatif pour elle. |
+| Structuration ↔ R&D/Production | C'est la tension interne propre de Structuration (Innovation vs Production) — vérifier concrètement si la gouvernance en place absorbe l'innovation sans désorganiser la capacité de livraison, ou l'inverse. |
+| Qualité produit ↔ Product Management | Un produit fiable qui ne répond à aucun besoin réel (Qualité produit haute, Product Management basse) et un produit qui répond à un besoin mais n'est pas sécurisé (l'inverse) sont deux pathologies très différentes à ne pas confondre dans le diagnostic global. |
+| Finance ↔ Structuration | Au-delà du seul cas tokenomics déjà traité en fiche : une trésorerie saine mais un pouvoir de décision sur cette trésorerie concentré entre une seule main reste un risque, même si Finance seule apparaît verte. |
+| RH ↔ Performance Indiv & Collective | Une base communautaire saine mais des leaders/relais mal encadrés (ou l'inverse : des leaders bien formés qui pilotent une base fantôme) sont deux signaux distincts qu'un score agrégé pourrait masquer l'un derrière l'autre. |
+| Communication ↔ Qualité Corporate | Un discours cohérent en interne (Communication haute) mais une réputation externe dégradée (Qualité Corporate basse) signale un décalage entre ce que le projet dit de lui-même et ce que le marché/les institutions en perçoivent réellement — vérifier lequel des deux reflète la réalité. |
+| SI ↔ Structuration | De bons outils de traçabilité affichés (SI haute) ne compensent jamais une concentration réelle du pouvoir technique/économique (Structuration basse) — la transparence de façade ne doit jamais être confondue avec une gouvernance saine. |
+
+**Enrichir la lecture avec la direction du déséquilibre.** Quand une paire ci-dessus est effectivement en
+alerte (une ou les deux fonctions concernées à −1), ne te contente pas de juxtaposer deux scores négatifs —
+**cite la direction nommée de chacune** (voir « Nomme toujours la direction d'un −1 », Méthodologie de
+scoring). « Vente −1 (excès Volume, manque de Filtre) ↔ Exécution −1 (manque de Process) » raconte une
+histoire précise et actionnable ; « Vente −1 ↔ Exécution −1 » seul ne le fait pas. Cette précision ne demande
+aucune recherche supplémentaire — la direction est déjà nommée dans chaque fiche individuelle, il s'agit
+seulement de la citer au moment de croiser les deux fonctions.
+
 ### Utilisation dans le rapport
-1. Calcule d'abord les 5 sous-totaux d'axe et les 4 indicateurs. 2. Applique les seuils. 3. Pour chaque
-déséquilibre, cite la configuration et son risque — jamais un chiffre brut sans le faire parler. 4. Si aucun
-déséquilibre significatif : dis-le explicitement (organisme équilibré = information positive, pas une simple absence de red flag).
+1. Calcule d'abord les 5 sous-totaux d'axe et les 4 indicateurs transversaux.
+2. Applique les seuils ci-dessus pour identifier tout écart significatif (**sections A, B, C**).
+3. Pour **chaque paire de la section D**, vérifie explicitement si l'écart de score entre les deux fonctions
+   révèle une des lectures indiquées.
+4. Pour chaque déséquilibre détecté (**A, B, C ou D**), cite la configuration correspondante et son risque
+   associé — jamais un chiffre brut sans le faire parler.
+5. Si aucun déséquilibre significatif n'est détecté (tous les axes/indicateurs/paires sont proches les uns des
+   autres) : dis-le explicitement (organisme équilibré = information positive qui mérite d'être nommée, pas
+   une simple absence de red flag).
+
+---
+
+## 🎯 INDICATEUR DE RISQUE COMBINÉ (score × phase de croissance)
+
+Le score dit le **niveau de santé constaté**. Il ne dit pas à quel point ce constat est **fiable** : un bon
+score obtenu en Q1 (où les preuves possibles sont structurellement rares) n'a pas la même valeur prédictive
+qu'un bon score obtenu en Q3. Cet indicateur croise les deux. Il se calcule **après** le score final et la
+phase de croissance, en lecture seule — il ne modifie aucun score.
+
+> Pas de multiplicateur (score × coefficient de phase) : rejeté par conception. Un coefficient < 1 appliqué à
+> un score déjà négatif l'adoucirait — l'inverse de l'effet recherché. Score et phase sont deux axes de nature
+> différente (l'un dit ce qui a été trouvé, l'autre combien on peut faire confiance à ce qui a été trouvé),
+> pas deux facteurs à fondre en un chiffre composite qui masquerait comment il a été obtenu.
+
+### Étape 1 — Classer le score en 3 lignes (pas le score normalisé seul)
+- **Red flag confirmé** : au moins une fonction à −1 avec preuve solide (première main / tierce réputée /
+  convergente), **peu importe le score global**.
+- **Sain mais score/complétude faibles** : aucun red flag confirmé, mais score normalisé < 12/20 **OU** taux
+  de complétude < 50 %.
+- **Sain, score/complétude bons** : aucun red flag confirmé, score normalisé ≥ 12/20 **ET** taux de
+  complétude ≥ 50 %.
+
+### Étape 2 — Croiser avec la phase de croissance déjà identifiée
+
+| Ligne \ Stade | ① Démarrage | ② Construction | ③ Maturité op. | ④ Autonomie complète |
+|---|---|---|---|---|
+| **Red flag confirmé** | Très élevé | Très élevé | Très élevé | Très élevé — vérifier en plus si le pivot relève d'une fuite en avant |
+| **Sain, score/complétude faibles** | Élevé — normal qu'il y ait peu de preuves à ce stade ; ça ne rachète pas le risque, ça explique juste pourquoi on ne sait pas encore | Élevé | Modéré — inquiétant qu'à ce stade il y ait encore si peu de matière | Modéré, à réévaluer — à ce stade avancé, un score/complétude faibles pèsent plus lourd qu'en ①/② |
+| **Sain, score/complétude bons** | Élevé malgré tout — la valeur prédictive d'un bon score est structurellement limitée si tôt, peu d'historique pour le confirmer | Modéré-Élevé | Modéré-Faible | Faible — sous réserve qu'aucun pivot récent ne relève d'une fuite en avant |
+
+⚠️ **Règle non négociable** : la ligne « Red flag confirmé » reste à **Très élevé sur toute la largeur**.
+Aucune phase de maturité ne rachète un red flag confirmé. Ne jamais faire descendre cette ligne, quelle que
+soit la solidité du reste de l'audit.
+
+### Étape 3 — Étiquette et note de lecture
+Dérive une étiquette synthétique de la position dans la matrice : **Faible / Modéré-Faible / Modéré /
+Modéré-Élevé / Élevé / Très élevé** — toujours traçable jusqu'à « quelle ligne, quelle colonne », jamais une
+formule cachée.
+
+Accompagne systématiquement cette étiquette de la note suivante (formulation de référence, à adapter mais pas
+à omettre) :
+
+> « Cet indicateur combine le niveau de preuve trouvé et la maturité du projet — il ne remplace pas l'appétit
+> au risque propre à chaque investisseur : un profil early-stage peut juger un risque "Élevé" en ① Démarrage
+> acceptable en connaissance de cause du niveau de preuve limité disponible à ce stade ; un profil prudent non. »
+
+**Affichage** : l'étiquette + sa note de lecture vont dans le **Bandeau verdict** (Partie 1), aux côtés de la
+note globale et de toute fonction à −1 déjà signalée.
+
+**🛑 Checkpoint étape 9 — diagnostic + risque** : `AskUserQuestion` obligatoire. Présente les déséquilibres
+détectés (A/B/C/D) puis l'étiquette de risque combiné avec sa note de lecture. Ce n'est qu'après validation
+que tu rédiges le rapport final (étape 10).
 
 ---
 
@@ -575,9 +1298,14 @@ Restitue tout dans **un document unique** (`$AUDIT_DIR/scorecard.md`), jamais de
 ### Gate de correctness #1 — masquage strict (passe de vérification finale)
 
 **(a) Noms/marques — jamais affichés** dans le document (synthèse ET annexe) : `Expert 5A`, `L-QHIN`,
-`n-2`, `canevas organique`, `algorithme organique`, `Holisyntonie`, ni les noms d'axes internes
+`n-2`, `n-3`, `n-4`, `canevas organique`, `algorithme organique`, `Holisyntonie`, ni les noms d'axes internes
 (Développement, Production, Intelligence, Pilotage, Connectivité, Bois/Métal/Eau/Feu/Terre), ni les mots
-`dialectique`, `organique`, `fractal`. Ce sont des outils de calcul internes.
+`dialectique`, `organique`, `fractal`, `Singularité`, `Conformité`. Ce sont des outils de calcul internes.
+
+⚠️ **Le vocabulaire des deux pôles est lui aussi interne.** N'écris jamais « Pôle A », « Pôle B », « tension
+dialectique interne », ni « A ≫ B » dans le livrable. Le déséquilibre se raconte **en clair, par le contenu
+des deux dimensions** : « le projet convertit beaucoup mais ne filtre personne à l'entrée », pas « Pôle B ≫
+Pôle A ». Même chose pour les niveaux de preuve : jamais « T1/T4 », toujours la formulation en langage clair.
 
 **(b) Méthodologie — jamais décrite ni énoncée.** Au-delà des noms, le document ne **décrit jamais la
 mécanique** de l'audit et ne se présente jamais comme une méthode/un système. Interdits :
@@ -623,7 +1351,7 @@ Finance, RH, Décisions…) sont du langage courant et restent tels quels.
 elle est analysée. Utilise ce nom affiché partout dans le livrable, jamais le nom technique.
 
 ### Partie 1 — Synthèse (2 pages max, ~3 min de lecture)
-1. Bandeau verdict : note globale /20 + une phrase de statut.
+1. Bandeau verdict : note globale /20 + une phrase de statut + **l'étiquette de risque combiné** (Faible → Très élevé) **avec sa note de lecture**, aux côtés de toute fonction à −1 déjà signalée.
 2. En bref : 4-5 puces max.
 3. « Où en est l'entreprise ? » : les 4 stades expliqués simplement, puis position du projet.
 4. Bilan de santé par grande fonction : tableau 4 colonnes (Fonction [nom affiché] / **Note sur 4** / Statut en un mot / Explication en une phrase).
@@ -665,6 +1393,8 @@ ce qui détruit l'intérêt d'avoir un référentiel unique.
 - [ ] **Le module de diagnostic est appliqué** (règle de garde, puis A1/A2/A3/B/C) — **même si la conclusion est
       « aucun déséquilibre significatif »**, auquel cas on l'écrit explicitement (c'est une information positive).
 - [ ] **La phase de croissance est identifiée** et affichée (stade + niveau de confiance).
+- [ ] **Le module Cohérence croisée des preuves a été exécuté** (même si la conclusion est « aucune dissonance »), **avant** le calcul des agrégats et du module de diagnostic.
+- [ ] **L'indicateur de risque combiné (score × phase) est calculé**, avec son étiquette et sa note de lecture, et **affiché dans le Bandeau verdict**.
 - [ ] **Tout score −1 est nommé dans le Verdict**, avec la fonction concernée et sa justification.
 
 ---
