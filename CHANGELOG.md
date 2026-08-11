@@ -1,5 +1,18 @@
 # Changelog
 
+## v1.6.0 — 2026-08-10
+
+- `/audit-affiliation` : le rapport distingue désormais explicitement ce que la note
+  mesure (santé structurelle et gouvernance) de ce qu'elle ne mesure pas
+  (opportunité d'investissement sur un produit isolé).
+- **Anti double-comptage** : quand un même fait pèse sur plusieurs critères, le
+  rapport distingue le nombre d'alertes brutes du nombre de causes réelles.
+- Calibration plus juste des sites d'investigation spécialisés, et granularité
+  obligatoire des avertissements réglementaires (un statut administratif n'est plus
+  compté comme une accusation de fraude).
+- **Tensions clés** revues : 4 tensions toujours affichées, 6 autres seulement en cas
+  de déséquilibre réel, chacune avec sa combinaison précise.
+
 ## v1.5.0 — 2026-08-10
 
 - `/audit-affiliation` : l'audit se déroule désormais en **10 étapes validées une par
