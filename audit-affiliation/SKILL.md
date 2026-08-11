@@ -919,9 +919,11 @@ Innovation ralentie.
   « juge et partie ». **B ≫ A** : gouvernance si diluée (comité, process de validation multiples) que plus
   personne n'est clairement responsable d'une décision — dilution de responsabilité.
 
-⚠️ Cette lecture **recoupe et prolonge le Module D** (croisement Structuration ↔ R&D/Production, sur la tension
-Innovation vs Production de la fonction elle-même) — ne pas la traiter deux fois séparément dans le rapport
-final : l'une renvoie à l'autre.
+⚠️ **Articulation avec le module de diagnostic (section D)** : la tension interne de Structuration se lit
+**ici**, dans sa propre fiche. Les croisements de Structuration avec d'autres fonctions se lisent **là-bas** :
+paire 7 (Management expérience ↔ Structuration, dimension pouvoir organisationnel) et paire 10
+(SI ↔ Structuration, dimension pouvoir technique). Ne traite pas deux fois le même constat dans le rapport
+final : la fiche porte la tension propre, la section D porte les croisements — l'une renvoie à l'autre.
 
 **Checkpoint axe Pilotage** `AskUserQuestion` avant de passer à Connectivité.
 
@@ -1237,6 +1239,8 @@ Croisement : Nature du produit vs Segments (Positionnement) × Micro vs Macro (F
 - *excès-Segments + excès-Macro* → chiffres propres mais aucune direction — un shell financier sans âme.
 
 **4. Indice de dispersion positionnelle (Développement ↔ Production)**
+*⚠️ À l'affichage, cette paire se nomme « **Croissance & Traction ↔ Solidité de la livraison** » — les noms
+d'axes internes ne sortent jamais (table de correspondance, gate #1).*
 Ne compare pas deux fonctions entre elles : mesure l'**homogénéité des 4 paires horizontales** position-à-position
 de l'axe Développement/Production — R&D↔M&M, Vente↔Qualité produit, Marketing↔Product Management,
 Implémentation↔Exécution.
@@ -1389,7 +1393,14 @@ Restitue tout dans **un document unique** (`$AUDIT_DIR/scorecard.md`), jamais de
 **(a) Noms/marques — jamais affichés** dans le document (synthèse ET annexe) : `Expert 5A`, `L-QHIN`,
 `n-2`, `n-3`, `n-4`, `canevas organique`, `algorithme organique`, `Holisyntonie`, ni les noms d'axes internes
 (Développement, Production, Intelligence, Pilotage, Connectivité, Bois/Métal/Eau/Feu/Terre), ni les mots
-`dialectique`, `organique`, `fractal`, `Singularité`, `Conformité`. Ce sont des outils de calcul internes.
+`dialectique`, `organique`, `fractal`. Ce sont des outils de calcul internes.
+
+⚠️ **Interdiction au sens méthode uniquement — ne casse pas les noms d'affichage imposés.** Les mots
+`Singularité`, `Conformité`, `Pertinence`, `Intégration` sont interdits **en tant que noms de positions
+internes du modèle** (« le pôle Conformité », « position Singularité »). Ils restent parfaitement autorisés
+dans leur sens courant, et notamment dans les **noms d'affichage obligatoires** des fonctions :
+« Réputation & **Conformité** » (fonction 10) et « **Intégrations** » (fonction 3) s'écrivent tels quels.
+C'est l'usage-méthode qui est banni, pas le mot.
 
 ⚠️ **Le vocabulaire des deux pôles est lui aussi interne.** N'écris jamais « Pôle A », « Pôle B », « tension
 dialectique interne », ni « A ≫ B » dans le livrable. Le déséquilibre se raconte **en clair, par le contenu
@@ -1472,16 +1483,20 @@ elle est analysée. Utilise ce nom affiché partout dans le livrable, jamais le 
 
 ## ✅ CHECKLIST OBLIGATOIRE — avant de livrer un audit
 
-Un audit n'est **pas livrable** tant que ces 6 points ne sont pas faits. Vérifie-les explicitement avant de
-rendre le document. Sans eux, deux audits produits avec ce même parcours ne sont pas comparables entre eux —
-ce qui détruit l'intérêt d'avoir un référentiel unique.
+Un audit n'est **pas livrable** tant que tous les points ci-dessous ne sont pas faits. Vérifie-les
+explicitement avant de rendre le document. Sans eux, deux audits produits avec ce même parcours ne sont pas
+comparables entre eux — ce qui détruit l'intérêt d'avoir un référentiel unique.
 
 - [ ] **Les 20 fonctions sont scorées** (aucune oubliée ; une fonction non vérifiée est ⚪ 0, pas absente).
 - [ ] **Les 5 sous-totaux d'axe sont calculés** et affichés.
 - [ ] **Les 4 indicateurs transversaux sont calculés ET affichés dans leur tableau** (Indicateur / Définition /
       Score / Lecture — jamais la composition).
-- [ ] **Le module de diagnostic est appliqué** (règle de garde, puis A1/A2/A3/B/C) — **même si la conclusion est
-      « aucun déséquilibre significatif »**, auquel cas on l'écrit explicitement (c'est une information positive).
+- [ ] **Le module de diagnostic est appliqué en entier** (règle de garde, puis A1/A2/A3, B, C **et D**) — **même
+      si la conclusion est « aucun déséquilibre significatif »**, auquel cas on l'écrit explicitement (c'est une
+      information positive).
+- [ ] **Les 4 tensions clés du Niveau 1 (section D) sont affichées**, avec leur combinaison excès/manque —
+      systématiquement, quel que soit l'équilibre constaté. Les tensions du Niveau 2 uniquement si leur seuil
+      est atteint.
 - [ ] **La phase de croissance est identifiée** et affichée (stade + niveau de confiance).
 - [ ] **Le module Cohérence croisée des preuves a été exécuté** (même si la conclusion est « aucune dissonance »), **avant** le calcul des agrégats et du module de diagnostic.
 - [ ] **L'indicateur de risque combiné (score × phase) est calculé**, avec son étiquette et sa note de lecture, et **affiché dans le Bandeau verdict**.
