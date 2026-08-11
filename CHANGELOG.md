@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.6.1 — 2026-08-10
+
+- `/audit-affiliation` : passe de cohérence après les intégrations récentes.
+  Correction d'un conflit qui pouvait faire disparaître deux libellés de critères
+  du rapport, d'un renvoi interne devenu obsolète, d'une liste de contrôle
+  incomplète, et d'un terme technique qui pouvait apparaître dans le document remis.
+
 ## v1.6.0 — 2026-08-10
 
 - `/audit-affiliation` : le rapport distingue désormais explicitement ce que la note
