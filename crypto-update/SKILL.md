@@ -23,6 +23,63 @@ conflit, sinon tu lances un `git pull` propre. **Si git est absent ou cassé** (
 fréquent sur un Mac sans Command Line Tools), tu bascules sur une mise à jour
 **sans git** via `curl` (voir Phase 0).
 
+## Phase 0-auth — Jeton d'accès (repo privé)
+
+cryptostack peut être distribué depuis un **repo privé**. Dans ce cas, un jeton d'accès en
+lecture seule est nécessaire. Il est stocké dans `~/.cryptostack/token` (permissions 600).
+
+```bash
+TOKEN_FILE="${HOME}/.cryptostack/token"
+CS_TOKEN=""
+if [ -f "$TOKEN_FILE" ]; then
+  CS_TOKEN=$(tr -d '[:space:]' < "$TOKEN_FILE")
+  echo "AUTH: jeton présent"
+else
+  echo "AUTH: aucun jeton (OK si le repo est public)"
+fi
+```
+
+- **Jeton présent** : utilise-le pour toutes les opérations réseau (voir ci-dessous).
+- **Aucun jeton** : continue normalement. Si une opération échoue ensuite avec une erreur
+  d'authentification (`403`, `404` sur un repo qui existe, `Authentication failed`), c'est que le
+  repo est passé en privé : **ne relance pas en boucle**. Affiche la marche à suivre :
+
+  > « Ce dépôt est privé. Demande un jeton d'accès à ben@ennea.dev, puis installe-le :
+  > `mkdir -p ~/.cryptostack && printf '%s' 'TON_JETON' > ~/.cryptostack/token && chmod 600 ~/.cryptostack/token`
+  > Puis relance `/crypto-update`. »
+
+  Ne demande jamais à l'user de coller son jeton dans le chat : il l'écrit lui-même dans le fichier.
+
+**Usage du jeton, chemin git** (n'écrit jamais le jeton dans `.git/config`) :
+```bash
+git_auth() {
+  if [ -n "$CS_TOKEN" ]; then
+    git -c credential.helper='!f(){ echo username=x-access-token; echo "password=${CS_TOKEN}"; };f' "$@"
+  else
+    git "$@"
+  fi
+}
+# ex. : git_auth fetch origin --quiet   |   git_auth pull --ff-only origin main
+```
+
+**Usage du jeton, chemin curl** (Phase 0-bis) : passe par l'API tarball plutôt que par l'URL
+publique, avec l'en-tête d'autorisation :
+```bash
+if [ -n "$CS_TOKEN" ]; then
+  TARBALL="https://api.github.com/repos/KOLMennea/cryptostack/tarball/main"
+  CURL_AUTH=(-H "Authorization: Bearer $CS_TOKEN")
+else
+  TARBALL="https://github.com/KOLMennea/cryptostack/archive/refs/heads/main.tar.gz"
+  CURL_AUTH=()
+fi
+# ex. : curl -fsSL "${CURL_AUTH[@]}" "$TARBALL" -o "$TMP/cs.tar.gz"
+```
+⚠️ L'archive de l'API a un nom de dossier racine différent (`KOLMennea-cryptostack-<sha>`) de
+celui de l'URL publique (`cryptostack-main`). Détecte-le au lieu de le supposer :
+`SRC=$(find "$TMP" -maxdepth 1 -type d -name '*cryptostack*' | head -1)`.
+
+**Ne logge jamais le jeton**, ne l'affiche pas, ne le mets pas dans un message d'erreur.
+
 ## Phase 0 — Préflight : git est-il utilisable ?
 
 Beaucoup de Mac n'ont pas de git fonctionnel (`/usr/bin/git` est un stub qui échoue
@@ -70,12 +127,23 @@ branche `main` et écrase les fichiers de skill dans `$REPO_DIR` (les symlinks
 
 ```bash
 REPO_DIR="${HOME}/cryptostack"
-TARBALL="https://github.com/KOLMennea/cryptostack/archive/refs/heads/main.tar.gz"
 TMP=$(mktemp -d)
 
+# Jeton (Phase 0-auth) : API tarball si privé, URL publique sinon.
+TOKEN_FILE="${HOME}/.cryptostack/token"
+CS_TOKEN=""; [ -f "$TOKEN_FILE" ] && CS_TOKEN=$(tr -d '[:space:]' < "$TOKEN_FILE")
+if [ -n "$CS_TOKEN" ]; then
+  TARBALL="https://api.github.com/repos/KOLMennea/cryptostack/tarball/main"
+  set -- -H "Authorization: Bearer $CS_TOKEN"
+else
+  TARBALL="https://github.com/KOLMennea/cryptostack/archive/refs/heads/main.tar.gz"
+  set --
+fi
+
 echo "⬇️  Téléchargement de la dernière version…"
-if ! curl -fsSL "$TARBALL" -o "$TMP/cs.tar.gz"; then
-  echo "❌ Téléchargement échoué. Vérifie ta connexion et réessaie."
+if ! curl -fsSL "$@" "$TARBALL" -o "$TMP/cs.tar.gz"; then
+  echo "❌ Téléchargement échoué. Si le dépôt est privé, installe ton jeton (voir Phase 0-auth) ;"
+  echo "   sinon vérifie ta connexion et réessaie."
   rm -rf "$TMP"; exit 1
 fi
 if ! tar -xzf "$TMP/cs.tar.gz" -C "$TMP"; then
@@ -83,7 +151,9 @@ if ! tar -xzf "$TMP/cs.tar.gz" -C "$TMP"; then
   rm -rf "$TMP"; exit 1
 fi
 
-SRC="$TMP/cryptostack-main"
+# Nom du dossier racine différent selon la source — détecte, ne suppose pas.
+SRC=$(find "$TMP" -maxdepth 1 -type d -name '*cryptostack*' | head -1)
+[ -z "$SRC" ] && { echo "❌ Archive inattendue."; rm -rf "$TMP"; exit 1; }
 OLD_VERSION=$([ -f "$REPO_DIR/VERSION" ] && cat "$REPO_DIR/VERSION" || echo "inconnue")
 mkdir -p "$REPO_DIR"
 
@@ -150,13 +220,13 @@ Si A : `git stash push -m "crypto-update auto-stash $(date +%s)"` puis pull, pui
 
 Si B : stop, pas de pull.
 
-Si C : `git pull --ff-only` (échoue si divergence, sécurisé).
+Si C : `git_auth pull --ff-only` (échoue si divergence, sécurisé).
 
 ## Phase 3 — Fetch + comparer avec remote
 
 ```bash
 cd "$REPO_DIR"
-git fetch origin --quiet
+git_auth fetch origin --quiet   # voir Phase 0-auth ; sans jeton, équivaut à `git fetch`
 
 LOCAL_COMMIT=$(git rev-parse HEAD)
 REMOTE_COMMIT=$(git rev-parse @{u} 2>/dev/null || git rev-parse origin/main)
@@ -191,7 +261,7 @@ Options :
 - A) "Pull maintenant" — recommandé
 - B) "Annuler"
 
-Si A : `git pull --ff-only origin <branch>`.
+Si A : `git_auth pull --ff-only origin <branch>` (voir Phase 0-auth — sans jeton, équivaut à `git pull`).
 
 ## Phase 6 — Vérifier ET réparer les symlinks (auto)
 
