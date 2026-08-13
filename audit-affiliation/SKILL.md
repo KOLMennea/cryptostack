@@ -156,11 +156,51 @@ non observable à ce stade de croissance** du projet (ex. un process formalisé 
 et ne plafonne pas le score à 0.5 pour ce seul motif si l'autre pôle est solidement documenté et sain.
 Recoupe avec la phase Q1-Q4 déjà identifiée.
 
+### Palier de profondeur de recherche (distinct du score)
+
+Le score dit **ce qui a été trouvé**. Le palier dit **avec quel sérieux ça a été cherché**. Deux fonctions
+avec le même score n'ont pas nécessairement la même fiabilité — le taux de complétude seul mesurait la
+largeur de l'audit, pas sa profondeur.
+
+⚠️ **Symbole volontairement différent de celui du score**, pour ne jamais confondre les deux dimensions :
+cercles de couleur réservés au score, jauge de carrés réservée à la profondeur.
+
+| Palier | Symbole | Signification |
+|--------|---------|---------------|
+| Recherche exhaustive (3/3) | ■■■ | Les deux pôles vérifiés contre une vraie source chacun, signal contraire activement cherché |
+| Recherche partielle (2/3) | ■■□ | Un pôle vérifié sérieusement, l'autre survolé ou pas creusé |
+| Recherche minimale (1/3) | ■□□ | Le score repose sur une preuve isolée, sans vérification croisée ni exploration des autres sources |
+
+*Rappel de la légende du score (inchangée)* : 🟢 +1 sain · 🟡 +0.5 un pôle documenté, l'autre non ·
+⚪ 0 neutre, aucun pôle vérifiable · 🔴 −1 déséquilibre extrême confirmé vers un seul pôle.
+
+**Règle d'attribution** : attribue un palier à **chaque fonction scorée** (pas seulement aux neutres), à côté
+du score.
+
+⚠️ **Fais TOUJOURS suivre le symbole de sa fraction en texte simple entre parenthèses** — ex.
+« Vente : 🔴 −1, palier ■□□ (1/3, recherche minimale) » plutôt que le symbole seul. **Cette redondance n'est
+pas optionnelle** : les caractères spéciaux ne s'affichent pas de façon fiable sur tous les appareils (des
+échecs de rendu réels ont déjà été constatés — symboles remplacés par des caractères de substitution sur
+mobile, carré vide non rendu par un générateur de PDF). La fraction en chiffres reste lisible même si le
+symbole casse : c'est la seule partie garantie de s'afficher partout.
+
+**Affiche toujours la légende des symboles à côté du premier tableau qui les utilise** — ne suppose jamais
+que le lecteur se souvient de ce que veut dire chaque symbole sans rappel.
+
 ### Calcul du score
 - **Score brut** = somme des 20 scores (plage −20 à +20).
 - **Score normalisé** = `(score_brut + 20) / 40 × 20`, affiché **sur 20** pour une lecture intuitive.
-- **Taux de complétude** = % de fonctions avec un score ≠ 0. Mesure la fiabilité de l'audit
-  lui-même : un audit avec 60 % de fonctions « neutres » est peu concluant, quel que soit le score.
+- **Taux de complétude pondéré** = moyenne, sur les 20 fonctions, de la **profondeur de recherche obtenue**
+  (neutre = 0 % ; recherche minimale 1/3 = 33 % ; recherche partielle 2/3 = 67 % ; recherche exhaustive
+  3/3 = 100 %). Mesure la **fiabilité réelle de l'audit**, pas seulement la présence d'un score : une
+  fonction scorée sur une base fragile (1/3) ne compte plus comme « complète » à 100 %, elle ne pèse qu'un
+  tiers. **C'est ce chiffre — pas un simple ratio de fonctions non-neutres — qui doit apparaître dans le rapport.**
+  *Ordre de grandeur : un audit à 18 fonctions scorées sur 20, dont la moitié en recherche minimale,
+  affichait ~90 % avec l'ancienne définition ; il tombe autour de 60 % avec celle-ci — beaucoup plus fidèle
+  au travail réellement fourni.*
+  Les seuils déjà utilisés ailleurs (ex. « taux de complétude < 50 % » dans l'indicateur de risque combiné)
+  gardent les **mêmes valeurs numériques** : seul le calcul sous-jacent devient plus honnête, ce qui rend ces
+  seuils plus stricts en pratique sans qu'il faille les retoucher.
 
 ### Gate de correctness #2 — neutre ≠ force
 Une fonction ⚪ (0) n'est **jamais** lue comme un point de solidité. C'est une absence de preuve.
@@ -1378,6 +1418,21 @@ Si une info n'est trouvable ni par recherche web ni par déduction fiable : (1) 
 question précise à poser en interview ; (3) liste-la dans « Recherche complémentaire requise » du rapport.
 **Ne jamais halluciner une réponse ni extrapoler un score.**
 
+### « Recherche complémentaire requise » — une section, deux blocs
+
+Cette section du rapport **ne couvre pas que les fonctions neutres**. Elle réunit toutes les fonctions dont la
+base n'est pas encore solide, organisées en **deux blocs distincts** — ne les fusionne jamais en une seule
+liste, la nuance entre les deux est utile au lecteur :
+
+- **Bloc 1 — Aucune preuve trouvée** : les fonctions neutres (score 0), avec la question de repli en interview
+  formulée pour chacune.
+- **Bloc 2 — Preuve trouvée, recherche à approfondir** : toute fonction dont le palier de profondeur est
+  **2/3 ou 1/3**, même si elle a un score. Précise, pour chacune, **quel pôle reste survolé** et la source ou
+  la question qui permettrait de le creuser.
+
+Si un audit n'a aucune fonction dans l'un des deux blocs, **dis-le explicitement** plutôt que d'omettre le
+bloc — l'absence est aussi une information.
+
 **Réflexe de recherche gouvernance** : avant de marquer ⚪ une fonction de gouvernance (Performance Indiv &
 Collective 11, Structuration 16, Gestion 15), vérifie explicitement l'existence d'un espace de gouvernance
 public (`gov.<projet>.io`, `forum.<projet>.xyz`, Snapshot/Tally) — cette info est bien plus facile à vérifier
@@ -1485,7 +1540,7 @@ elle est analysée. Utilise ce nom affiché partout dans le livrable, jamais le 
    correct est précisément l'information qu'un lecteur pressé raterait ; il ne doit jamais être noyé.
 
 ### Partie 2 — Annexe détaillée (longueur libre, orientée compréhension/investissement)
-1. Pour chacune des 5 grandes fonctions (nom affiché) : le détail des 4 sous-fonctions (**nom affiché** de leur en-tête), avec note individuelle, statut 🟢🟡⚪🔴 et justification sourcée. **Tout score décisif (+1 / −1) porte obligatoirement la solidité de sa preuve en langage clair** (facultatif pour +0.5 / −0.5 / 0) : ex. « adresse de trésorerie lue on-chain » (fort) · « rapport d'audit d'un cabinet reconnu » (fort) · « plusieurs témoignages indépendants concordants » (moyen) · « annoncé par le projet, non confirmé par une source indépendante » (faible, signal non consolidé) · « rumeur isolée sans fait vérifiable » (très faible). Jamais de codes internes ni de règle de score.
+1. Pour chacune des 5 grandes fonctions (nom affiché) : le détail des 4 sous-fonctions (**nom affiché** de leur en-tête), avec note individuelle, statut 🟢🟡⚪🔴, **palier de profondeur de recherche** (symbole + fraction en chiffres, ex. « ■■□ (2/3) ») et justification sourcée. **Rappelle la légende des paliers** à côté du premier tableau qui les utilise. **Tout score décisif (+1 / −1) porte obligatoirement la solidité de sa preuve en langage clair** (facultatif pour +0.5 / −0.5 / 0) : ex. « adresse de trésorerie lue on-chain » (fort) · « rapport d'audit d'un cabinet reconnu » (fort) · « plusieurs témoignages indépendants concordants » (moyen) · « annoncé par le projet, non confirmé par une source indépendante » (faible, signal non consolidé) · « rumeur isolée sans fait vérifiable » (très faible). Jamais de codes internes ni de règle de score.
 2. Les 4 indicateurs transversaux : nom, **définition** (à quoi l'indicateur correspond), score, et lecture en une phrase. ⚠️ **JAMAIS la composition** (la liste des fonctions qui le composent) — c'est du sous-calcul interne, il ne doit pas apparaître (gate #1 b). Colonnes : Indicateur / Définition / Score / Lecture.
 3. Le raisonnement complet derrière chaque tension structurelle identifiée en Partie 1.
 4. Le raisonnement complet derrière le stade identifié (indicateurs, niveau de confiance, fonctions relues à la lumière de la phase).
@@ -1521,6 +1576,8 @@ comparables entre eux — ce qui détruit l'intérêt d'avoir un référentiel u
 - [ ] **Le module Cohérence croisée des preuves a été exécuté** (même si la conclusion est « aucune dissonance »), **avant** le calcul des agrégats et du module de diagnostic.
 - [ ] **L'indicateur de risque combiné (score × phase) est calculé**, avec son étiquette et sa note de lecture, et **affiché dans le Bandeau verdict**.
 - [ ] **Tout signal corrélé** (un même fait impactant 2 fonctions ou plus) **est identifié et signalé explicitement**, avec le décompte red flags bruts vs causes racines.
+- [ ] **Chaque fonction porte un palier de profondeur** (symbole **+ fraction en chiffres**), et la légende des paliers est affichée dans le rapport.
+- [ ] **La section « Recherche complémentaire requise » respecte la structure à deux blocs** (aucune preuve trouvée / preuve trouvée mais recherche à approfondir), en signalant explicitement un bloc vide.
 - [ ] **Tout score −1 est nommé dans le Verdict**, avec la fonction concernée et sa justification.
 
 ---
