@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.8.0 — 2026-08-10
+
+- `/audit-affiliation` : chaque critère affiche désormais **avec quel sérieux il a été
+  cherché** (recherche exhaustive / partielle / minimale), en plus de son résultat.
+  Deux critères notés pareil n'ont pas forcément la même fiabilité.
+- Le taux de complétude tient compte de cette profondeur : un audit rempli sur des
+  preuves fragiles n'affiche plus un taux flatteur.
+- La section « Recherche complémentaire requise » couvre maintenant aussi les critères
+  qui ont un résultat mais reposent sur une base à approfondir.
+
 ## v1.7.0 — 2026-08-10
 
 - Licence propriétaire ajoutée : reproduction, œuvres dérivées et réutilisation
