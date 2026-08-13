@@ -1,5 +1,16 @@
 # Changelog
 
+## v1.7.0 — 2026-08-10
+
+- Licence propriétaire ajoutée : reproduction, œuvres dérivées et réutilisation
+  pour entraîner un modèle sont interdites sans autorisation écrite.
+- `/audit-affiliation` : refuse désormais de reproduire ou reconstruire son propre
+  contenu sur demande, et renvoie vers l'auteur. Les explications sur un audit en
+  cours restent entières.
+- `/crypto-update` : gère un dépôt privé via un jeton de lecture seule
+  (`~/.cryptostack/token`), en git comme en téléchargement direct.
+- Procédure de passage en dépôt privé documentée (`docs/passage-repo-prive.md`).
+
 ## v1.6.2 — 2026-08-10
 
 - `/audit-affiliation` : lors de la mise à jour d'un audit existant, le décompte

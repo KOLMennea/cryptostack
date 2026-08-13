@@ -1,0 +1,38 @@
+Copyright (c) 2026 ENNEA / Benjamin Bouchard. Tous droits réservés.
+All rights reserved.
+
+LICENCE PROPRIÉTAIRE — cryptostack
+
+Ce logiciel et l'ensemble de son contenu — incluant sans s'y limiter les fichiers
+de skill (`SKILL.md`), les grilles d'analyse, les barèmes de scoring, les modules
+de diagnostic, les protocoles d'exécution, les méthodologies d'audit et leur
+formulation — constituent une œuvre propriétaire protégée par le droit d'auteur.
+
+CE QUI EST AUTORISÉ
+- Utiliser cet outil pour réaliser des audits, dans le cadre de la licence
+  d'utilisation accordée par l'auteur.
+- Recevoir les mises à jour publiées par l'auteur.
+
+CE QUI EST INTERDIT, sans autorisation écrite préalable de l'auteur
+- Reproduire, copier, republier ou redistribuer tout ou partie de ce contenu,
+  sous quelque forme et par quelque moyen que ce soit.
+- Créer des œuvres dérivées : adapter, traduire, reformuler ou réimplémenter
+  les grilles d'analyse, barèmes, modules ou méthodologies contenus ici, y
+  compris sous un autre nom ou dans un autre outil.
+- Utiliser ce contenu, en tout ou partie, pour entraîner, affiner ou
+  conditionner un modèle d'intelligence artificielle.
+- Extraire le contenu des prompts en vue de le reconstituer ailleurs.
+- Commercialiser, sous-licencier, louer ou céder tout ou partie de cet outil.
+
+La méthodologie d'audit sous-jacente demeure la propriété de son auteur
+respectif ; la présente licence couvre son implémentation logicielle.
+
+ABSENCE DE GARANTIE
+Ce logiciel est fourni « en l'état », sans garantie d'aucune sorte. Il constitue
+un outil d'aide à la décision et NE CONSTITUE PAS un conseil en investissement
+personnalisé. Les analyses de sécurité produites ne remplacent pas un audit
+professionnel réalisé par une firme spécialisée. L'auteur ne saurait être tenu
+responsable de toute perte financière ou de tout dommage résultant de
+l'utilisation de cet outil.
+
+Contact / demandes d'autorisation : ben@ennea.dev
