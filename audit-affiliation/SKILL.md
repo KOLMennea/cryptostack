@@ -201,6 +201,12 @@ que le lecteur se souvient de ce que veut dire chaque symbole sans rappel.
   Les seuils déjà utilisés ailleurs (ex. « taux de complétude < 50 % » dans l'indicateur de risque combiné)
   gardent les **mêmes valeurs numériques** : seul le calcul sous-jacent devient plus honnête, ce qui rend ces
   seuils plus stricts en pratique sans qu'il faille les retoucher.
+  **Affichage obligatoire, à deux endroits précis** : (1) dans le **bandeau verdict de la Partie 1**, à côté de
+  la note globale — format « Note : X/20 — Complétude de l'audit : Y % (Z fonctions vérifiées sur 20) » ;
+  (2) **en tête de la Partie 2**, avant le détail des 20 fonctions.
+  ⚠️ Un score sévère construit sur une complétude **élevée (≥ 80 %)** est un diagnostic **fiable**. Le même
+  score construit sur une complétude **faible (< 50 %)** doit être présenté comme **provisoire**, et la
+  Partie 1 doit **le dire en toutes lettres**.
 
 ### Gate de correctness #2 — neutre ≠ force
 Une fonction ⚪ (0) n'est **jamais** lue comme un point de solidité. C'est une absence de preuve.
@@ -1469,6 +1475,12 @@ Restitue tout dans **un document unique** (`$AUDIT_DIR/scorecard.md`), jamais de
 `n-2`, `n-3`, `n-4`, `canevas organique`, `algorithme organique`, `Holisyntonie`, ni les noms d'axes internes
 (Développement, Production, Intelligence, Pilotage, Connectivité, Bois/Métal/Eau/Feu/Terre), ni les mots
 `dialectique`, `organique`, `fractal`. Ce sont des outils de calcul internes.
+En plus des termes ci-dessus, ne fais jamais apparaître les **labels internes des modules de diagnostic** :
+`A1`, `A2`, `A3`, `B`, `C`, `D`, « Résonance », « Adaptation », ni **aucun renvoi explicite à un module par son
+nom**. Une tension se traduit **toujours en une phrase de bon sens**, jamais en citant sa grille de lecture —
+ex. ❌ « A1 : Développement fort, Production faible » → ✅ « Le projet communique plus vite qu'il ne construit :
+ce qui est annoncé va plus loin que ce qui est réellement livré. » Le raisonnement méthodologique complet
+reste réservé à la Partie 2.
 
 ⚠️ **Interdiction au sens méthode uniquement — ne casse pas les noms d'affichage imposés.** Les mots
 `Singularité`, `Conformité`, `Pertinence`, `Intégration` sont interdits **en tant que noms de positions
@@ -1525,21 +1537,69 @@ Finance, RH, Décisions…) sont du langage courant et restent tels quels.
 **directement dans l'en-tête de chaque fonction** (`*(dans le rapport : « … »)*`), à l'endroit même où
 elle est analysée. Utilise ce nom affiché partout dans le livrable, jamais le nom technique.
 
-### Partie 1 — Synthèse (2 pages max, ~3 min de lecture)
-1. Bandeau verdict : note globale /20 + une phrase de statut + **l'étiquette de risque combiné** (Faible → Très élevé) **avec sa note de lecture**, aux côtés de toute fonction à −1 déjà signalée. **Si un signal corrélé existe**, affiche le décompte **red flags bruts vs causes racines indépendantes**. Rappelle en une phrase ce que le score mesure (santé structurelle/gouvernance) et ce qu'il ne mesure pas (opportunité d'investissement sur un produit isolé).
-2. En bref : 4-5 puces max.
-3. « Où en est l'entreprise ? » : les 4 stades expliqués simplement, puis position du projet.
-4. Bilan de santé par grande fonction : tableau 4 colonnes (Fonction [nom affiché] / **Note sur 4** / Statut en un mot / Explication en une phrase).
-5. Tensions à surveiller : **les 4 tensions clés toujours affichées** (Module de diagnostic, section D,
-   Niveau 1) en phrases de bon sens, **plus toute tension du Niveau 2 déclenchée**.
-6. Ce qui rassure / ce qui reste à vérifier.
-7. Verdict + mention « **ne constitue pas un conseil en investissement personnalisé** ».
-   **Tout score −1, même isolé, est nommé dans le Verdict** (fonction concernée + pourquoi c'est éliminatoire
-   ou pénalisant). C'est le **fond** qui est obligatoire — nommer la fonction et justifier — **pas une
-   formulation littérale imposée** : rédige-le naturellement, adapté au cas. Un −1 isolé au milieu d'un profil
-   correct est précisément l'information qu'un lecteur pressé raterait ; il ne doit jamais être noyé.
+### Partie 1 — Synthèse (2 pages max) — **ordre fixe**
+
+> **Public visé : grand public, pas des auditeurs professionnels.** La Partie 1 doit se lire comme une
+> explication donnée par un ami à qui on demande son avis, **pas** comme un rapport de cabinet d'audit.
+> Ça ne dispense d'**aucune** exactitude ni d'aucun avertissement obligatoire : le disclaimer, la mention du
+> profil de risque et la visibilité d'un red flag isolé restent **non négociables** — seul le ton change.
+
+1. **Bandeau verdict** — note globale /20 ; **statut en une phrase de ton humain** (ex. « Ce projet a de bonnes
+   bases, mais un point sensible mérite ton attention avant d'investir. ») ; **étiquette de risque combiné**
+   (score × phase) avec sa note de lecture ; **taux de complétude de l'audit** au format
+   « Note : X/20 — Complétude de l'audit : Y % (Z fonctions vérifiées sur 20) ».
+2. **Le projet en un paragraphe** — 3-4 phrases max, langage courant, **sans score ni jargon** : que fait le
+   projet concrètement, comment prétend-il générer de la valeur, quelle est la nature du risque principal.
+3. **Signaux d'alerte confirmés** — liste **exhaustive et numérotée** de **toute** fonction à −1, une phrase
+   accessible chacune, **sans nom de sous-fonction technique cru**. Si plusieurs viennent d'un même signal
+   corrélé, le dire explicitement (nombre de red flags bruts vs causes racines indépendantes).
+   **Si aucun −1, le dire explicitement** plutôt qu'omettre la section.
+4. **Ce qui rassure / Ce qui reste à vérifier.**
+5. **Où en est le projet ?** — les 4 stades expliqués simplement, puis position du projet.
+6. **Bilan de santé par grande fonction** — tableau 4 colonnes (Fonction [nom affiché] / **Note sur 4** /
+   Statut en un mot / Explication en une phrase).
+7. **Tensions à surveiller** — les **4 tensions clés du Niveau 1 toujours affichées**, en phrases de bon sens
+   **strictement accessibles**, plus toute tension du **Niveau 2 déclenchée**, en limitant ces ajouts à
+   **2-3 maximum** pour ne pas surcharger la synthèse (le reste va en Partie 2).
+8. **Verdict final** + mention « **ne constitue pas un conseil en investissement personnalisé** ».
+
+⚠️ **Les points 2 et 3 sont volontairement en tête** — avant le bilan de santé et les stades. Ils doivent rester
+**courts** : c'est le résumé que 90 % des lecteurs retiendront.
+
+**Règle de visibilité obligatoire dans le Verdict.** Tout score −1, même isolé, est nommé (fonction concernée +
+pourquoi c'est pénalisant). C'est le **fond** qui est obligatoire — nommer et justifier — **pas une formulation
+littérale imposée**. Un −1 isolé au milieu d'un profil correct est précisément l'information qu'un lecteur
+pressé raterait ; il ne doit jamais être noyé.
+- **La totalité des −1, jamais une sélection des plus parlantes** — si l'audit compte six fonctions à −1,
+  les six apparaissent.
+- **Cas des red flags nombreux** : soit tous les −1 sont cités individuellement, soit ils sont **regroupés
+  explicitement par thème avec mention claire du nombre total** — ex. « Six fonctions présentent un signal
+  d'alerte confirmé, dont voici les trois plus significatives ; les trois autres sont détaillées en Partie 2. »
+  **Le silence sur un red flag confirmé n'est jamais acceptable**, y compris par souci de concision.
+
+*Exemple de rendu attendu (cas fictif) :*
+> **TokenFlow, en clair**
+> Ce projet a de bonnes bases — une équipe identifiable, un produit qui fonctionne réellement — mais un point
+> sensible mérite ton attention avant d'investir : le pouvoir de décision sur les fonds reste concentré entre
+> les mains d'une seule personne, sans aucun garde-fou.
+>
+> Note globale : 13/20 · Risque : Modéré-Élevé (phase construction) · Complétude de l'audit : 85 %
+> (17 fonctions vérifiées sur 20)
+>
+> **Le projet en un paragraphe** : TokenFlow est une plateforme d'échange qui reverse une partie de ses frais
+> de transaction à ses utilisateurs les plus actifs, via un système de parrainage à plusieurs niveaux.
+>
+> **Signaux d'alerte confirmés** : 1. Gouvernance du contrat — une seule personne peut modifier le contrat à
+> tout moment, sans délai ni validation collective. C'est le point à surveiller en priorité si tu investis.
+>
+> *Ceci n'est pas un conseil en investissement personnalisé — à toi de juger si ce niveau de risque
+> correspond à ton profil.*
 
 ### Partie 2 — Annexe détaillée (longueur libre, orientée compréhension/investissement)
+
+**En tête de Partie 2, avant le détail des 20 fonctions** : rappelle le **taux de complétude pondéré**
+(« Complétude de l'audit : Y % — Z fonctions vérifiées sur 20 »), et précise si le diagnostic est **fiable**
+(≥ 80 %) ou **provisoire** (< 50 %).
 1. Pour chacune des 5 grandes fonctions (nom affiché) : le détail des 4 sous-fonctions (**nom affiché** de leur en-tête), avec note individuelle, statut 🟢🟡⚪🔴, **palier de profondeur de recherche** (symbole + fraction en chiffres, ex. « ■■□ (2/3) ») et justification sourcée. **Rappelle la légende des paliers** à côté du premier tableau qui les utilise. **Tout score décisif (+1 / −1) porte obligatoirement la solidité de sa preuve en langage clair** (facultatif pour +0.5 / −0.5 / 0) : ex. « adresse de trésorerie lue on-chain » (fort) · « rapport d'audit d'un cabinet reconnu » (fort) · « plusieurs témoignages indépendants concordants » (moyen) · « annoncé par le projet, non confirmé par une source indépendante » (faible, signal non consolidé) · « rumeur isolée sans fait vérifiable » (très faible). Jamais de codes internes ni de règle de score.
 2. Les 4 indicateurs transversaux : nom, **définition** (à quoi l'indicateur correspond), score, et lecture en une phrase. ⚠️ **JAMAIS la composition** (la liste des fonctions qui le composent) — c'est du sous-calcul interne, il ne doit pas apparaître (gate #1 b). Colonnes : Indicateur / Définition / Score / Lecture.
 3. Le raisonnement complet derrière chaque tension structurelle identifiée en Partie 1.
@@ -1588,24 +1648,31 @@ Un audit n'est pas un one-shot : c'est un **dossier vivant**, mis à jour sur pl
 mesure que l'information arrive. Sans convention, chaque session réinvente la sienne et l'historique se perd.
 Quand tu reprends un audit déjà existant dans `$AUDIT_DIR` :
 
-1. **Date chaque entrée, n'écrase jamais l'historique.** Une nouvelle information s'ajoute avec sa date ; elle
-   ne remplace pas silencieusement la précédente. L'évolution du dossier doit rester lisible.
-2. **Affiche le score avant/après en cas de changement.** Toute révision de score est explicite :
-   « Fonction X : −1 → +0.5 (nouvelle preuve : audit publié le JJ/MM, cabinet reconnu) ». Jamais une
-   modification muette.
-3. **Recalcule en cascade.** Un score qui change impose de recalculer et de réafficher : le score global
-   normalisé, le sous-total de l'axe concerné, et **tous les indicateurs transversaux qui contiennent cette
-   fonction** (voir composition interne). Un audit dont le détail a bougé mais dont les agrégats sont restés
-   figés est incohérent.
-4. **Portée transversale, et son garde-fou.** Applique ici les deux règles jumelles déjà énoncées dans le
-   Protocole anti-biais (points 5 et 6) — elles valent à l'identique en mise à jour, avec une conséquence
-   propre : une preuve nouvelle vaut pour **toutes** les fonctions qu'elle éclaire (repasse-les), et si elle
-   en touche deux ou plus, c'est **1 signal corrélé impactant N fonctions**, pas N nouveaux problèmes. Le
-   décompte red flags bruts vs causes racines du Verdict doit être **recalculé**, pas seulement les scores.
-5. **Un changement de phase de croissance est un événement de mise à jour à part entière.** Si le projet
-   passe d'un stade au suivant, dis-le, date-le, et **relis les fonctions dont l'interprétation dépend de la
-   phase** (Arbitrages, Structuration, Positionnement stratégique) — une instabilité normale au stade
-   précédent peut devenir un signal d'alerte au stade suivant.
+1. **Dater chaque entrée, systématiquement, dès le titre.** Toute mise à jour d'une fonction déjà scorée est
+   horodatée, **sans effacer l'ancienne justification**. Fais apparaître le résumé de la mise à jour **dès le
+   titre du document**, avant même le Verdict — format « **Mise à jour du [date] : [score avant] → [score
+   après]** ».
+2. **Afficher le score avant/après au niveau de chaque fonction mise à jour.** Ex. « Fonction X : −1 → +0.5
+   (nouvelle preuve : audit publié le JJ/MM, cabinet reconnu) ». Jamais une modification muette.
+3. **Recalculer systématiquement en cascade** — score brut/normalisé, sous-total d'axe, indicateurs
+   transversaux concernés, **et taux de complétude pondéré**. Recalcule aussi le **décompte red flags bruts vs
+   causes racines** du Verdict s'il a bougé. Un audit dont le détail a changé mais dont les agrégats sont
+   restés figés est incohérent.
+4. **Une preuve qui éclaire plusieurs fonctions les met à jour toutes — mais chacune avec sa propre
+   vérification.** Si la nouvelle preuve concerne plusieurs fonctions, mets à jour chacune (même principe qu'en
+   recherche initiale) — mais **en mise à jour spécifiquement, vérifie indépendamment, pour chaque fonction
+   concernée, que le fait la touche réellement contre ses propres pôles**, plutôt que de cascader un même
+   constat par simple association. **Un fait qui ne touche qu'une fonction ne remonte qu'une fonction.**
+5. **Distinguer ce que le fait établit de ce qu'il n'établit pas.** Paragraphe **obligatoire** à chaque mise à
+   jour — ex. « Ce fait confirme que X, mais ne dit rien sur Y, qui reste non vérifié. »
+6. **Le verdict global n'est révisé que si le fait touche un pilier du verdict initial** — sinon, **dis-le
+   explicitement**.
+7. **Signaler un changement de phase de croissance comme un événement de mise à jour à part entière**, avec la
+   même règle avant/après. Relis alors les fonctions dont l'interprétation dépend de la phase (Arbitrages,
+   Structuration, Positionnement stratégique) — une instabilité normale au stade précédent peut devenir un
+   signal d'alerte au stade suivant.
+8. **Un audit mis à jour reste un seul document** (pas un fichier par version) — les mises à jour s'ajoutent
+   **chronologiquement à la suite de l'audit initial, dans l'Annexe**.
 
 ---
 

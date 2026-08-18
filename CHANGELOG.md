@@ -1,5 +1,18 @@
 # Changelog
 
+## v1.9.0 — 2026-08-10
+
+- `/audit-affiliation` : la synthèse est réécrite pour un lecteur non spécialiste —
+  elle s'ouvre sur une phrase claire plutôt que sur un chiffre, explique le projet en
+  un paragraphe sans jargon, et présente les signaux d'alerte dans une section dédiée
+  et exhaustive plutôt que noyés dans des puces.
+- Le niveau de complétude de l'audit est affiché avec la note : un diagnostic construit
+  sur peu de vérifications est annoncé comme provisoire.
+- Aucun signal d'alerte confirmé ne peut être passé sous silence, même par souci de
+  concision.
+- Mises à jour d'un audit : historique daté dès le titre, distinction explicite entre
+  ce qu'un fait établit et ce qu'il n'établit pas, et un seul document par audit.
+
 ## v1.8.0 — 2026-08-10
 
 - `/audit-affiliation` : chaque critère affiche désormais **avec quel sérieux il a été
