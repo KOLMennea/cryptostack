@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.9.1 — 2026-08-22
+
+- `/audit-affiliation` : chaque audit indique désormais la version de méthode avec
+  laquelle il a été produit (dans le bandeau verdict et en tête de l'annexe). En
+  archivant des audits, on sait immédiatement lesquels sont comparables entre eux.
+
 ## v1.9.0 — 2026-08-10
 
 - `/audit-affiliation` : la synthèse est réécrite pour un lecteur non spécialiste —
